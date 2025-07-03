@@ -24,7 +24,18 @@ logs:
 	docker-compose logs -f
 
 proto:
-	docker-compose run --rm proto-compiler
+	@echo "WARNING: Proto files are committed to git. Only regenerate if you've updated .proto files"
+	@echo "Building proto compiler..."
+	docker build -f docker/proto/Dockerfile -t sarna-proto-compiler .
+	@echo "Generating proto files..."
+	docker run --rm -v "$(CURDIR)/protos:/protos" -v "$(CURDIR)/backend/generated:/output" sarna-proto-compiler
+	@echo "Fixing imports..."
+	docker-compose exec backend python scripts/fix_proto_imports.py
+	@echo "Fixing grpc imports..."
+	docker-compose exec backend python -c "import re; from pathlib import Path; [open(f,'w').write(re.sub(r'^from \. import grpc$$','import grpc',open(f).read(),flags=re.MULTILINE)) for f in Path('/app/generated').rglob('*_pb2_grpc.py')]"
+	@echo "Fixing api_hub_enums imports..."
+	docker-compose exec backend python -c "import re; from pathlib import Path; [open(f,'w').write(re.sub(r'from \. import api_hub_enums_pb2','from .api_hub import api_hub_enums_pb2',open(f).read())) for f in Path('/app/generated').glob('*.py') if f.name != '__init__.py']"
+	@echo "Proto generation complete. Remember to commit the changes!"
 
 test-integration:
 	docker-compose run --rm backend pytest tests/integration

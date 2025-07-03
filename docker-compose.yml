@@ -58,14 +58,16 @@ services:
     volumes:
       - redis_data:/data
 
-  proto-compiler:
-    build:
-      context: .
-      dockerfile: docker/proto/Dockerfile
-    volumes:
-      - ./protos:/protos
-      - ./backend/generated:/output
-    command: /compile.sh
+  # Proto compiler disabled - files are committed to git
+  # To regenerate protos, run: make proto
+  # proto-compiler:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/proto/Dockerfile
+  #   volumes:
+  #     - ./protos:/protos
+  #     - ./backend/generated:/output
+  #   command: /compile.sh
 
 volumes:
   postgres_data:
