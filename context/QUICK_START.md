@@ -1,98 +1,128 @@
-# Quick Start Guide
+# Quick Start - Next Session
 
-## Prerequisites Check
-- [ ] Docker Desktop running
-- [ ] .env file has all required values
-- [ ] Proto files are in /protos folder
+## 🚀 Verify Everything is Working
 
-## Start Development
-
-### 1. First Time Setup
 ```bash
+# 1. Start all services
 cd C:\Development\sarna-insights-v2
-
-# Generate protobuf files
-docker-compose run --rm proto-compiler
-
-# Start all services
 docker-compose up -d
 
+# 2. Check services are running
+docker-compose ps
+
+# 3. Test backend is responding
+curl http://localhost:8000/api/health/
+
+# 4. Test gRPC connection
+docker-compose exec backend python test_grpc_connection.py
+
+# 5. Test cache is working
+docker-compose exec backend python test_cache_service.py
+
+# 6. Test API endpoints
+docker-compose exec backend python test_api_cache.py
+```
+
+## 📊 Current State Summary
+
+### What's Working:
+- ✅ gRPC connection to Sarna API
+- ✅ Redis caching (102x performance improvement)
+- ✅ All data endpoints (`/api/data/*`)
+- ✅ All visualization endpoints (`/api/viz/*`)
+- ✅ Historical data retrieval
+- ✅ Time machine service
+
+### What Needs Work:
+- ❌ LLM service not tested
+- ❌ Frontend not connected to backend
+- ❌ Chat endpoint needs LLM service
+
+## 🔧 Key Endpoints
+
+### Data Endpoints:
+- `GET /api/data/portfolio/10006` - Current portfolio (cached 30s)
+- `GET /api/data/history/10006?days=7` - Historical data (cached forever)
+- `POST /api/data/refresh/10006` - Clear cache
+
+### Visualization Endpoints:
+- `GET /api/viz/portfolio-overview/10006` - Bar chart of accounts
+- `GET /api/viz/pl-trends/10006?days=7` - P&L line chart
+- `GET /api/viz/risk-metrics/10006` - Risk radar chart
+- `GET /api/viz/liquidity-trends/10006?days=7` - Liquidity trends
+
+### Chat Endpoint (needs LLM):
+- `POST /api/chat/query` - Natural language queries
+
+## 🎯 Next Steps Priority
+
+### 1. Test LLM Service (30 mins)
+```python
+# Quick test in backend shell
+docker-compose exec backend python
+>>> from services.llm_service import LLMService
+>>> llm = LLMService()
+>>> await llm.query("What is 2+2?", provider="openai")
+```
+
+### 2. Connect Frontend (1 hour)
+- Update frontend API client to use correct endpoints
+- Test portfolio display
+- Test one visualization
+- Implement refresh button
+
+### 3. Implement Chat UI (1 hour)
+- Create chat component
+- Connect to `/api/chat/query`
+- Add provider selector
+- Test with sample queries
+
+## 📝 Important Notes
+
+1. **Accounts are pre-anonymized**: ACCOUNT_XXXXX format from API
+2. **Group 10006 has 9 accounts**: Not 7 as documented
+3. **Historical data is metadata**: Contains metrics, not full files
+4. **Cache keys follow pattern**: `type:id:params`
+
+## 🐛 Common Issues & Fixes
+
+### Backend Won't Start
+```bash
 # Check logs
-docker-compose logs -f backend
+docker-compose logs backend
+
+# Rebuild if needed
+docker-compose build backend
+docker-compose up -d
 ```
 
-### 2. Verify Services
-- Frontend: http://localhost
-- Backend API: http://localhost:8000
-- API Docs: http://localhost:8000/docs
-
-### 3. Common Issues & Solutions
-
-**Proto generation fails**
-- Check Docker is running
-- Run `docker-compose build proto-compiler` if image is missing
-- Ensure proto files have correct syntax
-
-**Import errors in backend**
+### Cache Not Working
 ```bash
-# Run the import fix script
-docker-compose exec backend python scripts/fix_proto_imports.py
+# Check Redis
+docker-compose exec redis redis-cli ping
+# Should return: PONG
+
+# Clear all cache
+docker-compose exec redis redis-cli FLUSHALL
 ```
 
-**Database connection errors**
-- The system automatically converts postgresql:// to postgresql+asyncpg://
-- If issues persist, check DATABASE_URL in .env
+### gRPC Connection Failed
+- Check SARNA_JWT_TOKEN hasn't expired
+- Verify SARNA_API_URL format (no https://)
+- Check network connectivity
 
-**Can't connect to Sarna API**
-- Verify SARNA_API_URL in .env
-- Check SARNA_JWT_TOKEN is valid
-- Ensure network connectivity
+## 📞 Key Files to Reference
 
-**Frontend not loading**
-- Check browser console for errors
-- Verify CORS settings include your domain
-- Check API is running on port 8000
+- `/context/CRITICAL_FIXES_2025-07-03.md` - Proto fixes
+- `/backend/test_*.py` - All test files for verification
+- `/backend/services/` - All service implementations
+- `/backend/routers/` - All API endpoints
 
-## Development Workflow
+## ✅ Definition of Done
 
-### Backend Changes
-1. Edit files in /backend
-2. Changes auto-reload (watch logs)
-3. Test via API docs
-
-### Frontend Changes
-1. Edit files in /frontend/src
-2. Changes auto-reload
-3. Check browser
-
-### Adding New Features
-1. Create API endpoint in /backend/routers
-2. Add service logic in /backend/services
-3. Create UI component in /frontend/src/components
-4. Update types in /frontend/src/types
-
-## Testing
-
-### Quick API Test
-```bash
-# From outside Docker
-curl http://localhost:8000/api/health
-
-# Or using PowerShell
-Invoke-WebRequest -Uri http://localhost:8000/api/health -Method GET
-```
-
-### Test Chat Endpoint (once implemented)
-```bash
-curl -X POST http://localhost:8000/api/chat/query \
-  -H "Content-Type: application/json" \
-  -d '{"question": "What is my total portfolio value?", "provider": "openai"}'
-```
-
-## Makefile Commands
-- `make up` - Start all services
-- `make down` - Stop all services
-- `make logs` - View logs
-- `make proto` - Generate protobuf files
-- `make test` - Run tests
-- `make clean` - Reset everything
+The backend is ready when:
+1. LLM service tested and working
+2. Frontend displays portfolio data
+3. At least one visualization works
+4. Chat interface processes queries
+5. Manual refresh updates data

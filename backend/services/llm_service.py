@@ -1,4 +1,4 @@
-"""Multi-provider LLM service."""
+"""Multi-provider LLM service with Anthropic fix for v0.8.0."""
 import logging
 from typing import Dict, Any, Optional
 from abc import ABC, abstractmethod
@@ -50,12 +50,19 @@ class AnthropicProvider(LLMProvider):
     async def query(self, prompt: str, system_prompt: Optional[str] = None) -> str:
         messages = [{"role": "user", "content": prompt}]
         
-        response = await self.client.messages.create(
-            model="claude-3-opus-20240229",
-            messages=messages,
-            system=system_prompt,
-            max_tokens=2000
-        )
+        # Prepare kwargs for the API call
+        kwargs = {
+            "model": "claude-3-5-sonnet-20241022",  # Latest Claude 3.5 Sonnet
+            "messages": messages,
+            "max_tokens": 2000,
+            "temperature": 0.7
+        }
+        
+        # Only add system if it's provided
+        if system_prompt:
+            kwargs["system"] = system_prompt
+        
+        response = await self.client.messages.create(**kwargs)
         
         return response.content[0].text
 
@@ -65,7 +72,7 @@ class GoogleProvider(LLMProvider):
     
     def __init__(self):
         genai.configure(api_key=settings.GOOGLE_API_KEY)
-        self.model = genai.GenerativeModel('gemini-pro')
+        self.model = genai.GenerativeModel('gemini-1.5-flash')  # Updated to available model
     
     async def query(self, prompt: str, system_prompt: Optional[str] = None) -> str:
         full_prompt = prompt
@@ -83,11 +90,13 @@ class LLMService:
         self.providers = {}
         
         # Initialize available providers
-        if settings.OPENAI_API_KEY:
+        if settings.OPENAI_API_KEY and settings.OPENAI_API_KEY != 'your-openai-key-here':
             self.providers['openai'] = OpenAIProvider()
-        if settings.ANTHROPIC_API_KEY:
+            
+        if settings.ANTHROPIC_API_KEY and settings.ANTHROPIC_API_KEY != 'your-anthropic-key-here':
             self.providers['anthropic'] = AnthropicProvider()
-        if settings.GOOGLE_API_KEY:
+            
+        if settings.GOOGLE_API_KEY and settings.GOOGLE_API_KEY != 'your-google-key-here':
             self.providers['google'] = GoogleProvider()
     
     async def query(

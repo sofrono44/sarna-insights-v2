@@ -34,7 +34,23 @@ else:
 ```
 This prevents loss of fixes during Docker rebuilds.
 
-## 4. Proto Import Structure
+## 5. Anthropic Provider Fix
+**File**: `backend/services/llm_service.py`
+**Issue**: Anthropic API v0.57.1 doesn't accept `None` for system parameter
+**Fix**: Only pass system parameter when it has a value
+```python
+kwargs = {
+    "model": "claude-3-5-sonnet-20241022",
+    "messages": messages,
+    "max_tokens": 2000,
+    "temperature": 0.7
+}
+# Only add system if it's provided
+if system_prompt:
+    kwargs["system"] = system_prompt
+```
+
+## 6. Proto Import Structure
 The correct structure after generation and fixes:
 ```
 /backend/generated/

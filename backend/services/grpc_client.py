@@ -5,6 +5,7 @@ from typing import Any, Dict, List, Optional
 from datetime import datetime, timedelta
 import asyncio
 import json
+from google.protobuf.timestamp_pb2 import Timestamp
 
 # Import generated protobuf files
 from generated.admin import admin_margin_manager_pb2
@@ -181,6 +182,21 @@ class SarnaGRPCClient:
             raise RuntimeError("Not connected to Sarna API")
         
         try:
+            # First, get accounts for the group to pick one account number
+            margin_data = await self.get_current_margin_data(group_id)
+            if not margin_data or not margin_data.get("accounts"):
+                logger.warning(f"No accounts found for group {group_id}")
+                return []
+            
+            # Use the first account's number for the query
+            first_account = margin_data["accounts"][0]
+            account_number = first_account.get("account_number")
+            if not account_number:
+                logger.error("No account number found in margin data")
+                return []
+            
+            logger.info(f"Using account {account_number} to fetch historical data for group {group_id}")
+            
             # Create stub for TimeMachineService
             stub = api_hub_service_pb2_grpc.TimeMachineServiceStub(self.channel)
             
@@ -188,41 +204,52 @@ class SarnaGRPCClient:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=days)
             
-            # Create request
+            # Create request with proper format
             request = time_machine_pb2.TimeMachineBrowseRequest()
-            
-            # Set the time range
+            request.AccountNumber = account_number
+            # Use FromDatetime to properly set the timestamps
             request.From.FromDatetime(start_time)
             request.To.FromDatetime(end_time)
+            request.RequestOrigin = 0  # Undefined = 0
             
-            # Note: The request can be made by AccountId OR AccountNumber
-            # Since we have a group_id, we'll need to fetch accounts first
-            # For now, we'll use the browse endpoint without specific account filter
+            logger.info(f"Request: AccountNumber={account_number}, From={start_time.isoformat()}, To={end_time.isoformat()}")
             
             # Make the call
             response = await stub.List(request, metadata=self._get_metadata())
             
+            logger.info(f"Received {len(response.Files)} historical files")
+            
             # Process the file list from the response
             snapshots = []
             for file_info in response.Files:
+                # Convert protobuf timestamp to datetime
+                created_time = datetime.fromtimestamp(
+                    file_info.CreatedTime.seconds + file_info.CreatedTime.nanos / 1e9
+                )
+                
                 snapshot = {
-                    "timestamp": file_info.CreatedTime.ToDatetime().isoformat(),
+                    "timestamp": created_time.isoformat(),
                     "file_name": file_info.FileName,
-                    "is_archived": file_info.IsArchived,
-                    "type": file_info.Type,
-                    "requirement": file_info.Requirement,
-                    "net_liquidity": file_info.NetLiquidity,
-                    "day_pnl": file_info.DayPnL,
-                    "day_pnl_utilization": file_info.DayPnLUtilization,
-                    "credit_utilization": file_info.CreditUtilization,
-                    "excess_liquidity": file_info.ExcessLiquidity,
-                    "account_group_ids": list(file_info.AccountGroupIds),
-                    "warning_count": file_info.WarningCount,
-                    "error_count": file_info.ErrorCount
+                    "type": str(file_info.Type) if hasattr(file_info, 'Type') else "",
+                    "requirement": float(file_info.Requirement) if hasattr(file_info, 'Requirement') else 0,
+                    "net_liquidity": float(file_info.NetLiquidity) if hasattr(file_info, 'NetLiquidity') else 0,
+                    "day_pnl": float(file_info.DayPnL) if hasattr(file_info, 'DayPnL') else 0,
+                    "day_pnl_utilization": float(file_info.DayPnLUtilization) if hasattr(file_info, 'DayPnLUtilization') else 0,
+                    "credit_utilization": float(file_info.CreditUtilization) if hasattr(file_info, 'CreditUtilization') else 0,
+                    "excess_liquidity": float(file_info.ExcessLiquidity) if hasattr(file_info, 'ExcessLiquidity') else 0,
+                    "account_group_ids": list(file_info.AccountGroupIds) if file_info.AccountGroupIds else [],
+                    "data": {
+                        "requirement": float(file_info.Requirement) if hasattr(file_info, 'Requirement') else 0,
+                        "net_liquidity": float(file_info.NetLiquidity) if hasattr(file_info, 'NetLiquidity') else 0,
+                        "credit_utilization": float(file_info.CreditUtilization) if hasattr(file_info, 'CreditUtilization') else 0,
+                        "excess_liquidity": float(file_info.ExcessLiquidity) if hasattr(file_info, 'ExcessLiquidity') else 0,
+                        "day_pnl": float(file_info.DayPnL) if hasattr(file_info, 'DayPnL') else 0
+                    }
                 }
                 
-                # Only include snapshots for our group
-                if group_id in snapshot["account_group_ids"]:
+                # Include snapshots that have our group ID, group ID 0, or no group IDs
+                group_ids = snapshot["account_group_ids"]
+                if not group_ids or group_id in group_ids or 0 in group_ids:
                     snapshots.append(snapshot)
             
             # Sort by timestamp
