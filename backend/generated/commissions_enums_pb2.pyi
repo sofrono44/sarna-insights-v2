@@ -1,0 +1,31 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumCommissionSchedule(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumCommissionSchedule_Undefined: _ClassVar[EnumCommissionSchedule]
+    EnumCommissionSchedule_OrderQuantity: _ClassVar[EnumCommissionSchedule]
+    EnumCommissionSchedule_LegQuantity: _ClassVar[EnumCommissionSchedule]
+    EnumCommissionSchedule_PercentOfPrincipal: _ClassVar[EnumCommissionSchedule]
+
+class EnumCommissionOverrideLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumCommissionOverrideLevel_Undefined: _ClassVar[EnumCommissionOverrideLevel]
+    EnumCommissionOverrideLevel_AccountOverride: _ClassVar[EnumCommissionOverrideLevel]
+    EnumCommissionOverrideLevel_UserOverride: _ClassVar[EnumCommissionOverrideLevel]
+    EnumCommissionOverrideLevel_BranchOverride: _ClassVar[EnumCommissionOverrideLevel]
+    EnumCommissionOverrideLevel_CountryCodeDefault: _ClassVar[EnumCommissionOverrideLevel]
+    EnumCommissionOverrideLevel_GlobalDefault: _ClassVar[EnumCommissionOverrideLevel]
+EnumCommissionSchedule_Undefined: EnumCommissionSchedule
+EnumCommissionSchedule_OrderQuantity: EnumCommissionSchedule
+EnumCommissionSchedule_LegQuantity: EnumCommissionSchedule
+EnumCommissionSchedule_PercentOfPrincipal: EnumCommissionSchedule
+EnumCommissionOverrideLevel_Undefined: EnumCommissionOverrideLevel
+EnumCommissionOverrideLevel_AccountOverride: EnumCommissionOverrideLevel
+EnumCommissionOverrideLevel_UserOverride: EnumCommissionOverrideLevel
+EnumCommissionOverrideLevel_BranchOverride: EnumCommissionOverrideLevel
+EnumCommissionOverrideLevel_CountryCodeDefault: EnumCommissionOverrideLevel
+EnumCommissionOverrideLevel_GlobalDefault: EnumCommissionOverrideLevel

@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Trading.Protos";
+
+// Enum for specifying the type of dividend. Corresponds to the [DividendTypes] table.
+enum EnumDividendType {
+  // Undefined dividend type.
+  EnumDividendType_Undefined = 0;
+  // Dividend type for a change in dividends.
+  EnumDividendType_Change = 1;
+  // Dividend type for a duplicate record of dividends.
+  EnumDividendType_Duplicate = 2;
+  // Dividend type for new dividends.
+  EnumDividendType_New = 3;
+}
+
+// Enum for specifying the type of dividend payment. Corresponds to the [DividendPaymentTypes] table.
+enum EnumDividendPaymentType {
+  // Undefined dividend payment type.
+  EnumDividendPaymentType_Undefined = 0;
+  // Dividend payment type for fixed-income interest.
+  EnumDividendPaymentType_FixedIncome_Interest = 1;
+  // Dividend payment type for cash dividends.
+  EnumDividendPaymentType_Cash_Dividend = 2;
+  // Dividend payment type for qualified dividends.
+  EnumDividendPaymentType_Qualified = 3;
+  // Dividend payment type for stock dividends.
+  EnumDividendPaymentType_Stock_Dividend = 4;
+  // Dividend payment type for stock splits.
+  EnumDividendPaymentType_Stock_Split = 5;
+  // Dividend payment type for reverse stock splits.
+  EnumDividendPaymentType_Reverse_Split = 6;
+  // Dividend payment type for medium capital gains.
+  EnumDividendPaymentType_Medium_Cap_Gain = 7;
+  // Dividend payment type for long capital gains.
+  EnumDividendPaymentType_Long_Cap_Gain = 8;
+  // Dividend payment type for royalties.
+  EnumDividendPaymentType_Royalties = 9;
+}

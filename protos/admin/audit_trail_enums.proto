@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Accounts.DTO";
+
+enum EnumRegulatoryAuditTrailType {
+  EnumRegulatoryAuditTrailType_Undefined = 0;
+  EnumRegulatoryAuditTrailType_AccountCreated = 1;
+  EnumRegulatoryAuditTrailType_AccountTradingLevelChanged = 2;
+  EnumRegulatoryAuditTrailType_AccountTradingLevelRejected = 3;
+  EnumRegulatoryAuditTrailType_AccountUpdatedByAdmin = 4;
+  EnumRegulatoryAuditTrailType_UserBlockedByAdmin = 5;
+  EnumRegulatoryAuditTrailType_UserUnBlockedByAdmin = 6;
+  EnumRegulatoryAuditTrailType_AdminEmailSentToTheUser = 7;
+  EnumRegulatoryAuditTrailType_AccountVerified = 8;
+  EnumRegulatoryAuditTrailType_AccountOpened = 9;
+  EnumRegulatoryAuditTrailType_AccountBpMarginTypeChanged = 10;
+  EnumRegulatoryAuditTrailType_AccountPendingClearingConfirmation = 11;
+  EnumRegulatoryAuditTrailType_AccountPendingDocuments = 12;
+  EnumRegulatoryAuditTrailType_MdeApprovedByAdmin = 13;
+  EnumRegulatoryAuditTrailType_MdeRevokedByAdmin = 14;
+  EnumRegulatoryAuditTrailType_MdeCanceledByUser = 15;
+  EnumRegulatoryAuditTrailType_MdeSelfAttested = 16;
+  EnumRegulatoryAuditTrailType_LinkUserToAccount = 17;
+  EnumRegulatoryAuditTrailType_UnlinkUserFromAccount = 18;
+  EnumRegulatoryAuditTrailType_AccountBalanceAdjustment = 19;
+  EnumRegulatoryAuditTrailType_PMAttributesAdjustment = 20;
+  EnumRegulatoryAuditTrailType_CreateBranch = 21;
+  EnumRegulatoryAuditTrailType_UpdateBranch = 22;
+  EnumRegulatoryAuditTrailType_DeleteBranch = 23;
+  EnumRegulatoryAuditTrailType_UserCreatedByAdmin = 24;
+  EnumRegulatoryAuditTrailType_UserUpdatedByAdmin = 25;
+  EnumRegulatoryAuditTrailType_UserAddAccountGroup = 26;
+  EnumRegulatoryAuditTrailType_UserUpdateAccountGroup = 27;
+  EnumRegulatoryAuditTrailType_UserDeleteAccountGroup = 28;
+}

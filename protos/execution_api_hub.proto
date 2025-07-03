@@ -1,0 +1,171 @@
+﻿syntax = "proto3";
+import "common.proto";
+import "orders.proto";
+import "orders_enums.proto";
+import "execution_acceptor_enums.proto";
+import "execution_api_hub_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "DTS.Services.ExecutionApiHub.DTO";
+
+// Request message for ExecutionAcceptor.
+message ExecutionAcceptorRequest {
+  // Specifies the type of execution acceptor request.
+  ExecutionAcceptorRequestType ExecutionAcceptorRequestType = 2;
+  // Information about the execution update.
+  ExecutionUpdateInfo ExecutionUpdateInfo = 3;
+}
+
+// Contains information for an execution update.
+message ExecutionUpdateInfo {
+  // FIX: ClOrdID <11>
+  string ClOrderId = 1;
+
+  // FIX: OrigClOrdID <41>
+  string OrigClOrderId = 2;
+
+  // FIX: OrderID <37> Unique identifier for Order as assigned by sell-side (broker, exchange, ECN). Uniqueness must be guaranteed within a single trading day. Firms which accept multi-day orders should consider embedding a date within the OrderID <37> field to assure uniqueness across days.
+  string ExternalOrderId = 3;
+
+  // FIX: LegRefID <654>
+  int32 LegNumber = 4;
+
+  // FIX: typically based on ExecType <150>
+  EnumOrderStatus OrderStatus = 5;
+
+  // Used for current order qty, on:New, Pending Replace, Replace,Partial Fill,Fill, Bust. Corresponding fix tag: OrderQty <38>
+  // Sign: always positive
+  double OrderQuantity = 6;
+
+  // Quantity filled so far, cumulative qty. FIX: CumQty <14>
+  // Sign: always positive
+  double CumFillQuantity = 7;
+
+  // Quantity filled during this fill. FIX:LastQty <32>
+  // Sign: always positive
+  double LastFillQuantity = 8;
+
+  // FIX: TransactTime <60> Time of execution/order creation (expressed in UTC (Universal Time Coordinated, also known as 'GMT')
+  google.protobuf.Timestamp TransactionTime = 9;
+
+  // FIX: OrderType <40>
+  EnumPriceType PriceType = 10;
+
+  // FIX: Price <44>
+  // Also wrapped by Price.
+  // Sign: positive or negative (for spreads).
+  double LimitPrice = 11;
+
+  // Corresponds to Fix tag Price<44>, implemented by wrapping LimitPrice.
+  // Wrapping LimitPrice getter.
+  // Sign: positive or negative (for spreads).
+  //  do NOT decorate as ProtoMember as it has no setter.
+  // double Price
+
+  // FIX: StopPx <99>
+  double StopPrice = 12;
+
+  // FIX: Text <58>
+  string MessageFromExchange = 13;
+
+  // Price of this (last) fill. Fix: LastPx <31>
+  // Sign: always positive.
+  double FillPrice = 14;
+
+  // Determines processing flow based on the source of request (i.e. FixAcceptor, ManualTrade, etc.)
+  EnumExecutionUpdateType ExecutionUpdateType = 15;
+
+  // Typically corresponds to ExecID <17> FIX tag
+  string ExecId = 16;
+
+  // OrderAction of a leg level message/update. Undefined for header level.
+  EnumOrderAction OrderAction = 17;
+
+  // Position effect of a leg level message/update. Undefined for header level.
+  // Might not be passed with FIX fill message (i.e. stock leg of CoveredCall)
+  // If not passed in FIX, set in ExecutionAcceptor.RequestAdjuster for Fill and Partial Fill
+  EnumPositionEffect PositionEffect = 18;
+
+  EnumSecurityType SecurityType = 19;
+
+  string Symbol = 20;
+
+  // Dollar value for the execution update transaction.
+  // Typically set by ExecutionAcceptor.RequestAdjuster
+  // For the fill or partial fill, this will indicate Fill Value(TradePrice* qty*multiplier+commissions) that should be used to alter Balances.
+  // For the bust, total amount that should be credited to Balances.
+  // No correspondence to a direct FIX tag, derived from FIX tags values.
+  double TransactionValue = 21;
+
+  // Commission value charged for the transaction.
+  // No correspondence to a direct FIX tag.
+  double Commission = 22;
+
+  // Used for internal recursive calls or when updated Order object is already loaded to avoid DB hit.
+  // Order Order = 23;
+
+  // Typically corresponds to ExecRefID <19> FIX tag
+  // Used to identify Execution affected by Adjustment (Correction or Bust)
+  string ExecRefID = 23;
+
+  // Used to indicate trade Adjustment; Correction or Bust.
+  // ExecTransType <20> FIX tag
+  EnumExecTransType ExecTransType = 24;
+
+  // Typically set based on tag <440> (ClearingAccount)
+  string AccountNumber = 25;
+
+  // Typically set based on tag <442> (MultiLegReportingType), where 1 = Single Security (default), 2 = Individual Leg of a Multi-leg Security, 3 = Multi-leg Security
+  bool IsSpread = 26;
+
+  // Optional field to indicate if the execution is a trade away execution WITHOUT the corresponding order initialized in our DB.
+  // Set by custom Fix tag <13013> = "TA"
+  // Instructs ExecAcceptor to re-construct order from the execution report. Such order will be marked via Order.Header.IsTradeAwayExecution = true.
+  bool IsTradeAwayExecution = 27;
+
+   // ExecutionReports may include <59> TimeInForce tag, which can be used to determine the duration of the order.
+  EnumOrderDuration OrderDuration = 28;
+
+  // ExecutionReports may include <48> SecurityID tag along with <22> SecurityIDSource tag set to <1> for CUSIP.
+  string Cusip = 29;
+}
+
+message ExecutionAcceptorResponse {
+  bool ACK = 1;
+  ExecutionAcceptorResponseInfo ExecutionAcceptorResponseInfo = 2;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message ExecutionAcceptorResponseInfo {
+  // OrderId of initialized order
+  int32 OrderId = 1;
+}
+
+// ExecutionInitiator
+message ExecutionInitiatorRequest {
+  ExecutionInitiatorRequestType ExecutionInitiatorRequestType = 2;
+  Order Order = 3;
+//  ConnectivityTestRequest ConnectivityTestRequest = 4;
+//  SendOffMarketHourOrdersRequest SendOffMarketHourOrdersRequest = 5;
+}
+
+message ExecutionInitiatorResponse {
+  bool ACK = 1;
+  ExecutionInitiatorOrderInitiationResponse ExecutionInitiatorOrderInitiationResponse = 2;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message ExecutionInitiatorOrderInitiationResponse {
+  int32 OrderId = 1;
+//  ConnectivityTestResponse ConnectivityTestResponse = 2;
+}
+
+message ExecutionFixDropRequest {
+  repeated string FixDropMessages = 1;
+}
+
+message ExecutionFixDropResponse {
+  repeated ExecutionAcceptorResponse ExecutionAcceptorResponses = 1;
+}

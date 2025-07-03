@@ -1,0 +1,47 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Sessions";
+
+// Enum for differentiating between types of users.
+enum EnumUserType {
+  EnumUserType_Undefined = 0;
+  EnumUserType_Individual = 1;
+  EnumUserType_Representative = 3;
+  EnumUserType_BranchAdmin = 4;
+  EnumUserType_SuperAdmin = 5;
+  EnumUserType_SoftwareApp = 6;
+}
+
+// Verification statuses and decisions provided by AiPrise.com
+// // For details, see: https://docs.aiprise.com/reference/verification-result#verification_result
+enum EnumVerificationStatus {
+  EnumVerificationStatus_Undefined = 0;
+  // initial status (NOT_STARTED)
+  EnumVerificationStatus_Created = 1;
+  // Verification is under review.
+  EnumVerificationStatus_Review = 2;
+  // Verification has been declined.
+  EnumVerificationStatus_Declined = 3;
+  // Verification failed.
+  EnumVerificationStatus_Failed = 4;
+  // Verification has been approved.
+  EnumVerificationStatus_Approved = 5;
+}
+
+// Enum for specifying user permissions within the system.
+enum EnumUserPermission
+{
+  EnumUserPermission_Undefined = 0;
+  // Permission to access real-time stock quotes.
+  EnumUserPermission_StockRealTimeQuote = 1;
+  // Permission to access real-time option quotes.
+  EnumUserPermission_OptionRealTimeQuote = 2;
+  // Permission for account access.
+  EnumUserPermission_AccountAccess = 3;
+  // Permission for user management access.
+  EnumUserPermission_UserAccess = 4;
+  // Permission for managing super admin.
+  EnumUserPermission_ManageSuperAdmin = 5;
+  // Permission for file upload.
+  EnumUserPermission_FileUpload = 6;
+}

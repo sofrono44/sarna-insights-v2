@@ -1,0 +1,84 @@
+﻿syntax = "proto3";
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "account_ach_enums.proto";
+import "account_ach_sdr_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Accounts";
+
+// Request message for creating an ABA (American Bankers Association) account.
+message CreateAbaAccountRequest {
+  // ABA account details to be created.
+  AbaAccount AbaAccount = 1;
+}
+
+// Response message for the CreateAbaAccountRequest.
+message CreateAbaAccountResponse {
+  // Status of the ABA account creation request.
+  bool Status = 1;
+  // Warnings related to the ABA account creation process.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the ABA account creation process.
+  repeated ResponseError Errors = 102;
+}
+
+// Response message containing a list of ABA accounts.
+message BrowseAbaAccountsResponse {
+  // List of ABA accounts.
+  repeated AbaAccount AbaAccounts = 1;
+  // Warnings related to the browsing of ABA accounts.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the browsing of ABA accounts.
+  repeated ResponseError Errors = 102;
+}
+
+// Represents an ABA account.
+message AbaAccount {
+  // Unique identifier for the ABA account.
+  int32 AbaAccountId = 1;
+  // Name associated with the ABA account.
+  string Name = 2;
+  // Routing number of the ABA account.
+  string RoutingNumber = 3;
+  // Account number of the ABA account.
+  string AccountNumber = 4;
+  // Type of the ABA account.
+  EnumAbaAccountType Type = 5;
+  // Ownership type of the ABA account.
+  EnumAbaAccountOwnerType OwnerType = 6;
+}
+
+// Request message for creating an ACH transfer associated with an account.
+message CreateAccountAchTransferRequest {
+  // ACH transaction details to be processed.
+  AccountAchTransaction AccountAchTransaction = 1;
+}
+// Response message for the CreateAccountAchTransferRequest.
+message CreateAccountAchTransferResponse {
+  // Status of the ACH transfer creation request.
+  bool Status = 1;
+  // Warnings related to the ACH transfer creation process.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the ACH transfer creation process.
+  repeated ResponseError Errors = 102;
+}
+
+// Represents an ACH transaction associated with an account.
+message AccountAchTransaction {
+  // Unique identifier for the ACH transaction.
+  int32 AccountAchTransactionId = 1;
+  // Account identifier associated with the ACH transaction.
+  int32 AccountId = 2;
+  // ABA account identifier associated with the ACH transaction.
+  int32 AbaAccountId = 3;
+  // Type of the ACH transaction.
+  EnumAccountAchTransactionType Type = 4;
+  // Amount involved in the ACH transaction.
+  double amount = 5;
+  // Status of the ACH transaction.
+  EnumAccountAchTransactionStatus Status = 6;
+  // Timestamp of when the ACH transaction was created.
+  google.protobuf.Timestamp CreatedTime = 7;
+  // Timestamp of the last modification to the ACH transaction.
+  google.protobuf.Timestamp LastModifiedTime = 8;
+}

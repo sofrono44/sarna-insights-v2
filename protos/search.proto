@@ -1,0 +1,141 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "accounts.proto";
+import "orders.proto";
+import "positions.proto";
+import "search_enums.proto";
+import "user.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Search";
+
+message SearchRequest {
+  // Search type (e.g. Orders, Accounts, OpenPositionLots, Persons)
+  EnumSearchType Type = 1;
+  // Search criteria
+  SearchCriteria SearchCriteria = 100;
+}
+
+message SearchCriteria {
+  // Filter
+  FilterGroup Filter = 1;
+  // Sort order
+  repeated FieldSortOrder FieldSortOrder = 2;
+  // Requested page
+  PageRequest Page = 3;
+}
+
+message PageRequest {
+  // Provide page request id that was returned by PageResponse to
+  // get consistent pagination aka Keyset Pagination.
+  string PageRequestId = 1;
+  // Page number
+  int32 Page = 2;
+  // Requested number of items per page
+  int32 PageSize = 3;
+}
+
+message Filter {
+  oneof FilterType {
+    FilterGroup FilterGroup = 1;
+    FieldFilter FieldFilter = 2;
+  }
+}
+
+message FieldFilter {
+  EnumField Field = 1;
+  EnumOperator Operator = 2;
+  repeated string Values = 3;
+}
+
+message FilterGroup {
+  repeated Filter Filters = 1;
+  EnumJoinOperator JoinOperator = 2;
+}
+
+message FieldSortOrder {
+  EnumField Field = 1;
+  EnumSortDirection SortDirection = 2;
+}
+
+message SearchServiceResponse {
+  EnumSearchServiceResponse Result = 1;
+  repeated SearchServiceOrderInfo Orders = 2;
+  repeated Account Accounts = 3;
+  repeated OpenPositionLot OpenPositionLots = 4;
+  repeated User Users = 15;
+  repeated AdditionalFieldValue AdditionalFieldValues = 16;
+
+  int32 OpenOrders = 9;
+  int32 FilledOrders = 10;
+  int32 CancelledOrders = 11;
+  int32 OpenOrdersTotal = 12;
+  int32 FilledOrdersTotal = 13;
+  int32 CancelledOrdersTotal = 14;
+
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  SearchCriteria SearchCriteria = 110;
+  // Page response
+  PageResponse Page = 111;
+}
+
+message PageResponse {
+  // Page request id (Keyset Pagination)
+  string PageRequestId = 1;
+  // Page number
+  int32 Page = 2;
+  // Requested number of items per page
+  int32 PageSize = 3;
+  // Number of all results
+  int32 TotalCount = 4;
+}
+
+message AdditionalFieldValue {
+  repeated FieldValuePair FieldValuePairs = 1;
+}
+
+message FieldValuePair
+{
+  EnumField Key = 1;
+  string Value = 2;
+}
+
+message SearchServiceOrderInfo{
+  Order Order = 1;
+  repeated bool AllowedActions = 2;
+}
+
+message SearchServiceDefinitionResponse{
+  repeated SearchTypeDefinition SearchTypeDefinitions = 1;
+
+  // List of warnings, applicable at the response level
+  repeated ResponseWarning Warnings = 101;
+  // List of errors, applicable at the response level
+  repeated ResponseError Errors = 102;
+}
+
+// Definitions for search types
+message SearchTypeDefinition{
+  string Group = 1;
+  repeated FieldDefinition FieldDefinitions = 2;
+}
+
+message FieldDefinition {
+  EnumField Field = 1;
+  EnumFieldType FieldType = 2;
+  repeated FieldOption FieldOptions = 3;
+}
+
+message FieldOption
+{
+  string Label= 1;
+  string Value = 2;
+}
+
+message SearchPerson
+{
+  string Name = 1;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminManagement";
+
+enum EnumAdminEmailType {
+  EnumAdminEmailType_Undefined = 0;
+  EnumAdminEmailType_DocumentsNeeded = 1;
+  EnumAdminEmailType_ApplicationRejection = 2;
+  EnumAdminEmailType_ApplicationApproval = 3;
+  EnumAdminEmailType_MoreInfoNeeded = 4;
+  EnumAdminEmailType_ContactUsToComplete = 5;
+  EnumAdminEmailType_MdeFormApproved = 6;
+  EnumAdminEmailTypee_MdeFormRejected = 7;
+}
+
+enum EnumAdminFileType {
+  EnumAdminFileType_Undefined = 0;
+  EnumAdminFileType_Accounts = 1;
+  EnumAdminFileType_Positions = 2;
+  EnumAdminFileType_Balances = 3;
+  EnumAdminFileType_MixedAccountsAndPositions = 4;
+  EnumAdminFileType_MixedBalancesAndPositions = 5;
+  EnumAdminFileType_MixedAccountsAndBalances = 6;
+  EnumAdminFileType_MixedAccountsBalancesAndPositions = 7;
+  //EnumAdminFileType_AllInOne = 8;
+}

@@ -1,0 +1,111 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Common.Enums";
+
+// Enum for specifying the application mode.
+enum EnumAppMode {
+  // Undefined application mode.
+  EnumAppMode_Undefined = 0;
+  // Real operation mode.
+  EnumAppMode_Real = 1;
+  // Virtual trading mode.
+  EnumAppMode_V_T = 2;
+}
+
+// Enum for specifying the type of clearing account.
+enum EnumClearingAccountType{
+  // Undefined clearing account type
+  EnumClearingAccountType_Undefined = 0;
+  // Cash account type.
+  EnumClearingAccountType_Cash = 1;
+  // Margin account for long positions.
+  EnumClearingAccountType_MarginLong = 2;
+  // Margin account for short positions.
+  EnumClearingAccountType_MarginShort = 3;
+  // TEFRA buffer account type.
+  EnumClearingAccountType_TEFRA_Buffer = 4;
+  // When issued cash account type.
+  EnumClearingAccountType_When_Issued_Cash = 5;
+  // Firm specified account type.
+  EnumClearingAccountType_Firm_Specified = 6;
+  // Miscellaneous account type.
+  EnumClearingAccountType_Miscellaneous = 7;
+}
+
+// Enum corresponding to the [Currencies] table, specifying currency types.
+enum EnumCurrency {
+  // Undefined currency type.
+  EnumCurrency_Undefined = 0;
+  // United States Dollar currency type.
+  EnumCurrency_USD = 1;
+}
+
+enum EnumAccountRiskType {
+  // Undefined risk type.
+  EnumAccountRiskType_Undefined = 0;
+  // RegT-Cash risk type.
+  EnumAccountRiskType_RegT_Cash = 1;
+  // RegT-Limited Margin risk type.
+  EnumAccountRiskType_RegT_LimitedMargin = 2;
+  // RegT-Margin risk type.
+  EnumAccountRiskType_RegT_Margin = 3;
+  // PM-CPM risk type.
+  EnumAccountRiskType_PM_CPM = 4;
+  // PM-BD risk type.
+  EnumAccountRiskType_PM_BD = 5;
+  // PM-MM risk type.
+  EnumAccountRiskType_PM_MM = 6;
+  // SPAN-Speculator risk type.
+  EnumAccountRiskType_SPAN_Speculator = 7;
+  // SPAN-Hedge risk type.
+  EnumAccountRiskType_SPAN_Hedge = 8;
+  // SPAN-Member risk type.
+  EnumAccountRiskType_SPAN_Member = 9;
+}
+
+enum EnumMaturityTerm {
+  EnumMaturityTerm_Undefined = 0;
+  EnumMaturityTerm_All = 1;
+  EnumMaturityTerm_Long = 2;
+  EnumMaturityTerm_Medium = 3;
+  EnumMaturityTerm_Short = 4;
+}
+
+enum EnumOptionPricingModel {
+    EnumOptionPricingModel_Undefined = 0;
+    EnumOptionPricingModel_OptionChainAnalysis = 1;
+    EnumOptionPricingModel_Delta = 2;
+    // Includes theoretical price movements, IV, and Delta Greeks from OCC file. Vega must be provided by caller, as the OCC does not provide it.
+    EnumOptionPricingModel_OCC_PriceMovements = 3;
+    // Includes theoretical price movements from OCC file. All Greeks: IV, Delta,and Vega must be provided by caller.
+    EnumOptionPricingModel_OCC_PriceMovementsWithLiveGreeks = 4;
+    // Black-Scholes using live quotes
+    EnumOptionPricingModel_BlackScholes = 5;
+    // Black-Scholes using OCC Theoretical Pricing files as input.
+    EnumOptionPricingModel_BlackScholesWithBod_Pricing = 6;
+    // Cox Ross Rubinstein using live quotes
+    EnumOptionPricingModel_BinomialTree = 7;
+    // Cox Ross Rubinstein using OCC Theoretical Pricing files as input.
+    EnumOptionPricingModel_BinomialTreeWithBod_Pricing = 8;
+}
+
+// Enum for specifying the type of external data source.
+enum EnumExternalDataSource {
+  // Undefined external data source.
+  EnumExternalDataSource_Undefined = 0;
+  // BBH Bank.
+  EnumExternalDataSource_B_B_H_Bank = 1;
+  // US Bank.
+  EnumExternalDataSource_U_S_Bank = 2;
+  // UMB Bank.
+  EnumExternalDataSource_U_M_B_Bank = 3;
+  // Fifth Third Bank.
+  EnumExternalDataSource_FifthThirdBank = 4;
+  // Citibank.
+  EnumExternalDataSource_CitiBank = 5;
+  // BNY Mellon Bank.
+  EnumExternalDataSource_B_N_Y_MellonBank = 6;
+  // Trade Away Execution.
+  EnumExternalDataSource_TradeAwayExecution = 7;
+}

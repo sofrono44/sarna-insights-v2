@@ -1,0 +1,193 @@
+﻿syntax = "proto3";
+import "account_application.proto";
+import "admin/admin_management.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminManagement";
+
+service AdminManagementService {
+	rpc AccountsSearch(AccountsSearchRequest) returns (AccountsSearchResponse){
+		option (google.api.http) = {
+			get: "/admin/accounts/search"
+
+			additional_bindings {
+				get: "/admin/accounts/search/{Query}"
+			}
+		};
+	}
+
+	rpc GetAccount(GetAccountRequest) returns (GetAccountResponse){
+		option (google.api.http) = {
+			get: "/admin/accounts"
+		};
+	}
+
+	rpc UpdateAccount(UpdateAccountRequest) returns (GetAccountResponse){
+		option (google.api.http) = {
+			post: "/admin/accounts"
+			body: "*"
+		};
+	}
+
+	rpc UsersSearch(UsersSearchRequest) returns (UsersSearchResponse){
+		option (google.api.http) = {
+			get: "/admin/users/search"
+
+			additional_bindings {
+				get: "/admin/users/search/{Query}"
+			}
+		};
+	}
+
+	rpc GetUser(GetUserRequest) returns (GetUserResponse){
+		option (google.api.http) = {
+			get: "/admin/users"
+
+			additional_bindings {
+				get: "/admin/users/{UserId}"
+			}
+		};
+	}
+
+	rpc GetUserStatus(GetUserStatusRequest) returns (GetUserStatusResponse){
+		option (google.api.http) = {
+			get: "/admin/users/status"
+
+			additional_bindings {
+				get: "/admin/users/{UserId}/status"
+			}
+		};
+	}
+
+	rpc GetUserAccounts(GetUserAccountsRequest) returns (GetUserAccountsResponse)
+	{
+		option (google.api.http) = {
+			get: "/admin/users/accounts"
+
+			additional_bindings {
+				get: "/admin/users/{UserId}/accounts"
+			}
+		};
+	}
+
+	rpc UpdateUserStatus(UpdateUserStatusRequest) returns (GetUserResponse){
+		option (google.api.http) = {
+			post: "/admin/users/status"
+			body: "*"
+
+			additional_bindings {
+				post: "/admin/users/{UserId}/status"
+				body: "*"
+			}
+		};
+	}
+
+	rpc UpdateUserIsEmployeeStatus(UpdateUserIsEmployeeStatusRequest) returns (GetUserResponse){
+		option (google.api.http) = {
+			post: "/admin/users/employee-status"
+			body: "*"
+
+			additional_bindings {
+				post: "/admin/users/{UserId}/employee-status"
+				body: "*"
+			}
+		};
+	}
+	
+
+	rpc LinkUserToAccount(LinkUserToAccountRequest) returns (GetUserResponse)
+	{
+		option (google.api.http) = {
+			post: "/admin/users/{UserId}/account/{AccountNumber}"
+		};
+	}
+
+	rpc UnlinkUserFromAccount(LinkUserToAccountRequest) returns (GetUserResponse)
+	{
+		option (google.api.http) = {
+			delete: "/admin/users/{UserId}/account/{AccountNumber}"
+		};
+	}
+	
+	rpc GetSecurityQuestions(GetSecurityQuestionsRequest) returns (SecurityQuestionUserResponsesResponse)
+	{
+		option (google.api.http) = {
+			get: "/admin/users/security-questions"
+
+			additional_bindings {
+				get: "/admin/users/{UserId}/security-questions"
+			}
+		};
+	}
+	
+	rpc SendEmailToUser(SendEmailToUserRequest) returns (SendEmailToUserResponse){
+		option (google.api.http) = {
+			post: "/admin/users/send-email"
+			body: "*"
+
+			additional_bindings {
+				post: "/admin/users/{UserId}/send-email"
+				body: "*"
+			}
+		};
+	}
+
+	rpc ManageUser(ManageUserRequest) returns (ManageUserResponse){
+		option (google.api.http) = {
+			post: "/admin/users/manage"
+			body: "*"
+		};
+	}
+
+	rpc GetBranch(BranchesRequest) returns (GetBranchesResponse){
+		option (google.api.http) = {
+			get: "/admin/branches/{BranchId}"
+		};
+	}
+
+	rpc ManageBranch(Branch) returns (ManageBranchResponse){
+		option (google.api.http) = {
+			post: "/admin/branches"
+			body: "*"
+		};
+	}
+
+	rpc DeleteBranch(BranchesRequest) returns (ManageBranchResponse){
+		option (google.api.http) = {
+			delete: "/admin/branches/{BranchId}"
+		};
+	}
+	
+	rpc UploadMorningFile(stream UploadMorningFileRequest) returns (UploadMorningFileResponse){
+		option (google.api.http) = {
+			post: "/admin/upload/morning-file"
+			body: "*"
+		};
+	}
+
+	rpc GetAccountGroups(google.protobuf.Empty) returns (AccountGroupsResponse){
+		option (google.api.http) = {
+			get: "/admin/account-groups"
+		};
+	}
+
+	rpc GetAccountGroup(AccountGroupRequest) returns (AccountGroupResponse){
+		option (google.api.http) = {
+			get: "/admin/account-groups/{AccountGroupId}"
+		};
+	}
+
+	rpc ManageAccountGroup(AccountGroup) returns (ManageAccountGroupsResponse){
+		option (google.api.http) = {
+			post: "/admin/account-groups"
+			body: "*"
+		};
+	}
+
+	rpc DeleteAccountGroup(DeleteAccountGroupRequest) returns (DeleteAccountGroupResponse){
+		option (google.api.http) = {
+			delete: "/admin/account-groups/{AccountGroupId}"
+		};
+	}
+}

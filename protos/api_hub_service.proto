@@ -1,0 +1,566 @@
+﻿syntax = "proto3";
+// Imports Google API annotations
+import "google/api/annotations.proto";
+// Imports Google Protobuf Empty message
+import "google/protobuf/empty.proto";
+// Imports definitions related to Buying Power
+import "bp.proto";
+// Imports Quote related definitions
+import "quotes.proto";
+// Imports Account related definitions
+import "accounts.proto";
+// Imports Order related definitions
+import "orders.proto";
+// Imports Order Execution Logs related definitions
+import "order_execution_logs.proto";
+// Imports Position related definitions
+import "positions.proto";
+// Imports Balance related definitions
+import "balances.proto";
+// Imports Trading related definitions
+import "trading.proto";
+// Imports Securities Master Data related definitions
+import "securities_master.proto";
+// Imports Account Application related definitions
+import "account_application.proto";
+// Imports Glossary related definitions
+import "glossary.proto";
+// Imports Commission related definitions
+import "commissions.proto";
+// Imports Subscription related definitions
+import "subscriptions.proto";
+// Imports User Experience Messages definitions
+import "ux_messages.proto";
+// Imports User Data related definitions
+import "user_data.proto";
+// Imports Market Data Entitlement related definitions
+import "market_data_entitlement.proto";
+// Imports Trading Level Change related definitions
+import "trading_level_change.proto";
+// Imports Account ACH related definitions
+import "account_ach.proto";
+// Imports Session related definitions
+import "sessions.proto";
+// Imports Search related definitions
+import "search.proto";
+// Imports TimMachine related definitions
+import "time_machine.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Api";
+
+// Session Service
+// Handles user session management
+service SessionsService {
+  // Creates a new user sessions
+  rpc Create(CreateSessionRequest) returns (SessionInfoResponse) {
+    option (google.api.http) = {
+      post: "/sessions"
+      body: "*"
+    };
+  }
+}
+
+// Message Service
+// Manages translated messages for the platform
+service MessagesService {
+  // Returns list of translated messages for provided language
+  rpc Get(GetUxMessagesRequest) returns (GetUxMessagesResponse) {
+    option (google.api.http) = {
+      get: "/messages/{LanguageCode}"
+    };
+  }
+}
+
+// Securities Master Service - manages securities master data
+service SecuritiesMasterService {
+  // Gets list of all equities and ETFs
+  rpc Get(google.protobuf.Empty) returns (SecuritiesMasterDataResponse) {
+    option (google.api.http) = {
+      get: "/securities-master/equities"
+    };
+  }
+
+  //Gets options by underlying symbols array
+  rpc GetOptions(SecuritiesMasterDataRequest) returns (SecuritiesMasterDataResponse) {
+    option (google.api.http) = {
+      get: "/securities-master/options"
+
+      additional_bindings {
+        get: "/securities-master/options/{UnderlyingSymbols}"
+      }
+    };
+  }
+}
+
+// Commissions Service - manages commissions and promo code claims
+service CommissionsService {
+  rpc Get(CommissionPromoClaimRequest) returns (CommissionPromoClaimResponse) {
+    option (google.api.http) = {
+      post: "/commissions/promo-claims"
+      body: "*"
+    };
+  }
+}
+
+// Glossary Service - provides glossary terms and definitions
+service GlossaryService {
+  rpc Get(GetProvincesRequest) returns (GlossaryResponse) {
+    option (google.api.http) = {
+      get: "/glossary/{CountryId}/provinces"
+
+      additional_bindings{
+        get: "/glossary/countries/{CountryId}/provinces"
+      }
+    };
+  }
+}
+
+// Subscription Service - manages user subscriptions
+service SubscriptionsService {
+  rpc UserStatus(UserStatusCheckRequest) returns (UserStatusCheckResponse) {
+    option (google.api.http) = {
+      get: "/subscriptions"
+    };
+  }
+  rpc SubscriptionActivation(UserPlatformSubscriptionActivationRequest) returns (UserPlatformSubscriptionActivationResponse) {
+    option (google.api.http) = {
+      post: "/subscriptions/{UserPlatformSubscriptionId}"
+      body: "*"
+    };
+  }
+  rpc SubscriptionDeactivation(UserPlatformSubscriptionDeactivationRequest) returns (UserPlatformSubscriptionDeactivationResponse) {
+    option (google.api.http) = {
+      delete: "/subscriptions/{UserPlatformSubscriptionId}"
+    };
+  }
+  rpc PromoClaim(PromoClaimRequest) returns (PromoClaimResponse) {
+    option (google.api.http) = {
+      post: "/subscriptions/promo-claims"
+      body: "*"
+    };
+  }
+}
+
+// Trade Service - manages trade execution and information
+service TradeService {
+  rpc Trade(TradeRequest) returns (TradeResponse) {
+    option (google.api.http) = {
+      post: "/trade"
+      body: "*"
+    };
+  }
+}
+
+// Balances Service - provides account balance information
+service BalancesService {
+  rpc Get(BalancesInfoRequest) returns (BalancesInfoResponse) {
+    option (google.api.http) = {
+      get: "/balances"
+    };
+  }
+  rpc GetBalance(BalanceCashInfoRequest) returns (BalanceCashInfoResponse) {
+    option (google.api.http) = {
+      get: "/balances/account/id/{AccountId}"
+      
+      additional_bindings {
+        get: "/balances/account/{AccountNumber}"
+      }
+    };
+  }
+  rpc Adjust(BalanceAdjustmentRequest) returns (BalanceAdjustmentResponse) {
+    option (google.api.http) = {
+      post: "/balances/adjust"
+      body: "*"
+    };
+  }
+}
+
+// Order Execution Logs Service - manages order execution logs
+service OrderExecutionLogsService {
+  rpc GetByOrderId(OrderExecutionLogsSearchCriteria) returns (OrderExecutionLogsResponse) {
+    option (google.api.http) = {
+      get: "/order-execution-logs/orders/{OrderId}"
+    };
+  }
+  rpc GetByAccountToday(OrderExecutionLogsSearchCriteria) returns (OrderExecutionLogsResponse) {
+    option (google.api.http) = {
+      get: "/order-execution-logs/accounts/{AccountNumbers}/today"
+    };
+  }
+  rpc GetByAccountHistorical(OrderExecutionLogsSearchCriteria) returns (OrderExecutionLogsResponse) {
+    option (google.api.http) = {
+      get: "/order-execution-logs/accounts/{AccountNumbers}/historical"
+    };
+  }
+  rpc GetAllByAccount(OrderExecutionLogsSearchCriteria) returns (OrderExecutionLogsResponse) {
+    option (google.api.http) = {
+      get: "/order-execution-logs/accounts/{AccountNumbers}"
+    };
+  }
+}
+
+// Quotes Service - provides stock, ETF and options quotes
+service QuotesService {
+  rpc GetQuote(GetQuoteRequestInfo) returns (QuoteResponse) {
+    option (google.api.http) = {
+      get: "/quote/{Symbol}"
+    };
+  }
+  rpc GetQuotes(GetQuotesRequestInfo) returns (QuoteResponse) {
+    option (google.api.http) = {
+      get: "/quotes"
+      
+      additional_bindings{
+        get: "/quotes/{Symbols}"
+      }
+    };
+  }
+  rpc GetNetQuote(GetNetQuoteRequestInfos) returns (QuoteResponse) {
+    option (google.api.http) = {
+      post: "/net-quotes"
+      body: "*"
+    };
+  }
+  rpc GetChainQuotes(GetChainQuotesRequestInfo) returns (ChainQuoteResponse) {
+    option (google.api.http) = {
+      get: "/chain-quotes/{UnderlyingSymbol}"
+    };
+  }
+  rpc GetExpirations(GetExpirationsRequest) returns (GetExpirationsResponse) {
+    option (google.api.http) = {
+      get: "/quotes-expiration/{UnderlyingSymbol}"
+    };
+  }
+}
+
+// Positions Service - manages account positions
+service PositionsService {
+  rpc Get(PositionsInfoRequest) returns (PositionsInfoResponse) {
+    option (google.api.http) = {
+      post: "/positions"
+      body: "*"
+    };
+  }
+}
+
+// Orders Service - manages order placement and information
+service OrdersService {
+  rpc Get(OrdersInfoRequest) returns (OrdersInfoResponse) {
+    option (google.api.http) = {
+      post: "/orders"
+      body: "*"
+    };
+  }
+}
+
+// Buying Power Service - provides information about real-time buying power at the account level and the sub account level
+service BuyingPowerService {
+  rpc Get(BuyingPowerRequest) returns (BuyingPowerResponse) {
+    option (google.api.http) = {
+      post: "/buying-power"
+      body: "*"
+    };
+  }
+}
+
+// Accounts Service - manages account information and operations
+service AccountsService {
+  rpc AccountsInfo(AccountsInfoRequest) returns (AccountsInfoResponse) {
+    option (google.api.http) = {
+      get: "/accounts"
+    };
+  }
+  rpc CreateSubaccount(CreateSubaccountRequest) returns (CreateSubaccountResponse) {
+    option (google.api.http) = {
+      post: "/accounts/{AccountId}/subaccounts",
+      body: "*"
+    };
+  }
+  rpc DeleteSubaccount(DeleteSubaccountRequest) returns (DeleteSubaccountResponse) {
+    option (google.api.http) = {
+      delete: "/accounts/{AccountId}/subaccounts/{SubaccountId}"
+    };
+  }
+  rpc UpdateNickname(UpdateNicknameRequest) returns (AccountsInfoResponse) {
+    option (google.api.http) = {
+      post: "/accounts/{AccountId}/nickname"
+      body: "*"
+
+      additional_bindings {
+        post: "/accounts/{AccountId}/subaccounts/{SubaccountId}/nickname"
+        body: "*"
+      }
+    };
+  }
+  rpc CreateVTAccount(CreateVTAccountRequest) returns (CreateVTAccountResponse) {
+    option (google.api.http) = {
+      post: "/accounts-vt"
+      body: "*"
+    };
+  }
+  rpc GetAccountActivity(GetAccountsActivityRequest) returns (GetAccountsActivityResponse) {
+    option (google.api.http) = {
+      get: "/accounts/{AccountNumbers}/activity"
+      additional_bindings {
+        post: "/accounts/activity"
+        body: "*"
+      }
+    };
+  }
+  rpc AskForTradingLevelChange(AskForTradingLevelChangeRequest) returns (AskForTradingLevelChangeResponse) {
+    option (google.api.http) = {
+      post: "/accounts/{AccountId}/trading-level"
+      body: "*"
+    };
+  }
+  rpc SubaccountsTransfer(SubaccountsTransferRequest) returns (SubaccountsTransferResponse) {
+    option (google.api.http) = {
+      post: "/accounts/{AccountId}/transfer"
+      body: "*"
+    };
+  }
+  rpc CreateAbaAccount(CreateAbaAccountRequest) returns (CreateAbaAccountResponse) {
+    option (google.api.http) = {
+      post: "/aba-accounts"
+      body: "*"
+    };
+  }
+  rpc BrowseAbaAccount(google.protobuf.Empty) returns (BrowseAbaAccountsResponse) {
+    option (google.api.http) = {
+      get: "/aba-accounts"
+    };
+  }
+  rpc CreateAccountAchTransfer(CreateAccountAchTransferRequest) returns (CreateAccountAchTransferResponse) {
+    option (google.api.http) = {
+      post: "/ach"
+      body: "*"
+    };
+  }
+
+  rpc LinkGroup(LinkAccountGroupRequest) returns (LinkAccountGroupResponse) {
+    option (google.api.http) = {
+      post: "/account-groups"
+      body: "*"
+    };
+  }
+  
+  rpc UnlinkGroup(LinkAccountGroupRequest) returns (LinkAccountGroupResponse) {
+    option (google.api.http) = {
+      post: "/account-groups"
+      body: "*"
+    };
+  }
+
+  rpc ChangeGroup(ChangeAccountGroupRequest) returns (LinkAccountGroupResponse) {
+    option (google.api.http) = {
+      post: "/account-groups"
+      body: "*"
+    };
+  }
+}
+
+// Account Application Service - manages account application process for both new accounts and addition of accounts for existging clients. The service includes the collection
+// of personal and employment details, market data entitlements, investment and risk profile, security questions and trusted contacts. Data collected here is used to auto-recommend
+// options trading level for accounts requesting options trading.
+service AccountApplicationsService {
+  // Validate person data
+  // Description:
+  // Validates person data from Account Application form.
+  // This method should be called after user enter personal data.
+  rpc ValidatePerson(AccountApplicationPersonRequest) returns (AccountApplicationResponse) {
+    // test option
+    option (google.api.http) = {
+      post: "/account-applications/validate/person"
+      body: "*"
+    };
+  }
+  rpc ValidateAccount(AccountApplicationAccountRequest) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/account"
+      body: "*"
+    };
+  }
+  rpc ValidateAddresses(AccountApplicationAddressesRequest) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/addresses"
+      body: "*"
+    };
+  }
+  rpc ValidateInvestmentProfile(AccountApplicationInvestmentProfileRequest) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/investment-profile"
+      body: "*"
+    };
+  }
+  rpc ValidateEmployment(Employment) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/employment"
+      body: "*"
+    };
+  }
+  rpc ValidateFederalDisclosure(FederalDisclosure) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/federal-disclosure"
+      body: "*"
+    };
+  }
+  rpc ValidateSecurityQuestions(SecurityQuestionUserResponseRequest) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/security-questions"
+      body: "*"
+    };
+  }
+  rpc ValidateTrustedContact(CreateTrustedContactRequest) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/trusted-contact"
+      body: "*"
+    };
+  }
+  rpc ValidateMarketDataEntitlementFormResponses(MarketDataEntitlementFormResponses) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/mde"
+      body: "*"
+    };
+  }
+  rpc ValidateOtherBrokerageAccount(ExternalBrokerageAccountInfo) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/validate/other-brokerage-account"
+      body: "*"
+    };
+  }
+  
+  // create
+  rpc CreateVerificationSession(AccountApplicationCreateVerificationSessionRequest) returns (VerificationSessionResponse) {
+    option (google.api.http) = {
+      post: "/account-applications/verification-session"
+      body: "*"
+    };
+  }
+  rpc CreateAccount(CreateAccountApplicationRequest) returns (AccountApplicationResponse) {
+    option (google.api.http) = {
+      post: "/account-applications"
+      body: "*"
+    };
+  }
+}
+
+// Users Service - manages user profiles and preferences including notifications, market date entitlements and account security questions
+service UsersService {
+  rpc GetUserProfile(google.protobuf.Empty) returns (GetUserProfileResponse) {
+    option (google.api.http) = {
+      get: "/users/profile"
+    };
+  }
+  rpc UpdateUserProfile(UserProfile) returns (GetUserProfileResponse) {
+    option (google.api.http) = {
+      put: "/users/profile"
+      body: "*"
+    };
+  }
+  //Not implemented
+  rpc UpdateUserEmail(UpdateUserEmailRequest) returns (GetUserProfileResponse) {
+    option (google.api.http) = {
+      put: "/users/email"
+      body: "*"
+    };
+  }
+  rpc GetInvestmentProfile(google.protobuf.Empty) returns (GetInvestmentProfileResponse) {
+    option (google.api.http) = {
+      get: "/users/investment-profile"
+    };
+  }
+  rpc GetExternalBrokerageAccountInfo(google.protobuf.Empty) returns (GetExternalBrokerageAccountInfoResponse) {
+    option (google.api.http) = {
+      get: "/users/external-brokerage-account"
+    };
+  }
+  rpc GetAllSecurityQuestions(google.protobuf.Empty) returns (SecurityQuestions) {
+    option (google.api.http) = {
+      get: "/security-questions"
+    };
+  }
+  rpc GetSecurityQuestionUserResponses(google.protobuf.Empty) returns (SecurityQuestionUserResponsesResponse) {
+    option (google.api.http) = {
+      get: "/users/security-questions"
+    };
+  }
+  rpc UpdateSecurityQuestionUserResponses(SecurityQuestionUserResponseRequest) returns (SecurityQuestionUserResponsesResponse) {
+    option (google.api.http) = {
+      put: "/users/security-questions"
+      body: "*"
+    };
+  }
+  rpc GetAllMdeFormQuestions(google.protobuf.Empty) returns (MarketDataEntitlementFormQuestions) {
+    option (google.api.http) = {
+      get: "/mde-questions"
+    };
+  }
+  rpc GetMdeFormResponses(google.protobuf.Empty) returns (MarketDataEntitlementFormResponsesResponse) {
+    option (google.api.http) = {
+      get: "/users/mde"
+    };
+  }
+  rpc UpdateMdeFormUserResponses(MarketDataEntitlementFormResponses) returns (MarketDataEntitlementFormResponsesResponse) {
+    option (google.api.http) = {
+      put: "/users/mde"
+      body: "*"
+    };
+  }
+  rpc DeleteMdeFormQuestionsUserResponses(google.protobuf.Empty) returns (MarketDataEntitlementFormResponsesResponse) {
+    option (google.api.http) = {
+      delete: "/users/mde"
+    };
+  }
+  rpc GetUserNotificationPreferences(google.protobuf.Empty) returns (GetUserNotificationPreferencesResponse) {
+    option (google.api.http) = {
+      get: "/users/notification-preferences"
+    };
+  }
+  rpc UpdateUserNotificationPreferences(UpdateUserNotificationPreferencesRequest) returns (GetUserNotificationPreferencesResponse) {
+    option (google.api.http) = {
+      put: "/users/notification-preferences"
+      body: "*"
+    };
+  }
+  rpc GetUserPreferences(GetUserPreferencesRequest) returns (GetUserPreferencesResponse) {
+    option (google.api.http) = {
+      get: "/users/preferences"
+    };
+  }
+  rpc UpdateUserPreferences(UpdateUserPreferencesRequest) returns (GetUserPreferencesResponse) {
+    option (google.api.http) = {
+      put: "/users/preferences"
+      body: "*"
+    };
+  }
+}
+
+service SearchService {
+  rpc Search(SearchRequest) returns (SearchServiceResponse) {
+    option (google.api.http) = {
+      post: "/search",
+      body: "*"
+    };
+  }
+
+  rpc GetDefinition(google.protobuf.Empty) returns (SearchServiceDefinitionResponse) {
+    option (google.api.http) = {
+      get: "/search/definition"
+    };
+  }
+}
+
+service TimeMachineService {
+  rpc List(TimeMachineBrowseRequest) returns (TimeMachineBrowseResponse) {
+    option (google.api.http) = {
+      post: "/time-machine"
+      body: "*"
+    };
+  }
+
+  rpc Get(TimeMachineDownloadRequest) returns (TimeMachineDownloadResponse) {
+    option (google.api.http) = {
+      get: "/time-machine/{FileName}"
+    };
+  }
+}

@@ -1,0 +1,290 @@
+syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Services.SDR.DTO.Enums";
+
+// Enum for specifying the type of account application request.
+enum EnumAccountApplicationRequestType {
+  // Undefined request type.
+  EnumAccountApplicationRequestType_Undefined = 0;
+  // Request to validate personal information.
+  EnumAccountApplicationRequestType_ValidatePerson = 1;
+  // Request to validate account information.
+  EnumAccountApplicationRequestType_ValidateAccount = 2;
+  // Request to validate address information.
+  EnumAccountApplicationRequestType_ValidateAddress = 3;
+  // Request to validate approximate annual income.
+  EnumAccountApplicationRequestType_ValidateApproximateAnnualIncome = 4;
+  // Request to validate investment objective.
+  EnumAccountApplicationRequestType_ValidateInvestmentObjective = 5;
+  // Request to validate total net worth.
+  EnumAccountApplicationRequestType_ValidateTotalNetWorth = 6;
+  // Request to validate investing experience.
+  EnumAccountApplicationRequestType_ValidateInvestingExperience = 7;
+  // Request to validate risk tolerance.
+  EnumAccountApplicationRequestType_ValidateRiskTolerance = 8;
+  // Request to validate employment information.
+  EnumAccountApplicationRequestType_ValidateEmployment = 9;
+  // Request to validate federal disclosure information.
+  EnumAccountApplicationRequestType_ValidateFederalDisclosure = 10;
+  // Request to validate security questions.
+  EnumAccountApplicationRequestType_ValidateSecurityQuestions = 11;
+  // Request to validate trusted contact information.
+  EnumAccountApplicationRequestType_ValidateTrustedContact = 12;
+  // Request to create a verification session.
+  EnumAccountApplicationRequestType_CreateVerificationSession = 13;
+  // Request to create an account.
+  EnumAccountApplicationRequestType_CreateAccount = 14;
+  // Request to create an additional account.
+  EnumAccountApplicationRequestType_CreateAdditionalAccount = 15;
+  // Request to validate market data entitlement form responses.
+  EnumAccountApplicationRequestType_ValidateMarketDataEntitlementFormResponses = 16;
+  // Request to validate education.
+  EnumAccountApplicationRequestType_ValidateExternalBrokerageAccountRequest = 17;
+}
+
+// Enum for specifying the investment profile request type within an account application.
+enum EnumAccountApplicationInvestmentProfileRequestType {
+  // Undefined request type.
+  EnumAccountApplicationInvestmentProfileRequestType_Undefined = 0;
+  // Validates approximate annual income within investment profile.
+  EnumAccountApplicationInvestmentProfileRequestType_ValidateApproximateAnnualIncome = 4;
+  // Validates investment objective within investment profile.
+  EnumAccountApplicationInvestmentProfileRequestType_ValidateInvestmentObjective = 5;
+  // Validates total net worth within investment profile.
+  EnumAccountApplicationInvestmentProfileRequestType_ValidateTotalNetWorth = 6;
+  // Validates investing experience within investment profile.
+  EnumAccountApplicationInvestmentProfileRequestType_ValidateInvestingExperience = 7;
+  // Validates risk tolerance within investment profile.
+  EnumAccountApplicationInvestmentProfileRequestType_ValidateRiskTolerance = 8;
+}
+
+// Enum for specifying the relationship type of a trusted contact.
+enum EnumTrustedContactRelationshipType {
+  // Undefined relationship type.
+  EnumTrustedContactRelationshipType_Undefined = 0;
+  // Spouse relationship.
+  EnumTrustedContactRelationshipType_Spouse = 1;
+  // Child relationship.
+  EnumTrustedContactRelationshipType_Child = 2;
+  // Other types of relationships.
+  EnumTrustedContactRelationshipType_Other = 3;
+}
+
+// Enum for specifying types of federal disclosures.
+enum EnumFederalDisclosure {
+  // Undefined disclosure type.
+  EnumFederalDisclosure_Undefined = 0;
+  // Affiliation with a broker-dealer.
+  EnumFederalDisclosure_BrokerDealerAffiliation = 1;
+  // Affiliation with a publicly traded company.
+  EnumFederalDisclosure_PubliclyTradedCompany = 2;
+  // Being a public official.
+  EnumFederalDisclosure_PublicOfficial = 3;
+  // No disclosures.
+  EnumFederalDisclosure_None = 4;
+}
+
+// Enum for specifying types of national ID numbers.
+enum EnumNationalIdNumberType {
+  // Undefined ID type.
+  EnumNationalIdNumberType_Undefined = 0;
+  // U.S. Social Security Number.
+  EnumNationalIdNumberType_U_S_S_S_N = 1;
+  // U.S. Tax Identification Number.
+  EnumNationalIdNumberType_U_S_TaxI_D = 2;
+  // Canadian Unique Client Identifier.
+  EnumNationalIdNumberType_C_A_U_C_I = 3;
+  // Canadian Social Insurance Number.
+  EnumNationalIdNumberType_C_A_S_I_N = 4;
+  // Polish PESEL number.
+  EnumNationalIdNumberType_P_L_Pesel = 5;
+  // Polish NIP tax identification number.
+  EnumNationalIdNumberType_P_L_N_I_P = 
+
+6;
+}
+
+// Enum for specifying marital status.
+enum EnumMaritalStatusType {
+  // Undefined marital status.
+  EnumMaritalStatusType_Undefined = 0;
+  // Single marital status.
+  EnumMaritalStatusType_Single = 1;
+  // Married marital status.
+  EnumMaritalStatusType_Married = 2;
+  // Divorced or separated.
+  EnumMaritalStatusType_DivorcedOrSeparated = 3;
+  // Widowed status.
+  EnumMaritalStatusType_Widowed = 4;
+}
+
+// Enum for specifying U.S. citizenship status.
+enum EnumUSCitizenshipStatus {
+  // Undefined citizenship status.
+  EnumUSCitizenshipStatus_Undefined = 0;
+  // U.S. Citizen.
+  EnumUSCitizenshipStatus_U_S_A = 1;
+  // U.S. Resident Alien.
+  EnumUSCitizenshipStatus_U_S_ResidentAlien = 2;
+  // Non-U.S. Resident Alien.
+  EnumUSCitizenshipStatus_NonU_S_ResidentAlien = 3;
+}
+
+// Enum for specifying nationality.
+enum EnumNationality {
+  // Undefined nationality.
+  EnumNationality_Undefined = 0;
+  // American nationality.
+  EnumNationality_American = 1;
+  // Polish nationality.
+  EnumNationality_Polish = 2;
+  // Canadian nationality.
+  EnumNationality_Canadian = 3;
+}
+
+// Enum for specifying employment type.
+enum EnumEmploymentType {
+  // Undefined employment type.
+  EnumEmploymentType_Undefined = 0;
+  // Employed status.
+  EnumEmploymentType_Employed = 1;
+  // Self-employed status.
+  EnumEmploymentType_SelfEmployed = 2;
+  // Unemployed status.
+  EnumEmploymentType_Unemployed = 3;
+  // Retirement status.
+  EnumEmploymentType_Retirement = 4;
+  // Student status.
+  EnumEmploymentType_Student = 5;
+}
+
+// Enum for specifying occupation type.
+enum EnumOccupationType {
+  // Undefined occupation type.
+  EnumOccupationType_Undefined = 0;
+  // Manager or business owner.
+  EnumOccupationType_ManagerOrBusinessOwner = 1;
+  // Professional occupation.
+  EnumOccupationType_Professional = 2;
+  // Technician and associate professional.
+  EnumOccupationType_TechnicianAndAssociateProfessional = 3;
+  // Clerical support worker.
+  EnumOccupationType_ClericalSupportWorker = 4;
+  // Service and sales worker.
+  EnumOccupationType_ServiceAndSalesWorker = 5;
+  // Agricultural, forestry, and fishery worker.
+  EnumOccupationType_AgriculturalForestryAndFisheryWorker = 6;
+  // Craft and related trades worker.
+  EnumOccupationType_CraftAndRelatedTradesWorker = 7;
+  // Elementary occupation.
+  EnumOccupationType_ElementaryOccupation = 8;
+  // Armed forces occupations.
+  EnumOccupationType_ArmedForcesOccupations = 9;
+  // Other occupation types.
+  EnumOccupationType_Other = 10;
+}
+
+// Enum for specifying investment objective type.
+enum EnumInvestmentObjectiveType {
+  // Undefined investment objective.
+  EnumInvestmentObjectiveType_Undefined = 0;
+  // Level 1 investment objective.
+  EnumInvestmentObjectiveType_Level1 = 1;
+  // Level 2 investment objective.
+  EnumInvestmentObjectiveType_Level2 = 2;
+  // Level 3 investment objective.
+  EnumInvestmentObjectiveType_Level3 = 3;
+  // Level 4 investment objective.
+  EnumInvestmentObjectiveType_Level4 = 4;
+}
+
+// Enum for specifying investing experience type.
+enum EnumInvestingExperienceType {
+  // Undefined investing experience.
+  EnumInvestingExperienceType_Undefined = 0;
+  // No investing experience.
+  EnumInvestingExperienceType_NoneInvestingExperience = 1;
+  // Limited investing experience.
+  EnumInvestingExperienceType_Limited = 2;
+  // Good investing experience.
+  EnumInvestingExperienceType_Good = 3;
+  // Extensive investing experience.
+  EnumInvestingExperienceType_Extensive = 4;
+}
+
+// Enum for specifying risk tolerance type.
+enum EnumRiskToleranceType {
+  // Undefined risk tolerance.
+  EnumRiskToleranceType_Undefined = 0;
+  // Low risk tolerance.
+  EnumRiskToleranceType_Low = 1;
+  // Medium low risk tolerance.
+  EnumRiskToleranceType_MediumLow = 2;
+  // Medium high risk tolerance.
+  EnumRiskToleranceType_MediumHigh = 3;
+  // High risk tolerance.
+  EnumRiskToleranceType_High = 4;
+}
+
+// Enum for specifying address type.
+enum EnumAddressType {
+  // Undefined address type.
+  EnumAddressType_Undefined = 0;
+  // Mailing address type.
+  EnumAddressType_Mailing = 1;
+  // Permanent address type.
+  EnumAddressType_Permanent = 2;
+  // Mailing address is the same as permanent.
+  EnumAddressType_MailingSameAsPermanent = 3;
+}
+
+// Enum for specifying phone type.
+enum EnumPhoneType {
+  // Undefined phone type.
+  EnumPhoneType_Undefined = 0;
+  // Primary phone type.
+  EnumPhoneType_Primary = 1;
+}
+
+// Enum for highest education type
+enum EnumEducationType {
+  EnumEducationType_Undefined = 0;
+  // High School Diploma or GED
+  EnumEducationType_HighSchool = 1;
+  // Some College
+  EnumEducationType_College = 2;
+  // Associate Degree
+  EnumEducationType_AssociateDegree = 3;
+  // Bachelor Degree
+  EnumEducationType_Bachelor = 4;
+  // Masters Degree
+  EnumEducationType_Masters = 5;
+  // Professional (e.g., JD, MD)
+  EnumEducationType_Professional = 6;
+}
+
+enum EnumCommoditiesType
+{
+  EnumCommoditiesType_Undefined = 0;
+  EnumCommoditiesType_FinancialOrCurrency = 1;
+  EnumCommoditiesType_Metals = 2;
+  EnumCommoditiesType_Ags = 3;
+  EnumCommoditiesType_StockIndices = 4;
+  EnumCommoditiesType_Other = 5;
+}
+
+enum EnumNatureOfTrading
+{
+  EnumNatureOfTrading_Undefined = 0;
+  EnumNatureOfTrading_Discretionary = 1;
+  EnumNatureOfTrading_NonDiscretionary = 2;
+}
+
+enum EnumTradingObjective
+{
+  EnumTradingObjective_Undefined = 0;
+  EnumTradingObjective_Speculation = 1;
+  EnumTradingObjective_Hedging = 2;
+}
+

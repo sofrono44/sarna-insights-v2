@@ -1,0 +1,4140 @@
+MarginManagerInfo: {10140 : AccountId: 10140
+AccountNumber: TS0
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+    }
+    Cash: 300000
+    AdvancedValues: {
+    }
+    BuyingPower: 2010000
+    NetLiquidity: 300000
+    ValueAtRiskResult: {
+    }
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 300000
+    PositionAggregations: {
+    }
+  }
+  AccountId: 10140
+  AccountNumber: TS0
+  AccountName: Level0Accoun
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 0.1186
+  }
+}
+YesterdayLiquidationValue: 300000
+Cash: 300000
+IsPMAccount: true
+AccountRiskType: RegTMargin
+AlertLevel: 103
+} 
+MarginManagerInfo: {10141 : AccountId: 10141
+AccountNumber: TS1
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+      PortfolioGroups: {
+        PortfolioGroupId: BBIDX
+        ProductGroups: {
+          ProductGroupId: 9
+          ClassGroups: {
+            ClassGroupId: 00018
+            ProductGroupId: 9
+            Products: {
+              ProductType: EQUI
+              ClassGroupId: 00018
+              ProductGroupId: 9
+              GainsAndLossesScenarios: -98386
+              GainsAndLossesScenarios: -78708
+              GainsAndLossesScenarios: -59032
+              GainsAndLossesScenarios: -39354
+              GainsAndLossesScenarios: -19678
+              GainsAndLossesScenarios: 0
+              GainsAndLossesScenarios: 14758
+              GainsAndLossesScenarios: 29516
+              GainsAndLossesScenarios: 44274
+              GainsAndLossesScenarios: 59032
+              GainsAndLossesScenarios: 73790
+              PriceMovementValues: -49.193
+              PriceMovementValues: -39.354
+              PriceMovementValues: -29.516
+              PriceMovementValues: -19.677
+              PriceMovementValues: -9.839
+              PriceMovementValues: 0
+              PriceMovementValues: 7.379
+              PriceMovementValues: 14.758
+              PriceMovementValues: 22.137
+              PriceMovementValues: 29.516
+              PriceMovementValues: 36.895
+              UnderlyingSymbol: SPY
+              Quantity: 2000
+              Symbol: SPY
+              Multiplier: 1
+              NAV: 1229820
+              UnderlyingPrice: 613.4
+              InputStrategyComponentType: OpenPosition
+              VolatilityDownShock: {
+              }
+              VolatilityUpShock: {
+              }
+              ScenariosPercentages: -0.08
+              ScenariosPercentages: -0.064
+              ScenariosPercentages: -0.048
+              ScenariosPercentages: -0.032
+              ScenariosPercentages: -0.016
+              ScenariosPercentages: 0
+              ScenariosPercentages: 0.012
+              ScenariosPercentages: 0.024
+              ScenariosPercentages: 0.036
+              ScenariosPercentages: 0.048
+              ScenariosPercentages: 0.06
+              IsETF: true
+              MarketMoveAdjustmentFactor: 1
+              MorningNAV: 1229820
+              Greeks: {
+              }
+              ProductId: p3492
+              WhatIfAdjustment: {
+              }
+              Requirement: 98386
+              IsPMEligible: true
+              IsShockEligible: true
+              Price: 614.91
+            }
+            NAV: 1229820
+            RiskCharge: -98386
+            GainsAndLosses: -98386
+            GainsAndLosses: -78708
+            GainsAndLosses: -59032
+            GainsAndLosses: -39354
+            GainsAndLosses: -19678
+            GainsAndLosses: 0
+            GainsAndLosses: 14758
+            GainsAndLosses: 29516
+            GainsAndLosses: 44274
+            GainsAndLosses: 59032
+            GainsAndLosses: 73790
+            ConcentrationPercentage: 0.9454281282972308
+            ConcentrationToNetLiq: 0.09910611494177846
+            ScenariosPercentages: -0.08
+            ScenariosPercentages: -0.064
+            ScenariosPercentages: -0.048
+            ScenariosPercentages: -0.032
+            ScenariosPercentages: -0.016
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.012
+            ScenariosPercentages: 0.024
+            ScenariosPercentages: 0.036
+            ScenariosPercentages: 0.048
+            ScenariosPercentages: 0.06
+            MorningNAV: 1229820
+            PositionAggregations: {
+              LongMarketValue: 1229820
+              DeltaLongExposure: 1229820
+              DeltaLongCount: 1
+            }
+            Requirement: 98386
+          }
+          NAV: 1229820
+          RiskCharge: -98386
+          GainsAndLosses: -98386
+          GainsAndLosses: -78708
+          GainsAndLosses: -59032
+          GainsAndLosses: -39354
+          GainsAndLosses: -19678
+          GainsAndLosses: 0
+          GainsAndLosses: 14758
+          GainsAndLosses: 29516
+          GainsAndLosses: 44274
+          GainsAndLosses: 59032
+          GainsAndLosses: 73790
+          AppliedOffsetPercent: 0.9
+          Requirement: 98386
+          ConcentrationPercentage: 0.9454281282972308
+          ConcentrationToNetLiq: 0.09910611494177846
+          ScenariosPercentages: -0.08
+          ScenariosPercentages: -0.064
+          ScenariosPercentages: -0.048
+          ScenariosPercentages: -0.032
+          ScenariosPercentages: -0.016
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.012
+          ScenariosPercentages: 0.024
+          ScenariosPercentages: 0.036
+          ScenariosPercentages: 0.048
+          ScenariosPercentages: 0.06
+          MorningNAV: 1229820
+          PositionAggregations: {
+            LongMarketValue: 1229820
+            DeltaLongExposure: 1229820
+            DeltaLongCount: 1
+          }
+        }
+        NAV: 1229820
+        RiskCharge: -98386
+        GainsAndLosses: -98386
+        GainsAndLosses: -78708
+        GainsAndLosses: -59032
+        GainsAndLosses: -39354
+        GainsAndLosses: -19678
+        GainsAndLosses: 0
+        GainsAndLosses: 14758
+        GainsAndLosses: 29516
+        GainsAndLosses: 44274
+        GainsAndLosses: 59032
+        GainsAndLosses: 73790
+        AppliedOffsetPercent: 0.85
+        ConcentrationPercentage: 1
+        ConcentrationToNetLiq: 0.09910611494177846
+        MorningNAV: 1229820
+        PositionAggregations: {
+          LongMarketValue: 1229820
+          DeltaLongExposure: 1229820
+          DeltaLongCount: 1
+        }
+        Requirement: 98386
+      }
+      ProductGroups: {
+        ProductGroupId: 999
+        ClassGroups: {
+          ClassGroupId: NVDA
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: NVDA
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -10648.35
+            GainsAndLossesScenarios: -8518.5
+            GainsAndLossesScenarios: -6389.1
+            GainsAndLossesScenarios: -4259.25
+            GainsAndLossesScenarios: -2129.85
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 2129.85
+            GainsAndLossesScenarios: 4259.25
+            GainsAndLossesScenarios: 6389.1
+            GainsAndLossesScenarios: 8518.5
+            GainsAndLossesScenarios: 10648.35
+            PriceMovementValues: -23.663
+            PriceMovementValues: -18.93
+            PriceMovementValues: -14.198
+            PriceMovementValues: -9.465
+            PriceMovementValues: -4.733
+            PriceMovementValues: 0
+            PriceMovementValues: 4.733
+            PriceMovementValues: 9.465
+            PriceMovementValues: 14.198
+            PriceMovementValues: 18.93
+            PriceMovementValues: 23.663
+            UnderlyingSymbol: NVDA
+            Quantity: 450
+            Symbol: NVDA
+            Multiplier: 1
+            NAV: 70987.5
+            UnderlyingPrice: 157.58
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 70987.5
+            Greeks: {
+            }
+            ProductId: p3476
+            WhatIfAdjustment: {
+            }
+            Requirement: 10648.35
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 157.75
+          }
+          NAV: 70987.5
+          RiskCharge: -10648.35
+          GainsAndLosses: -10648.35
+          GainsAndLosses: -8518.5
+          GainsAndLosses: -6389.1
+          GainsAndLosses: -4259.25
+          GainsAndLosses: -2129.85
+          GainsAndLosses: 0
+          GainsAndLosses: 2129.85
+          GainsAndLosses: 4259.25
+          GainsAndLosses: 6389.1
+          GainsAndLosses: 8518.5
+          GainsAndLosses: 10648.35
+          ConcentrationPercentage: 0.05457187170276924
+          ConcentrationToNetLiq: 0.010726288283295252
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 70987.5
+          PositionAggregations: {
+            LongMarketValue: 70987.5
+            DeltaLongExposure: 70987.5
+            DeltaLongCount: 1
+          }
+          Requirement: 10648.35
+        }
+        NAV: 70987.5
+        RiskCharge: -10648.35
+        GainsAndLosses: -10648.35
+        GainsAndLosses: -8518.5
+        GainsAndLosses: -6389.1
+        GainsAndLosses: -4259.25
+        GainsAndLosses: -2129.85
+        GainsAndLosses: 0
+        GainsAndLosses: 2129.85
+        GainsAndLosses: 4259.25
+        GainsAndLosses: 6389.1
+        GainsAndLosses: 8518.5
+        GainsAndLosses: 10648.35
+        AppliedOffsetPercent: 1
+        Requirement: 10648.35
+        ConcentrationPercentage: 0.05457187170276924
+        ConcentrationToNetLiq: 0.010726288283295252
+        ScenariosPercentages: -0.15
+        ScenariosPercentages: -0.12
+        ScenariosPercentages: -0.09
+        ScenariosPercentages: -0.06
+        ScenariosPercentages: -0.03
+        ScenariosPercentages: 0
+        ScenariosPercentages: 0.03
+        ScenariosPercentages: 0.06
+        ScenariosPercentages: 0.09
+        ScenariosPercentages: 0.12
+        ScenariosPercentages: 0.15
+        MorningNAV: 70987.5
+        PositionAggregations: {
+          LongMarketValue: 70987.5
+          DeltaLongExposure: 70987.5
+          DeltaLongCount: 1
+        }
+      }
+    }
+    NAV: 1300807.5
+    Requirement: 109034.35
+    Cash: -308073.6
+    AdvancedValues: {
+    }
+    BuyingPower: 5920786.985
+    NetLiquidity: 992733.9
+    ValueAtRiskResult: {
+    }
+    GainsAndLosses: -109034.35
+    GainsAndLosses: -87226.5
+    GainsAndLosses: -65421.1
+    GainsAndLosses: -43613.25
+    GainsAndLosses: -21807.85
+    GainsAndLosses: 0
+    GainsAndLosses: 16887.85
+    GainsAndLosses: 33775.25
+    GainsAndLosses: 50663.1
+    GainsAndLosses: 67550.5
+    GainsAndLosses: 84438.35
+    MorningNAV: 1300807.5
+    CreditUtilization: 0.1098324032250737
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 883699.55
+    PositionAggregations: {
+      LongMarketValue: 1300807.5
+      DeltaLongExposure: 1300807.5
+      DeltaLongCount: 2
+    }
+  }
+  AccountId: 10141
+  AccountNumber: TS1
+  AccountName: Level1Account
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 1.139
+  }
+}
+YesterdayLiquidationValue: 992733.9
+Cash: -308073.6
+IsPMAccount: true
+AccountRiskType: PMCPM
+AlertLevel: 103
+} 
+MarginManagerInfo: {10142 : AccountId: 10142
+AccountNumber: TS2
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+      ProductGroups: {
+        ProductGroupId: 999
+        ClassGroups: {
+          ClassGroupId: AAPL
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: AAPL
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -241.296
+            GainsAndLossesScenarios: -193.04
+            GainsAndLossesScenarios: -144.776
+            GainsAndLossesScenarios: -96.52
+            GainsAndLossesScenarios: -48.256
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 48.256
+            GainsAndLossesScenarios: 96.52
+            GainsAndLossesScenarios: 144.776
+            GainsAndLossesScenarios: 193.04
+            GainsAndLossesScenarios: 241.296
+            PriceMovementValues: -30.162
+            PriceMovementValues: -24.13
+            PriceMovementValues: -18.097
+            PriceMovementValues: -12.065
+            PriceMovementValues: -6.032
+            PriceMovementValues: 0
+            PriceMovementValues: 6.032
+            PriceMovementValues: 12.065
+            PriceMovementValues: 18.097
+            PriceMovementValues: 24.13
+            PriceMovementValues: 30.162
+            UnderlyingSymbol: AAPL
+            Quantity: 8
+            Symbol: AAPL
+            Multiplier: 1
+            NAV: 1608.64
+            UnderlyingPrice: 201.17
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 1608.64
+            Greeks: {
+            }
+            ProductId: p3268
+            WhatIfAdjustment: {
+            }
+            Requirement: 241.296
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 201.08
+          }
+          NAV: 1608.64
+          RiskCharge: -241.296
+          GainsAndLosses: -241.296
+          GainsAndLosses: -193.04
+          GainsAndLosses: -144.776
+          GainsAndLosses: -96.52
+          GainsAndLosses: -48.256
+          GainsAndLosses: 0
+          GainsAndLosses: 48.256
+          GainsAndLosses: 96.52
+          GainsAndLosses: 144.776
+          GainsAndLosses: 193.04
+          GainsAndLosses: 241.296
+          ConcentrationPercentage: 0.18714604148149525
+          ConcentrationToNetLiq: 0.003925870922207313
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 1608.64
+          PositionAggregations: {
+            LongMarketValue: 1608.64
+            DeltaLongExposure: 1608.64
+            DeltaLongCount: 1
+          }
+          Requirement: 241.296
+        }
+        ClassGroups: {
+          ClassGroupId: AMZN
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: AMZN
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -100.48499999999999
+            GainsAndLossesScenarios: -80.388
+            GainsAndLossesScenarios: -60.291000000000004
+            GainsAndLossesScenarios: -40.194
+            GainsAndLossesScenarios: -20.097
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 20.097
+            GainsAndLossesScenarios: 40.194
+            GainsAndLossesScenarios: 60.291000000000004
+            GainsAndLossesScenarios: 80.388
+            GainsAndLossesScenarios: 100.48499999999999
+            PriceMovementValues: -33.495
+            PriceMovementValues: -26.796
+            PriceMovementValues: -20.097
+            PriceMovementValues: -13.398
+            PriceMovementValues: -6.699
+            PriceMovementValues: 0
+            PriceMovementValues: 6.699
+            PriceMovementValues: 13.398
+            PriceMovementValues: 20.097
+            PriceMovementValues: 26.796
+            PriceMovementValues: 33.495
+            UnderlyingSymbol: AMZN
+            Quantity: 3
+            Symbol: AMZN
+            Multiplier: 1
+            NAV: 669.9000000000001
+            UnderlyingPrice: 222.4998
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 669.9000000000001
+            Greeks: {
+            }
+            ProductId: p3269
+            WhatIfAdjustment: {
+            }
+            Requirement: 100.48499999999999
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 223.3
+          }
+          NAV: 669.9000000000001
+          RiskCharge: -100.48499999999999
+          GainsAndLosses: -100.48499999999999
+          GainsAndLosses: -80.388
+          GainsAndLosses: -60.291000000000004
+          GainsAndLosses: -40.194
+          GainsAndLosses: -20.097
+          GainsAndLosses: 0
+          GainsAndLosses: 20.097
+          GainsAndLosses: 40.194
+          GainsAndLosses: 60.291000000000004
+          GainsAndLosses: 80.388
+          GainsAndLosses: 100.48499999999999
+          ConcentrationPercentage: 0.07793485999879009
+          ConcentrationToNetLiq: 0.0016348847043382475
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 669.9000000000001
+          PositionAggregations: {
+            LongMarketValue: 669.9000000000001
+            DeltaLongExposure: 669.9000000000001
+            DeltaLongCount: 1
+          }
+          Requirement: 100.48499999999999
+        }
+        ClassGroups: {
+          ClassGroupId: ARKK
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: ARKK
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -31.428000000000004
+            GainsAndLossesScenarios: -25.143
+            GainsAndLossesScenarios: -18.857999999999997
+            GainsAndLossesScenarios: -12.57
+            GainsAndLossesScenarios: -6.285
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 6.285
+            GainsAndLossesScenarios: 12.57
+            GainsAndLossesScenarios: 18.857999999999997
+            GainsAndLossesScenarios: 25.143
+            GainsAndLossesScenarios: 31.428000000000004
+            PriceMovementValues: -10.476
+            PriceMovementValues: -8.381
+            PriceMovementValues: -6.286
+            PriceMovementValues: -4.19
+            PriceMovementValues: -2.095
+            PriceMovementValues: 0
+            PriceMovementValues: 2.095
+            PriceMovementValues: 4.19
+            PriceMovementValues: 6.286
+            PriceMovementValues: 8.381
+            PriceMovementValues: 10.476
+            UnderlyingSymbol: ARKK
+            Quantity: 3
+            Symbol: ARKK
+            Multiplier: 1
+            NAV: 209.52
+            UnderlyingPrice: 69.84
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 209.52
+            Greeks: {
+            }
+            ProductId: p3270
+            WhatIfAdjustment: {
+            }
+            Requirement: 31.428000000000004
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 69.84
+          }
+          NAV: 209.52
+          RiskCharge: -31.428000000000004
+          GainsAndLosses: -31.428000000000004
+          GainsAndLosses: -25.143
+          GainsAndLosses: -18.857999999999997
+          GainsAndLosses: -12.57
+          GainsAndLosses: -6.285
+          GainsAndLosses: 0
+          GainsAndLosses: 6.285
+          GainsAndLosses: 12.57
+          GainsAndLosses: 18.857999999999997
+          GainsAndLosses: 25.143
+          GainsAndLosses: 31.428000000000004
+          ConcentrationPercentage: 0.024375148331014326
+          ConcentrationToNetLiq: 0.0005113316065874753
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 209.52
+          PositionAggregations: {
+            LongMarketValue: 209.52
+            DeltaLongExposure: 209.52
+            DeltaLongCount: 1
+          }
+          Requirement: 31.428000000000004
+        }
+        ClassGroups: {
+          ClassGroupId: ARKQ
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: ARKQ
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -26.502
+            GainsAndLossesScenarios: -21.202
+            GainsAndLossesScenarios: -15.902
+            GainsAndLossesScenarios: -10.6
+            GainsAndLossesScenarios: -5.3
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 5.3
+            GainsAndLossesScenarios: 10.6
+            GainsAndLossesScenarios: 15.902
+            GainsAndLossesScenarios: 21.202
+            GainsAndLossesScenarios: 26.502
+            PriceMovementValues: -13.251
+            PriceMovementValues: -10.601
+            PriceMovementValues: -7.951
+            PriceMovementValues: -5.3
+            PriceMovementValues: -2.65
+            PriceMovementValues: 0
+            PriceMovementValues: 2.65
+            PriceMovementValues: 5.3
+            PriceMovementValues: 7.951
+            PriceMovementValues: 10.601
+            PriceMovementValues: 13.251
+            UnderlyingSymbol: ARKQ
+            Quantity: 2
+            Symbol: ARKQ
+            Multiplier: 1
+            NAV: 176.68
+            UnderlyingPrice: 88.34
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 176.68
+            Greeks: {
+            }
+            ProductId: p3271
+            WhatIfAdjustment: {
+            }
+            Requirement: 26.502
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 88.34
+          }
+          NAV: 176.68
+          RiskCharge: -26.502
+          GainsAndLosses: -26.502
+          GainsAndLosses: -21.202
+          GainsAndLosses: -15.902
+          GainsAndLosses: -10.6
+          GainsAndLosses: -5.3
+          GainsAndLosses: 0
+          GainsAndLosses: 5.3
+          GainsAndLosses: 10.6
+          GainsAndLosses: 15.902
+          GainsAndLosses: 21.202
+          GainsAndLosses: 26.502
+          ConcentrationPercentage: 0.020554606754121855
+          ConcentrationToNetLiq: 0.0004311858927638179
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 176.68
+          PositionAggregations: {
+            LongMarketValue: 176.68
+            DeltaLongExposure: 176.68
+            DeltaLongCount: 1
+          }
+          Requirement: 26.502
+        }
+        ClassGroups: {
+          ClassGroupId: BLOK
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: BLOK
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -33.168
+            GainsAndLossesScenarios: -26.536
+            GainsAndLossesScenarios: -19.9
+            GainsAndLossesScenarios: -13.268
+            GainsAndLossesScenarios: -6.632
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 6.632
+            GainsAndLossesScenarios: 13.268
+            GainsAndLossesScenarios: 19.9
+            GainsAndLossesScenarios: 26.536
+            GainsAndLossesScenarios: 33.168
+            PriceMovementValues: -8.292
+            PriceMovementValues: -6.634
+            PriceMovementValues: -4.975
+            PriceMovementValues: -3.317
+            PriceMovementValues: -1.658
+            PriceMovementValues: 0
+            PriceMovementValues: 1.658
+            PriceMovementValues: 3.317
+            PriceMovementValues: 4.975
+            PriceMovementValues: 6.634
+            PriceMovementValues: 8.292
+            UnderlyingSymbol: BLOK
+            Quantity: 4
+            Symbol: BLOK
+            Multiplier: 1
+            NAV: 221.12
+            UnderlyingPrice: 55.28
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 221.12
+            Greeks: {
+            }
+            ProductId: p3272
+            WhatIfAdjustment: {
+            }
+            Requirement: 33.168
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 55.28
+          }
+          NAV: 221.12
+          RiskCharge: -33.168
+          GainsAndLosses: -33.168
+          GainsAndLosses: -26.536
+          GainsAndLosses: -19.9
+          GainsAndLosses: -13.268
+          GainsAndLosses: -6.632
+          GainsAndLosses: 0
+          GainsAndLosses: 6.632
+          GainsAndLosses: 13.268
+          GainsAndLosses: 19.9
+          GainsAndLosses: 26.536
+          GainsAndLosses: 33.168
+          ConcentrationPercentage: 0.02572466971627476
+          ConcentrationToNetLiq: 0.0005396412984374881
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 221.12
+          PositionAggregations: {
+            LongMarketValue: 221.12
+            DeltaLongExposure: 221.12
+            DeltaLongCount: 1
+          }
+          Requirement: 33.168
+        }
+        ClassGroups: {
+          ClassGroupId: COIN
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: COIN
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -53.015
+            GainsAndLossesScenarios: -42.412
+            GainsAndLossesScenarios: -31.809
+            GainsAndLossesScenarios: -21.206
+            GainsAndLossesScenarios: -10.603
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 10.603
+            GainsAndLossesScenarios: 21.206
+            GainsAndLossesScenarios: 31.809
+            GainsAndLossesScenarios: 42.412
+            GainsAndLossesScenarios: 53.015
+            PriceMovementValues: -53.015
+            PriceMovementValues: -42.412
+            PriceMovementValues: -31.809
+            PriceMovementValues: -21.206
+            PriceMovementValues: -10.603
+            PriceMovementValues: 0
+            PriceMovementValues: 10.603
+            PriceMovementValues: 21.206
+            PriceMovementValues: 31.809
+            PriceMovementValues: 42.412
+            PriceMovementValues: 53.015
+            UnderlyingSymbol: COIN
+            Quantity: 1
+            Symbol: COIN
+            Multiplier: 1
+            NAV: 353.43
+            UnderlyingPrice: 351
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 353.43
+            Greeks: {
+            }
+            ProductId: p3273
+            WhatIfAdjustment: {
+            }
+            Requirement: 53.015
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 353.43
+          }
+          NAV: 353.43
+          RiskCharge: -53.015
+          GainsAndLosses: -53.015
+          GainsAndLosses: -42.412
+          GainsAndLosses: -31.809
+          GainsAndLosses: -21.206
+          GainsAndLosses: -10.603
+          GainsAndLosses: 0
+          GainsAndLosses: 10.603
+          GainsAndLosses: 21.206
+          GainsAndLosses: 31.809
+          GainsAndLosses: 42.412
+          GainsAndLosses: 53.015
+          ConcentrationPercentage: 0.041117357171775455
+          ConcentrationToNetLiq: 0.000862550754843929
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 353.43
+          PositionAggregations: {
+            LongMarketValue: 353.43
+            DeltaLongExposure: 353.43
+            DeltaLongCount: 1
+          }
+          Requirement: 53.015
+        }
+        ClassGroups: {
+          ClassGroupId: CSAN
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: CSAN
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -13.993500000000001
+            GainsAndLossesScenarios: -11.194799999999999
+            GainsAndLossesScenarios: -8.3961
+            GainsAndLossesScenarios: -5.5973999999999995
+            GainsAndLossesScenarios: -2.7986999999999997
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 2.7986999999999997
+            GainsAndLossesScenarios: 5.5973999999999995
+            GainsAndLossesScenarios: 8.3961
+            GainsAndLossesScenarios: 11.194799999999999
+            GainsAndLossesScenarios: 13.993500000000001
+            PriceMovementValues: -0.7365
+            PriceMovementValues: -0.5892
+            PriceMovementValues: -0.4419
+            PriceMovementValues: -0.2946
+            PriceMovementValues: -0.1473
+            PriceMovementValues: 0
+            PriceMovementValues: 0.1473
+            PriceMovementValues: 0.2946
+            PriceMovementValues: 0.4419
+            PriceMovementValues: 0.5892
+            PriceMovementValues: 0.7365
+            UnderlyingSymbol: CSAN
+            Quantity: 19
+            Symbol: CSAN
+            Multiplier: 1
+            NAV: 93.29
+            UnderlyingPrice: 5
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 93.29
+            Greeks: {
+            }
+            ProductId: p3274
+            WhatIfAdjustment: {
+            }
+            Requirement: 13.993500000000001
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 4.91
+          }
+          NAV: 93.29
+          RiskCharge: -13.993500000000001
+          GainsAndLosses: -13.993500000000001
+          GainsAndLosses: -11.194799999999999
+          GainsAndLosses: -8.3961
+          GainsAndLosses: -5.5973999999999995
+          GainsAndLosses: -2.7986999999999997
+          GainsAndLosses: 0
+          GainsAndLosses: 2.7986999999999997
+          GainsAndLosses: 5.5973999999999995
+          GainsAndLosses: 8.3961
+          GainsAndLosses: 11.194799999999999
+          GainsAndLosses: 13.993500000000001
+          ConcentrationPercentage: 0.010853176726805682
+          ConcentrationToNetLiq: 0.00022767337523169897
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 93.29
+          PositionAggregations: {
+            LongMarketValue: 93.29
+            DeltaLongExposure: 93.29
+            DeltaLongCount: 1
+          }
+          Requirement: 13.993500000000001
+        }
+        ClassGroups: {
+          ClassGroupId: F
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: F
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -16.200000000000003
+            GainsAndLossesScenarios: -12.96
+            GainsAndLossesScenarios: -9.719999999999999
+            GainsAndLossesScenarios: -6.48
+            GainsAndLossesScenarios: -3.24
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 3.24
+            GainsAndLossesScenarios: 6.48
+            GainsAndLossesScenarios: 9.719999999999999
+            GainsAndLossesScenarios: 12.96
+            GainsAndLossesScenarios: 16.200000000000003
+            PriceMovementValues: -1.62
+            PriceMovementValues: -1.296
+            PriceMovementValues: -0.972
+            PriceMovementValues: -0.648
+            PriceMovementValues: -0.324
+            PriceMovementValues: 0
+            PriceMovementValues: 0.324
+            PriceMovementValues: 0.648
+            PriceMovementValues: 0.972
+            PriceMovementValues: 1.296
+            PriceMovementValues: 1.62
+            UnderlyingSymbol: F
+            Quantity: 10
+            Symbol: F
+            Multiplier: 1
+            NAV: 108
+            UnderlyingPrice: 10.78
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 108
+            Greeks: {
+            }
+            ProductId: p3275
+            WhatIfAdjustment: {
+            }
+            Requirement: 16.200000000000003
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 10.8
+          }
+          NAV: 108
+          RiskCharge: -16.200000000000003
+          GainsAndLosses: -16.200000000000003
+          GainsAndLosses: -12.96
+          GainsAndLosses: -9.719999999999999
+          GainsAndLosses: -6.48
+          GainsAndLosses: -3.24
+          GainsAndLosses: 0
+          GainsAndLosses: 3.24
+          GainsAndLosses: 6.48
+          GainsAndLosses: 9.719999999999999
+          GainsAndLosses: 12.96
+          GainsAndLosses: 16.200000000000003
+          ConcentrationPercentage: 0.012564509448976456
+          ConcentrationToNetLiq: 0.0002635729930863275
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 108
+          PositionAggregations: {
+            LongMarketValue: 108
+            DeltaLongExposure: 108
+            DeltaLongCount: 1
+          }
+          Requirement: 16.200000000000003
+        }
+        ClassGroups: {
+          ClassGroupId: FINX
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: FINX
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -15.18
+            GainsAndLossesScenarios: -12.144
+            GainsAndLossesScenarios: -9.108
+            GainsAndLossesScenarios: -6.072
+            GainsAndLossesScenarios: -3.036
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 3.036
+            GainsAndLossesScenarios: 6.072
+            GainsAndLossesScenarios: 9.108
+            GainsAndLossesScenarios: 12.144
+            GainsAndLossesScenarios: 15.18
+            PriceMovementValues: -5.06
+            PriceMovementValues: -4.048
+            PriceMovementValues: -3.036
+            PriceMovementValues: -2.024
+            PriceMovementValues: -1.012
+            PriceMovementValues: 0
+            PriceMovementValues: 1.012
+            PriceMovementValues: 2.024
+            PriceMovementValues: 3.036
+            PriceMovementValues: 4.048
+            PriceMovementValues: 5.06
+            UnderlyingSymbol: FINX
+            Quantity: 3
+            Symbol: FINX
+            Multiplier: 1
+            NAV: 101.19
+            UnderlyingPrice: 34
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 101.19
+            Greeks: {
+            }
+            ProductId: p3276
+            WhatIfAdjustment: {
+            }
+            Requirement: 15.18
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 33.73
+          }
+          NAV: 101.19
+          RiskCharge: -15.18
+          GainsAndLosses: -15.18
+          GainsAndLosses: -12.144
+          GainsAndLosses: -9.108
+          GainsAndLosses: -6.072
+          GainsAndLosses: -3.036
+          GainsAndLosses: 0
+          GainsAndLosses: 3.036
+          GainsAndLosses: 6.072
+          GainsAndLosses: 9.108
+          GainsAndLosses: 12.144
+          GainsAndLosses: 15.18
+          ConcentrationPercentage: 0.011772247325388218
+          ConcentrationToNetLiq: 0.0002469776564845957
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 101.19
+          PositionAggregations: {
+            LongMarketValue: 101.19
+            DeltaLongExposure: 101.19
+            DeltaLongCount: 1
+          }
+          Requirement: 15.18
+        }
+        ClassGroups: {
+          ClassGroupId: GOOGL
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: GOOGL
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -53.482
+            GainsAndLossesScenarios: -42.784
+            GainsAndLossesScenarios: -32.088
+            GainsAndLossesScenarios: -21.392
+            GainsAndLossesScenarios: -10.696
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 10.696
+            GainsAndLossesScenarios: 21.392
+            GainsAndLossesScenarios: 32.088
+            GainsAndLossesScenarios: 42.784
+            GainsAndLossesScenarios: 53.482
+            PriceMovementValues: -26.741
+            PriceMovementValues: -21.392
+            PriceMovementValues: -16.044
+            PriceMovementValues: -10.696
+            PriceMovementValues: -5.348
+            PriceMovementValues: 0
+            PriceMovementValues: 5.348
+            PriceMovementValues: 10.696
+            PriceMovementValues: 16.044
+            PriceMovementValues: 21.392
+            PriceMovementValues: 26.741
+            UnderlyingSymbol: GOOG
+            Quantity: 2
+            Symbol: GOOG
+            Multiplier: 1
+            NAV: 356.54
+            UnderlyingPrice: 178.22
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 356.54
+            Greeks: {
+            }
+            ProductId: p3277
+            WhatIfAdjustment: {
+            }
+            Requirement: 53.482
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 178.27
+          }
+          NAV: 356.54
+          RiskCharge: -53.482
+          GainsAndLosses: -53.482
+          GainsAndLosses: -42.784
+          GainsAndLosses: -32.088
+          GainsAndLosses: -21.392
+          GainsAndLosses: -10.696
+          GainsAndLosses: 0
+          GainsAndLosses: 10.696
+          GainsAndLosses: 21.392
+          GainsAndLosses: 32.088
+          GainsAndLosses: 42.784
+          GainsAndLosses: 53.482
+          ConcentrationPercentage: 0.0414791685086858
+          ConcentrationToNetLiq: 0.0008701488158174669
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 356.54
+          PositionAggregations: {
+            LongMarketValue: 356.54
+            DeltaLongExposure: 356.54
+            DeltaLongCount: 1
+          }
+          Requirement: 53.482
+        }
+        ClassGroups: {
+          ClassGroupId: GWSO
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: GWSO
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -0.0014999999999999998
+            GainsAndLossesScenarios: -0.0012000000000000001
+            GainsAndLossesScenarios: -0.0009
+            GainsAndLossesScenarios: -0.0006000000000000001
+            GainsAndLossesScenarios: -0.00030000000000000003
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 0.00030000000000000003
+            GainsAndLossesScenarios: 0.0006000000000000001
+            GainsAndLossesScenarios: 0.0009
+            GainsAndLossesScenarios: 0.0012000000000000001
+            GainsAndLossesScenarios: 0.0014999999999999998
+            PriceMovementValues: -0.00015
+            PriceMovementValues: -0.00012
+            PriceMovementValues: -0.00008999999999999999
+            PriceMovementValues: -0.00006
+            PriceMovementValues: -0.00003
+            PriceMovementValues: 0
+            PriceMovementValues: 0.00003
+            PriceMovementValues: 0.00006
+            PriceMovementValues: 0.00008999999999999999
+            PriceMovementValues: 0.00012
+            PriceMovementValues: 0.00015
+            UnderlyingSymbol: GWSO
+            Quantity: 10
+            Symbol: GWSO
+            Multiplier: 1
+            NAV: 0.01
+            UnderlyingPrice: 0.001
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 0.01
+            Greeks: {
+            }
+            ProductId: p3278
+            WhatIfAdjustment: {
+            }
+            Requirement: 0.0014999999999999998
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 0.001
+          }
+          NAV: 0.01
+          RiskCharge: -0.0014999999999999998
+          GainsAndLosses: -0.0014999999999999998
+          GainsAndLosses: -0.0012000000000000001
+          GainsAndLosses: -0.0009
+          GainsAndLosses: -0.0006000000000000001
+          GainsAndLosses: -0.00030000000000000003
+          GainsAndLosses: 0
+          GainsAndLosses: 0.00030000000000000003
+          GainsAndLosses: 0.0006000000000000001
+          GainsAndLosses: 0.0009
+          GainsAndLosses: 0.0012000000000000001
+          GainsAndLosses: 0.0014999999999999998
+          ConcentrationPercentage: 0.000001163380504534857
+          ConcentrationToNetLiq: 2.4404906767252538e-8
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 0.01
+          PositionAggregations: {
+            LongMarketValue: 0.01
+            DeltaLongExposure: 0.01
+            DeltaLongCount: 1
+          }
+          Requirement: 0.0014999999999999998
+        }
+        ClassGroups: {
+          ClassGroupId: HAIL
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: HAIL
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -9.114
+            GainsAndLossesScenarios: -7.292
+            GainsAndLossesScenarios: -5.47
+            GainsAndLossesScenarios: -3.646
+            GainsAndLossesScenarios: -1.824
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 1.824
+            GainsAndLossesScenarios: 3.646
+            GainsAndLossesScenarios: 5.47
+            GainsAndLossesScenarios: 7.292
+            GainsAndLossesScenarios: 9.114
+            PriceMovementValues: -4.557
+            PriceMovementValues: -3.646
+            PriceMovementValues: -2.735
+            PriceMovementValues: -1.823
+            PriceMovementValues: -0.912
+            PriceMovementValues: 0
+            PriceMovementValues: 0.912
+            PriceMovementValues: 1.823
+            PriceMovementValues: 2.735
+            PriceMovementValues: 3.646
+            PriceMovementValues: 4.557
+            UnderlyingSymbol: HAIL
+            Quantity: 2
+            Symbol: HAIL
+            Multiplier: 1
+            NAV: 60.76
+            UnderlyingPrice: 30.3828
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 60.76
+            Greeks: {
+            }
+            ProductId: p3279
+            WhatIfAdjustment: {
+            }
+            Requirement: 9.114
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 30.38
+          }
+          NAV: 60.76
+          RiskCharge: -9.114
+          GainsAndLosses: -9.114
+          GainsAndLosses: -7.292
+          GainsAndLosses: -5.47
+          GainsAndLosses: -3.646
+          GainsAndLosses: -1.824
+          GainsAndLosses: 0
+          GainsAndLosses: 1.824
+          GainsAndLosses: 3.646
+          GainsAndLosses: 5.47
+          GainsAndLosses: 7.292
+          GainsAndLosses: 9.114
+          ConcentrationPercentage: 0.007068699945553791
+          ConcentrationToNetLiq: 0.00014828421351782646
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 60.76
+          PositionAggregations: {
+            LongMarketValue: 60.76
+            DeltaLongExposure: 60.76
+            DeltaLongCount: 1
+          }
+          Requirement: 9.114
+        }
+        ClassGroups: {
+          ClassGroupId: IBUY
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: IBUY
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -30.762
+            GainsAndLossesScenarios: -24.608999999999998
+            GainsAndLossesScenarios: -18.456
+            GainsAndLossesScenarios: -12.306000000000001
+            GainsAndLossesScenarios: -6.1530000000000005
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 6.1530000000000005
+            GainsAndLossesScenarios: 12.306000000000001
+            GainsAndLossesScenarios: 18.456
+            GainsAndLossesScenarios: 24.608999999999998
+            GainsAndLossesScenarios: 30.762
+            PriceMovementValues: -10.254
+            PriceMovementValues: -8.203
+            PriceMovementValues: -6.152
+            PriceMovementValues: -4.102
+            PriceMovementValues: -2.051
+            PriceMovementValues: 0
+            PriceMovementValues: 2.051
+            PriceMovementValues: 4.102
+            PriceMovementValues: 6.152
+            PriceMovementValues: 8.203
+            PriceMovementValues: 10.254
+            UnderlyingSymbol: IBUY
+            Quantity: 3
+            Symbol: IBUY
+            Multiplier: 1
+            NAV: 205.07999999999998
+            UnderlyingPrice: 68.36
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 205.07999999999998
+            Greeks: {
+            }
+            ProductId: p3280
+            WhatIfAdjustment: {
+            }
+            Requirement: 30.762
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 68.36
+          }
+          NAV: 205.07999999999998
+          RiskCharge: -30.762
+          GainsAndLosses: -30.762
+          GainsAndLosses: -24.608999999999998
+          GainsAndLosses: -18.456
+          GainsAndLosses: -12.306000000000001
+          GainsAndLosses: -6.1530000000000005
+          GainsAndLosses: 0
+          GainsAndLosses: 6.1530000000000005
+          GainsAndLosses: 12.306000000000001
+          GainsAndLosses: 18.456
+          GainsAndLosses: 24.608999999999998
+          GainsAndLosses: 30.762
+          ConcentrationPercentage: 0.023858607387000845
+          ConcentrationToNetLiq: 0.0005004958279828151
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 205.07999999999998
+          PositionAggregations: {
+            LongMarketValue: 205.07999999999998
+            DeltaLongExposure: 205.07999999999998
+            DeltaLongCount: 1
+          }
+          Requirement: 30.762
+        }
+        ClassGroups: {
+          ClassGroupId: ICLN
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: ICLN
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -37.107
+            GainsAndLossesScenarios: -29.678
+            GainsAndLossesScenarios: -22.267999999999997
+            GainsAndLossesScenarios: -14.839
+            GainsAndLossesScenarios: -7.429
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 7.429
+            GainsAndLossesScenarios: 14.839
+            GainsAndLossesScenarios: 22.267999999999997
+            GainsAndLossesScenarios: 29.678
+            GainsAndLossesScenarios: 37.107
+            PriceMovementValues: -1.953
+            PriceMovementValues: -1.562
+            PriceMovementValues: -1.172
+            PriceMovementValues: -0.781
+            PriceMovementValues: -0.391
+            PriceMovementValues: 0
+            PriceMovementValues: 0.391
+            PriceMovementValues: 0.781
+            PriceMovementValues: 1.172
+            PriceMovementValues: 1.562
+            PriceMovementValues: 1.953
+            UnderlyingSymbol: ICLN
+            Quantity: 19
+            Symbol: ICLN
+            Multiplier: 1
+            NAV: 247.38
+            UnderlyingPrice: 12.91
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 247.38
+            Greeks: {
+            }
+            ProductId: p3281
+            WhatIfAdjustment: {
+            }
+            Requirement: 37.107
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 13.02
+          }
+          NAV: 247.38
+          RiskCharge: -37.107
+          GainsAndLosses: -37.107
+          GainsAndLosses: -29.678
+          GainsAndLosses: -22.267999999999997
+          GainsAndLosses: -14.839
+          GainsAndLosses: -7.429
+          GainsAndLosses: 0
+          GainsAndLosses: 7.429
+          GainsAndLosses: 14.839
+          GainsAndLosses: 22.267999999999997
+          GainsAndLosses: 29.678
+          GainsAndLosses: 37.107
+          ConcentrationPercentage: 0.02877970692118329
+          ConcentrationToNetLiq: 0.0006037285836082934
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 247.38
+          PositionAggregations: {
+            LongMarketValue: 247.38
+            DeltaLongExposure: 247.38
+            DeltaLongCount: 1
+          }
+          Requirement: 37.107
+        }
+        ClassGroups: {
+          ClassGroupId: IDRV
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: IDRV
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -18.428
+            GainsAndLossesScenarios: -14.74
+            GainsAndLossesScenarios: -11.056
+            GainsAndLossesScenarios: -7.372
+            GainsAndLossesScenarios: -3.684
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 3.684
+            GainsAndLossesScenarios: 7.372
+            GainsAndLossesScenarios: 11.056
+            GainsAndLossesScenarios: 14.74
+            GainsAndLossesScenarios: 18.428
+            PriceMovementValues: -4.607
+            PriceMovementValues: -3.685
+            PriceMovementValues: -2.764
+            PriceMovementValues: -1.843
+            PriceMovementValues: -0.921
+            PriceMovementValues: 0
+            PriceMovementValues: 0.921
+            PriceMovementValues: 1.843
+            PriceMovementValues: 2.764
+            PriceMovementValues: 3.685
+            PriceMovementValues: 4.607
+            UnderlyingSymbol: IDRV
+            Quantity: 4
+            Symbol: IDRV
+            Multiplier: 1
+            NAV: 122.84
+            UnderlyingPrice: 30.71
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 122.84
+            Greeks: {
+            }
+            ProductId: p3282
+            WhatIfAdjustment: {
+            }
+            Requirement: 18.428
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 30.71
+          }
+          NAV: 122.84
+          RiskCharge: -18.428
+          GainsAndLosses: -18.428
+          GainsAndLosses: -14.74
+          GainsAndLosses: -11.056
+          GainsAndLosses: -7.372
+          GainsAndLosses: -3.684
+          GainsAndLosses: 0
+          GainsAndLosses: 3.684
+          GainsAndLosses: 7.372
+          GainsAndLosses: 11.056
+          GainsAndLosses: 14.74
+          GainsAndLosses: 18.428
+          ConcentrationPercentage: 0.014290966117706184
+          ConcentrationToNetLiq: 0.0002998224146046199
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 122.84
+          PositionAggregations: {
+            LongMarketValue: 122.84
+            DeltaLongExposure: 122.84
+            DeltaLongCount: 1
+          }
+          Requirement: 18.428
+        }
+        ClassGroups: {
+          ClassGroupId: JETS
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: JETS
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -17.185
+            GainsAndLossesScenarios: -13.745000000000001
+            GainsAndLossesScenarios: -10.309999999999999
+            GainsAndLossesScenarios: -6.875
+            GainsAndLossesScenarios: -3.4350000000000005
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 3.4350000000000005
+            GainsAndLossesScenarios: 6.875
+            GainsAndLossesScenarios: 10.309999999999999
+            GainsAndLossesScenarios: 13.745000000000001
+            GainsAndLossesScenarios: 17.185
+            PriceMovementValues: -3.437
+            PriceMovementValues: -2.749
+            PriceMovementValues: -2.062
+            PriceMovementValues: -1.375
+            PriceMovementValues: -0.687
+            PriceMovementValues: 0
+            PriceMovementValues: 0.687
+            PriceMovementValues: 1.375
+            PriceMovementValues: 2.062
+            PriceMovementValues: 2.749
+            PriceMovementValues: 3.437
+            UnderlyingSymbol: JETS
+            Quantity: 5
+            Symbol: JETS
+            Multiplier: 1
+            NAV: 114.55
+            UnderlyingPrice: 22.91
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 114.55
+            Greeks: {
+            }
+            ProductId: p3283
+            WhatIfAdjustment: {
+            }
+            Requirement: 17.185
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 22.91
+          }
+          NAV: 114.55
+          RiskCharge: -17.185
+          GainsAndLosses: -17.185
+          GainsAndLosses: -13.745000000000001
+          GainsAndLosses: -10.309999999999999
+          GainsAndLosses: -6.875
+          GainsAndLosses: -3.4350000000000005
+          GainsAndLosses: 0
+          GainsAndLosses: 3.4350000000000005
+          GainsAndLosses: 6.875
+          GainsAndLosses: 10.309999999999999
+          GainsAndLosses: 13.745000000000001
+          GainsAndLosses: 17.185
+          ConcentrationPercentage: 0.013326523679446787
+          ConcentrationToNetLiq: 0.00027959888186348994
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 114.55
+          PositionAggregations: {
+            LongMarketValue: 114.55
+            DeltaLongExposure: 114.55
+            DeltaLongCount: 1
+          }
+          Requirement: 17.185
+        }
+        ClassGroups: {
+          ClassGroupId: JUSHF
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: JUSHF
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -0.8699999999999999
+            GainsAndLossesScenarios: -0.696
+            GainsAndLossesScenarios: -0.522
+            GainsAndLossesScenarios: -0.348
+            GainsAndLossesScenarios: -0.174
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 0.174
+            GainsAndLossesScenarios: 0.348
+            GainsAndLossesScenarios: 0.522
+            GainsAndLossesScenarios: 0.696
+            GainsAndLossesScenarios: 0.8699999999999999
+            PriceMovementValues: -0.0435
+            PriceMovementValues: -0.0348
+            PriceMovementValues: -0.026099999999999998
+            PriceMovementValues: -0.0174
+            PriceMovementValues: -0.0087
+            PriceMovementValues: 0
+            PriceMovementValues: 0.0087
+            PriceMovementValues: 0.0174
+            PriceMovementValues: 0.026099999999999998
+            PriceMovementValues: 0.0348
+            PriceMovementValues: 0.0435
+            UnderlyingSymbol: JUSHF
+            Quantity: 20
+            Symbol: JUSHF
+            Multiplier: 1
+            NAV: 5.8
+            UnderlyingPrice: 0.29
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 5.8
+            Greeks: {
+            }
+            ProductId: p3284
+            WhatIfAdjustment: {
+            }
+            Requirement: 0.8699999999999999
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 0.29
+          }
+          NAV: 5.8
+          RiskCharge: -0.8699999999999999
+          GainsAndLosses: -0.8699999999999999
+          GainsAndLosses: -0.696
+          GainsAndLosses: -0.522
+          GainsAndLosses: -0.348
+          GainsAndLosses: -0.174
+          GainsAndLosses: 0
+          GainsAndLosses: 0.174
+          GainsAndLosses: 0.348
+          GainsAndLosses: 0.522
+          GainsAndLosses: 0.696
+          GainsAndLosses: 0.8699999999999999
+          ConcentrationPercentage: 0.000674760692630217
+          ConcentrationToNetLiq: 0.000014154845925006472
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 5.8
+          PositionAggregations: {
+            LongMarketValue: 5.8
+            DeltaLongExposure: 5.8
+            DeltaLongCount: 1
+          }
+          Requirement: 0.8699999999999999
+        }
+        ClassGroups: {
+          ClassGroupId: METV
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: METV
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -25.32
+            GainsAndLossesScenarios: -20.259999999999998
+            GainsAndLossesScenarios: -15.19
+            GainsAndLossesScenarios: -10.129999999999999
+            GainsAndLossesScenarios: -5.0600000000000005
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 5.0600000000000005
+            GainsAndLossesScenarios: 10.129999999999999
+            GainsAndLossesScenarios: 15.19
+            GainsAndLossesScenarios: 20.259999999999998
+            GainsAndLossesScenarios: 25.32
+            PriceMovementValues: -2.532
+            PriceMovementValues: -2.026
+            PriceMovementValues: -1.519
+            PriceMovementValues: -1.013
+            PriceMovementValues: -0.506
+            PriceMovementValues: 0
+            PriceMovementValues: 0.506
+            PriceMovementValues: 1.013
+            PriceMovementValues: 1.519
+            PriceMovementValues: 2.026
+            PriceMovementValues: 2.532
+            UnderlyingSymbol: METV
+            Quantity: 10
+            Symbol: METV
+            Multiplier: 1
+            NAV: 168.79999999999998
+            UnderlyingPrice: 16.88
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 168.79999999999998
+            Greeks: {
+            }
+            ProductId: p3285
+            WhatIfAdjustment: {
+            }
+            Requirement: 25.32
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 16.88
+          }
+          NAV: 168.79999999999998
+          RiskCharge: -25.32
+          GainsAndLosses: -25.32
+          GainsAndLosses: -20.259999999999998
+          GainsAndLosses: -15.19
+          GainsAndLosses: -10.129999999999999
+          GainsAndLosses: -5.0600000000000005
+          GainsAndLosses: 0
+          GainsAndLosses: 5.0600000000000005
+          GainsAndLosses: 10.129999999999999
+          GainsAndLosses: 15.19
+          GainsAndLosses: 20.259999999999998
+          GainsAndLosses: 25.32
+          ConcentrationPercentage: 0.019637862916548385
+          ConcentrationToNetLiq: 0.0004119548262312229
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 168.79999999999998
+          PositionAggregations: {
+            LongMarketValue: 168.79999999999998
+            DeltaLongExposure: 168.79999999999998
+            DeltaLongCount: 1
+          }
+          Requirement: 25.32
+        }
+        ClassGroups: {
+          ClassGroupId: TSLA
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: TSLA
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -436.90500000000003
+            GainsAndLossesScenarios: -349.524
+            GainsAndLossesScenarios: -262.143
+            GainsAndLossesScenarios: -174.762
+            GainsAndLossesScenarios: -87.381
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 87.381
+            GainsAndLossesScenarios: 174.762
+            GainsAndLossesScenarios: 262.143
+            GainsAndLossesScenarios: 349.524
+            GainsAndLossesScenarios: 436.90500000000003
+            PriceMovementValues: -48.545
+            PriceMovementValues: -38.836
+            PriceMovementValues: -29.127
+            PriceMovementValues: -19.418
+            PriceMovementValues: -9.709
+            PriceMovementValues: 0
+            PriceMovementValues: 9.709
+            PriceMovementValues: 19.418
+            PriceMovementValues: 29.127
+            PriceMovementValues: 38.836
+            PriceMovementValues: 48.545
+            UnderlyingSymbol: TSLA
+            Quantity: 9
+            Symbol: TSLA
+            Multiplier: 1
+            NAV: 2912.67
+            UnderlyingPrice: 322.71
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 2912.67
+            Greeks: {
+            }
+            ProductId: p3287
+            WhatIfAdjustment: {
+            }
+            Requirement: 436.90500000000003
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 323.63
+          }
+          NAV: 2912.67
+          RiskCharge: -436.90500000000003
+          GainsAndLosses: -436.90500000000003
+          GainsAndLosses: -349.524
+          GainsAndLosses: -262.143
+          GainsAndLosses: -174.762
+          GainsAndLosses: -87.381
+          GainsAndLosses: 0
+          GainsAndLosses: 87.381
+          GainsAndLosses: 174.762
+          GainsAndLosses: 262.143
+          GainsAndLosses: 349.524
+          GainsAndLosses: 436.90500000000003
+          ConcentrationPercentage: 0.3388543494143542
+          ConcentrationToNetLiq: 0.007108417194097648
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 2912.67
+          PositionAggregations: {
+            LongMarketValue: 2912.67
+            DeltaLongExposure: 2912.67
+            DeltaLongCount: 1
+          }
+          Requirement: 436.90500000000003
+        }
+        ClassGroups: {
+          ClassGroupId: UBER
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: UBER
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -68.65
+            GainsAndLossesScenarios: -54.92
+            GainsAndLossesScenarios: -41.19
+            GainsAndLossesScenarios: -27.46
+            GainsAndLossesScenarios: -13.73
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 13.73
+            GainsAndLossesScenarios: 27.46
+            GainsAndLossesScenarios: 41.19
+            GainsAndLossesScenarios: 54.92
+            GainsAndLossesScenarios: 68.65
+            PriceMovementValues: -13.73
+            PriceMovementValues: -10.984
+            PriceMovementValues: -8.238
+            PriceMovementValues: -5.492
+            PriceMovementValues: -2.746
+            PriceMovementValues: 0
+            PriceMovementValues: 2.746
+            PriceMovementValues: 5.492
+            PriceMovementValues: 8.238
+            PriceMovementValues: 10.984
+            PriceMovementValues: 13.73
+            UnderlyingSymbol: UBER
+            Quantity: 5
+            Symbol: UBER
+            Multiplier: 1
+            NAV: 457.65
+            UnderlyingPrice: 91.3
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 457.65
+            Greeks: {
+            }
+            ProductId: p3288
+            WhatIfAdjustment: {
+            }
+            Requirement: 68.65
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 91.53
+          }
+          NAV: 457.65
+          RiskCharge: -68.65
+          GainsAndLosses: -68.65
+          GainsAndLosses: -54.92
+          GainsAndLosses: -41.19
+          GainsAndLosses: -27.46
+          GainsAndLosses: -13.73
+          GainsAndLosses: 0
+          GainsAndLosses: 13.73
+          GainsAndLosses: 27.46
+          GainsAndLosses: 41.19
+          GainsAndLosses: 54.92
+          GainsAndLosses: 68.65
+          ConcentrationPercentage: 0.05324210879003773
+          ConcentrationToNetLiq: 0.0011169312330479248
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 457.65
+          PositionAggregations: {
+            LongMarketValue: 457.65
+            DeltaLongExposure: 457.65
+            DeltaLongCount: 1
+          }
+          Requirement: 68.65
+        }
+        ClassGroups: {
+          ClassGroupId: XLV
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: XLV
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -60.269999999999996
+            GainsAndLossesScenarios: -48.215999999999994
+            GainsAndLossesScenarios: -36.162
+            GainsAndLossesScenarios: -24.107999999999997
+            GainsAndLossesScenarios: -12.053999999999998
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 12.053999999999998
+            GainsAndLossesScenarios: 24.107999999999997
+            GainsAndLossesScenarios: 36.162
+            GainsAndLossesScenarios: 48.215999999999994
+            GainsAndLossesScenarios: 60.269999999999996
+            PriceMovementValues: -20.09
+            PriceMovementValues: -16.072
+            PriceMovementValues: -12.054
+            PriceMovementValues: -8.036
+            PriceMovementValues: -4.018
+            PriceMovementValues: 0
+            PriceMovementValues: 4.018
+            PriceMovementValues: 8.036
+            PriceMovementValues: 12.054
+            PriceMovementValues: 16.072
+            PriceMovementValues: 20.09
+            UnderlyingSymbol: XLV
+            Quantity: 3
+            Symbol: XLV
+            Multiplier: 1
+            NAV: 401.79
+            UnderlyingPrice: 133.66
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            IsETF: true
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 401.79
+            Greeks: {
+            }
+            ProductId: p3289
+            WhatIfAdjustment: {
+            }
+            Requirement: 60.269999999999996
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 133.93
+          }
+          NAV: 401.79
+          RiskCharge: -60.269999999999996
+          GainsAndLosses: -60.269999999999996
+          GainsAndLosses: -48.215999999999994
+          GainsAndLosses: -36.162
+          GainsAndLosses: -24.107999999999997
+          GainsAndLosses: -12.053999999999998
+          GainsAndLosses: 0
+          GainsAndLosses: 12.053999999999998
+          GainsAndLosses: 24.107999999999997
+          GainsAndLosses: 36.162
+          GainsAndLosses: 48.215999999999994
+          GainsAndLosses: 60.269999999999996
+          ConcentrationPercentage: 0.046743465291706025
+          ConcentrationToNetLiq: 0.0009805891539082072
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 401.79
+          PositionAggregations: {
+            LongMarketValue: 401.79
+            DeltaLongExposure: 401.79
+            DeltaLongCount: 1
+          }
+          Requirement: 60.269999999999996
+        }
+        NAV: 8595.640000000001
+        RiskCharge: -1289.362
+        GainsAndLosses: -1289.362
+        GainsAndLosses: -1031.485
+        GainsAndLosses: -773.616
+        GainsAndLosses: -515.746
+        GainsAndLosses: -257.868
+        GainsAndLosses: 0
+        GainsAndLosses: 257.868
+        GainsAndLosses: 515.746
+        GainsAndLosses: 773.616
+        GainsAndLosses: 1031.485
+        GainsAndLosses: 1289.362
+        AppliedOffsetPercent: 1
+        Requirement: 1289.362
+        ConcentrationPercentage: 1
+        ConcentrationToNetLiq: 0.020977839599492183
+        ScenariosPercentages: -0.15
+        ScenariosPercentages: -0.12
+        ScenariosPercentages: -0.09
+        ScenariosPercentages: -0.06
+        ScenariosPercentages: -0.03
+        ScenariosPercentages: 0
+        ScenariosPercentages: 0.03
+        ScenariosPercentages: 0.06
+        ScenariosPercentages: 0.09
+        ScenariosPercentages: 0.12
+        ScenariosPercentages: 0.15
+        MorningNAV: 8595.640000000001
+        PositionAggregations: {
+          LongMarketValue: 8595.640000000001
+          DeltaLongExposure: 8595.640000000001
+          DeltaLongCount: 21
+        }
+      }
+    }
+    NAV: 8595.640000000001
+    Requirement: 1289.362
+    Cash: 52867.4098
+    AdvancedValues: {
+    }
+    BuyingPower: 403163.70826
+    NetLiquidity: 61463.0498
+    ValueAtRiskResult: {
+    }
+    GainsAndLosses: -1289.362
+    GainsAndLosses: -1031.485
+    GainsAndLosses: -773.616
+    GainsAndLosses: -515.746
+    GainsAndLosses: -257.868
+    GainsAndLosses: 0
+    GainsAndLosses: 257.868
+    GainsAndLosses: 515.746
+    GainsAndLosses: 773.616
+    GainsAndLosses: 1031.485
+    GainsAndLosses: 1289.362
+    MorningNAV: 8595.640000000001
+    CreditUtilization: 0.020977839599492183
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 60173.6878
+    PositionAggregations: {
+      LongMarketValue: 8595.640000000001
+      DeltaLongExposure: 8595.640000000001
+      DeltaLongCount: 21
+    }
+  }
+  AccountId: 10142
+  AccountNumber: TS2
+  AccountName: Level2Account
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 9.2803
+  }
+}
+YesterdayLiquidationValue: 61463.0554
+Cash: 52867.4098
+IsPMAccount: true
+AccountRiskType: PMCPM
+AlertLevel: 103
+} 
+MarginManagerInfo: {10143 : AccountId: 10143
+AccountNumber: TS3
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+      ProductGroups: {
+        ProductGroupId: RegT
+        ClassGroups: {
+          ClassGroupId: NVDA
+          ProductGroupId: RegT
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: NVDA
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: -10648.35
+            GainsAndLossesScenarios: -8518.5
+            GainsAndLossesScenarios: -6389.1
+            GainsAndLossesScenarios: -4259.25
+            GainsAndLossesScenarios: -2129.85
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 2129.85
+            GainsAndLossesScenarios: 4259.25
+            GainsAndLossesScenarios: 6389.1
+            GainsAndLossesScenarios: 8518.5
+            GainsAndLossesScenarios: 10648.35
+            PriceMovementValues: -23.663
+            PriceMovementValues: -18.93
+            PriceMovementValues: -14.198
+            PriceMovementValues: -9.465
+            PriceMovementValues: -4.733
+            PriceMovementValues: 0
+            PriceMovementValues: 4.733
+            PriceMovementValues: 9.465
+            PriceMovementValues: 14.198
+            PriceMovementValues: 18.93
+            PriceMovementValues: 23.663
+            UnderlyingSymbol: NVDA
+            Quantity: 450
+            Symbol: NVDA
+            Multiplier: 1
+            NAV: 70987.5
+            UnderlyingPrice: 157.58
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 70987.5
+            Greeks: {
+            }
+            ProductId: p3482
+            WhatIfAdjustment: {
+            }
+            IsShockEligible: true
+            Price: 157.75
+          }
+          NAV: 70987.5
+          RiskCharge: -10648.35
+          GainsAndLosses: -10648.35
+          GainsAndLosses: -8518.5
+          GainsAndLosses: -6389.1
+          GainsAndLosses: -4259.25
+          GainsAndLosses: -2129.85
+          GainsAndLosses: 0
+          GainsAndLosses: 2129.85
+          GainsAndLosses: 4259.25
+          GainsAndLosses: 6389.1
+          GainsAndLosses: 8518.5
+          GainsAndLosses: 10648.35
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 70987.5
+          PositionAggregations: {
+            LongMarketValue: 70987.5
+            DeltaLongExposure: 70987.5
+            DeltaLongCount: 1
+          }
+          Requirement: 17727.75
+        }
+        NAV: 70987.5
+        RiskCharge: -10648.35
+        GainsAndLosses: -10648.35
+        GainsAndLosses: -8518.5
+        GainsAndLosses: -6389.1
+        GainsAndLosses: -4259.25
+        GainsAndLosses: -2129.85
+        GainsAndLosses: 0
+        GainsAndLosses: 2129.85
+        GainsAndLosses: 4259.25
+        GainsAndLosses: 6389.1
+        GainsAndLosses: 8518.5
+        GainsAndLosses: 10648.35
+        AppliedOffsetPercent: 1
+        ScenariosPercentages: -0.15
+        ScenariosPercentages: -0.12
+        ScenariosPercentages: -0.09
+        ScenariosPercentages: -0.06
+        ScenariosPercentages: -0.03
+        ScenariosPercentages: 0
+        ScenariosPercentages: 0.03
+        ScenariosPercentages: 0.06
+        ScenariosPercentages: 0.09
+        ScenariosPercentages: 0.12
+        ScenariosPercentages: 0.15
+        MorningNAV: 70987.5
+        PositionAggregations: {
+          LongMarketValue: 70987.5
+          DeltaLongExposure: 70987.5
+          DeltaLongCount: 1
+        }
+      }
+    }
+    NAV: 70987.5
+    Requirement: 17727.75
+    Cash: 770075.46
+    AdvancedValues: {
+    }
+    BuyingPower: 5635121.8319999995
+    NetLiquidity: 840986.46
+    ValueAtRiskResult: {
+    }
+    GainsAndLosses: -10648.35
+    GainsAndLosses: -8518.5
+    GainsAndLosses: -6389.1
+    GainsAndLosses: -4259.25
+    GainsAndLosses: -2129.85
+    GainsAndLosses: 0
+    GainsAndLosses: 2129.85
+    GainsAndLosses: 4259.25
+    GainsAndLosses: 6389.1
+    GainsAndLosses: 8518.5
+    GainsAndLosses: 10648.35
+    MorningNAV: 70987.5
+    CreditUtilization: 0.021079709178670962
+    DayPnL: -76.49999999999437
+    DayPnLUtilization: -0.00009096460363939078
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 823258.71
+    PositionAggregations: {
+      LongMarketValue: 70987.5
+      DeltaLongExposure: 70987.5
+      DeltaLongCount: 1
+    }
+  }
+  AccountId: 10143
+  AccountNumber: TS3
+  AccountName: Level3Account
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 0.1806
+  }
+}
+YesterdayLiquidationValue: 841062.96
+Cash: 770075.46
+IsPMAccount: true
+AccountRiskType: RegTMargin
+AlertLevel: 103
+} 
+MarginManagerInfo: {10144 : AccountId: 10144
+AccountNumber: TS4
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+      ProductGroups: {
+        ProductGroupId: RegT
+        ClassGroups: {
+          ClassGroupId: AMD
+          ProductGroupId: RegT
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: AMD
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: -64931.719999999994
+            GainsAndLossesScenarios: -51943.57000000001
+            GainsAndLossesScenarios: -38958.43
+            GainsAndLossesScenarios: -25973.289999999997
+            GainsAndLossesScenarios: -12985.14
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 12985.14
+            GainsAndLossesScenarios: 25973.289999999997
+            GainsAndLossesScenarios: 38958.43
+            GainsAndLossesScenarios: 51943.57000000001
+            GainsAndLossesScenarios: 64931.719999999994
+            PriceMovementValues: -21.572
+            PriceMovementValues: -17.257
+            PriceMovementValues: -12.943
+            PriceMovementValues: -8.629
+            PriceMovementValues: -4.314
+            PriceMovementValues: 0
+            PriceMovementValues: 4.314
+            PriceMovementValues: 8.629
+            PriceMovementValues: 12.943
+            PriceMovementValues: 17.257
+            PriceMovementValues: 21.572
+            UnderlyingSymbol: AMD
+            Quantity: 3010
+            Symbol: AMD
+            Multiplier: 1
+            NAV: 432868.10000000003
+            UnderlyingPrice: 143.59
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 432868.10000000003
+            Greeks: {
+            }
+            ProductId: p3290
+            WhatIfAdjustment: {
+            }
+            IsShockEligible: true
+            Price: 143.81
+          }
+          NAV: 432868.10000000003
+          RiskCharge: -64931.719999999994
+          GainsAndLosses: -64931.719999999994
+          GainsAndLosses: -51943.57000000001
+          GainsAndLosses: -38958.43
+          GainsAndLosses: -25973.289999999997
+          GainsAndLosses: -12985.14
+          GainsAndLosses: 0
+          GainsAndLosses: 12985.14
+          GainsAndLosses: 25973.289999999997
+          GainsAndLosses: 38958.43
+          GainsAndLosses: 51943.57000000001
+          GainsAndLosses: 64931.719999999994
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 432868.10000000003
+          PositionAggregations: {
+            LongMarketValue: 432868.10000000003
+            DeltaLongExposure: 432868.10000000003
+            DeltaLongCount: 1
+          }
+          Requirement: 108051.475
+        }
+        ClassGroups: {
+          ClassGroupId: NVDA
+          ProductGroupId: RegT
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: NVDA
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: -2366.3
+            GainsAndLossesScenarios: -1893
+            GainsAndLossesScenarios: -1419.8
+            GainsAndLossesScenarios: -946.5
+            GainsAndLossesScenarios: -473.29999999999995
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 473.29999999999995
+            GainsAndLossesScenarios: 946.5
+            GainsAndLossesScenarios: 1419.8
+            GainsAndLossesScenarios: 1893
+            GainsAndLossesScenarios: 2366.3
+            PriceMovementValues: -23.663
+            PriceMovementValues: -18.93
+            PriceMovementValues: -14.198
+            PriceMovementValues: -9.465
+            PriceMovementValues: -4.733
+            PriceMovementValues: 0
+            PriceMovementValues: 4.733
+            PriceMovementValues: 9.465
+            PriceMovementValues: 14.198
+            PriceMovementValues: 18.93
+            PriceMovementValues: 23.663
+            UnderlyingSymbol: NVDA
+            Quantity: 100
+            Symbol: NVDA
+            Multiplier: 1
+            NAV: 15775
+            UnderlyingPrice: 157.58
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 15775
+            Greeks: {
+            }
+            ProductId: p3240
+            WhatIfAdjustment: {
+            }
+            IsShockEligible: true
+            Price: 157.75
+          }
+          NAV: 15775
+          RiskCharge: -2366.3
+          GainsAndLosses: -2366.3
+          GainsAndLosses: -1893
+          GainsAndLosses: -1419.8
+          GainsAndLosses: -946.5
+          GainsAndLosses: -473.29999999999995
+          GainsAndLosses: 0
+          GainsAndLosses: 473.29999999999995
+          GainsAndLosses: 946.5
+          GainsAndLosses: 1419.8
+          GainsAndLosses: 1893
+          GainsAndLosses: 2366.3
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 15775
+          PositionAggregations: {
+            LongMarketValue: 15775
+            DeltaLongExposure: 15775
+            DeltaLongCount: 1
+          }
+          Requirement: 3939.5
+        }
+        ClassGroups: {
+          ClassGroupId: QQQ
+          ProductGroupId: RegT
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: QQQ
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: -10961.8
+            GainsAndLossesScenarios: -8769.4
+            GainsAndLossesScenarios: -6577
+            GainsAndLossesScenarios: -4384.8
+            GainsAndLossesScenarios: -2192.4
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 2192.4
+            GainsAndLossesScenarios: 4384.8
+            GainsAndLossesScenarios: 6577
+            GainsAndLossesScenarios: 8769.4
+            GainsAndLossesScenarios: 10961.8
+            PriceMovementValues: -54.809
+            PriceMovementValues: -43.847
+            PriceMovementValues: -32.885
+            PriceMovementValues: -21.924
+            PriceMovementValues: -10.962
+            PriceMovementValues: 0
+            PriceMovementValues: 10.962
+            PriceMovementValues: 21.924
+            PriceMovementValues: 32.885
+            PriceMovementValues: 43.847
+            PriceMovementValues: 54.809
+            UnderlyingSymbol: QQQ
+            Quantity: 200
+            Symbol: QQQ
+            Multiplier: 1
+            NAV: 109618
+            UnderlyingPrice: 547.59
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 109618
+            Greeks: {
+            }
+            ProductId: p3263
+            WhatIfAdjustment: {
+            }
+            IsShockEligible: true
+            Price: 548.09
+          }
+          Products: {
+            ProductType: OPTN
+            ClassGroupId: QQQ
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: 22025.556
+            GainsAndLossesScenarios: 17640.84
+            GainsAndLossesScenarios: 13256.124
+            GainsAndLossesScenarios: 8871.408
+            GainsAndLossesScenarios: 4486.692
+            GainsAndLossesScenarios: -0.0
+            GainsAndLossesScenarios: -4282.768
+            GainsAndLossesScenarios: -8667.484
+            GainsAndLossesScenarios: -13052.2
+            GainsAndLossesScenarios: -17436.92
+            GainsAndLossesScenarios: -21821.636
+            PriceMovementValues: -5506.389
+            PriceMovementValues: -4410.21
+            PriceMovementValues: -3314.031
+            PriceMovementValues: -2217.852
+            PriceMovementValues: -1121.673
+            PriceMovementValues: 0
+            PriceMovementValues: 1070.692
+            PriceMovementValues: 2166.871
+            PriceMovementValues: 3263.05
+            PriceMovementValues: 4359.23
+            PriceMovementValues: 5455.409
+            UnderlyingSymbol: QQQ
+            Quantity: -4
+            Symbol: QQQ   250630C00450000
+            Multiplier: 100
+            NAV: -39337.96
+            CallPut: C
+            Strike: 450
+            UnderlyingPrice: 548.09
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            UnderlyingPriceMovementValues: -54.809
+            UnderlyingPriceMovementValues: -43.847
+            UnderlyingPriceMovementValues: -32.885
+            UnderlyingPriceMovementValues: -21.924
+            UnderlyingPriceMovementValues: -10.962
+            UnderlyingPriceMovementValues: 0
+            UnderlyingPriceMovementValues: 10.962
+            UnderlyingPriceMovementValues: 21.924
+            UnderlyingPriceMovementValues: 32.885
+            UnderlyingPriceMovementValues: 43.847
+            UnderlyingPriceMovementValues: 54.809
+            MorningNAV: -39337.96
+            Greeks: {
+              Delta: 1
+              ImpliedVolatility: 0.278233
+              Theta: -0.05707498771495491
+            }
+            ProductId: p3250
+            WhatIfAdjustment: {
+            }
+            Expiration: 6/30/2025
+            IsShockEligible: true
+            Price: 98.3449
+          }
+          Products: {
+            ProductType: OPTN
+            ClassGroupId: QQQ
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: -22031.436
+            GainsAndLossesScenarios: -17646.72
+            GainsAndLossesScenarios: -13262.004
+            GainsAndLossesScenarios: -8877.288
+            GainsAndLossesScenarios: -4492.572
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 4276.888
+            GainsAndLossesScenarios: 8661.604
+            GainsAndLossesScenarios: 13046.32
+            GainsAndLossesScenarios: 17431.04
+            GainsAndLossesScenarios: 21815.756
+            PriceMovementValues: -5507.859
+            PriceMovementValues: -4411.68
+            PriceMovementValues: -3315.501
+            PriceMovementValues: -2219.322
+            PriceMovementValues: -1123.143
+            PriceMovementValues: 0
+            PriceMovementValues: 1069.222
+            PriceMovementValues: 2165.401
+            PriceMovementValues: 3261.58
+            PriceMovementValues: 4357.76
+            PriceMovementValues: 5453.939
+            UnderlyingSymbol: QQQ
+            Quantity: 4
+            Symbol: QQQ   250630C00490000
+            Multiplier: 100
+            NAV: 23343.84
+            CallPut: C
+            Strike: 490
+            UnderlyingPrice: 548.09
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            UnderlyingPriceMovementValues: -54.809
+            UnderlyingPriceMovementValues: -43.847
+            UnderlyingPriceMovementValues: -32.885
+            UnderlyingPriceMovementValues: -21.924
+            UnderlyingPriceMovementValues: -10.962
+            UnderlyingPriceMovementValues: 0
+            UnderlyingPriceMovementValues: 10.962
+            UnderlyingPriceMovementValues: 21.924
+            UnderlyingPriceMovementValues: 32.885
+            UnderlyingPriceMovementValues: 43.847
+            UnderlyingPriceMovementValues: 54.809
+            MorningNAV: 23343.84
+            Greeks: {
+              Delta: 1
+              ImpliedVolatility: 0.278233
+              Theta: -0.06214831995645777
+            }
+            ProductId: p3251
+            WhatIfAdjustment: {
+            }
+            Expiration: 6/30/2025
+            IsShockEligible: true
+            Price: 58.3596
+          }
+          Products: {
+            ProductType: OPTN
+            ClassGroupId: QQQ
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: 8174.192
+            GainsAndLossesScenarios: 6819.702
+            GainsAndLossesScenarios: 5318.056
+            GainsAndLossesScenarios: 3684.184
+            GainsAndLossesScenarios: 1934.89
+            GainsAndLossesScenarios: -0.0
+            GainsAndLossesScenarios: -1841.042
+            GainsAndLossesScenarios: -3835.29
+            GainsAndLossesScenarios: -5881.476
+            GainsAndLossesScenarios: -7967.876
+            GainsAndLossesScenarios: -10084.802
+            PriceMovementValues: -4087.096
+            PriceMovementValues: -3409.851
+            PriceMovementValues: -2659.028
+            PriceMovementValues: -1842.092
+            PriceMovementValues: -967.445
+            PriceMovementValues: 0
+            PriceMovementValues: 920.521
+            PriceMovementValues: 1917.645
+            PriceMovementValues: 2940.738
+            PriceMovementValues: 3983.938
+            PriceMovementValues: 5042.401
+            UnderlyingSymbol: QQQ
+            Quantity: -2
+            Symbol: QQQ   250919C00490000
+            Multiplier: 100
+            NAV: -13753.22
+            CallPut: C
+            Strike: 490
+            UnderlyingPrice: 548.09
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            UnderlyingPriceMovementValues: -54.809
+            UnderlyingPriceMovementValues: -43.847
+            UnderlyingPriceMovementValues: -32.885
+            UnderlyingPriceMovementValues: -21.924
+            UnderlyingPriceMovementValues: -10.962
+            UnderlyingPriceMovementValues: 0
+            UnderlyingPriceMovementValues: 10.962
+            UnderlyingPriceMovementValues: 21.924
+            UnderlyingPriceMovementValues: 32.885
+            UnderlyingPriceMovementValues: 43.847
+            UnderlyingPriceMovementValues: 54.809
+            MorningNAV: -13753.22
+            Greeks: {
+              Delta: 0.85
+              Vega: 0.5804793105650071
+              ImpliedVolatility: 0.254141
+              Theta: -0.14104666024071502
+              Gamma: 0.0033846501332251257
+            }
+            ProductId: p3264
+            WhatIfAdjustment: {
+            }
+            Expiration: 9/19/2025
+            IsShockEligible: true
+            Price: 68.7661
+          }
+          NAV: 79870.66
+          RiskCharge: -2793.4880000000003
+          GainsAndLosses: -2793.4880000000003
+          GainsAndLosses: -1955.5780000000004
+          GainsAndLosses: -1264.8240000000014
+          GainsAndLosses: -706.496000000001
+          GainsAndLosses: -263.3900000000001
+          GainsAndLosses: 0
+          GainsAndLosses: 345.47800000000007
+          GainsAndLosses: 543.6299999999992
+          GainsAndLosses: 689.6439999999993
+          GainsAndLosses: 795.644000000002
+          GainsAndLosses: 871.1180000000022
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 79870.66
+          PositionAggregations: {
+            LongMarketValue: 132961.84
+            ShortMarketValue: -53091.18
+            DeltaLongExposure: 328854
+            DeltaShortExposure: 312411.3
+            DeltaLongCount: 1
+            VegaExposure: 116.09586211300143
+            ThetaExposure: 75.89865511670808
+            GammaExposure: 371.01857830387183
+          }
+          Requirement: 40500
+        }
+        NAV: 528513.76
+        RiskCharge: -70091.50799999999
+        GainsAndLosses: -70091.50799999999
+        GainsAndLosses: -55792.14800000001
+        GainsAndLosses: -41643.054000000004
+        GainsAndLosses: -27626.286
+        GainsAndLosses: -13721.829999999998
+        GainsAndLosses: 0
+        GainsAndLosses: 13803.917999999998
+        GainsAndLosses: 27463.42
+        GainsAndLosses: 41067.874
+        GainsAndLosses: 54632.21400000001
+        GainsAndLosses: 68169.13799999999
+        AppliedOffsetPercent: 1
+        ScenariosPercentages: -0.15
+        ScenariosPercentages: -0.12
+        ScenariosPercentages: -0.09
+        ScenariosPercentages: -0.06
+        ScenariosPercentages: -0.03
+        ScenariosPercentages: 0
+        ScenariosPercentages: 0.03
+        ScenariosPercentages: 0.06
+        ScenariosPercentages: 0.09
+        ScenariosPercentages: 0.12
+        ScenariosPercentages: 0.15
+        MorningNAV: 528513.76
+        PositionAggregations: {
+          LongMarketValue: 581604.9400000001
+          ShortMarketValue: -53091.18
+          DeltaLongExposure: 777497.1000000001
+          DeltaShortExposure: 312411.3
+          DeltaLongCount: 3
+          VegaExposure: 116.09586211300143
+          ThetaExposure: 75.89865511670808
+          GammaExposure: 371.01857830387183
+        }
+      }
+    }
+    NAV: 528513.76
+    Requirement: 152490.975
+    Cash: 549127
+    AdvancedValues: {
+    }
+    BuyingPower: 7220193.092
+    NetLiquidity: 1075878.9
+    ValueAtRiskResult: {
+    }
+    GainsAndLosses: -70091.50799999999
+    GainsAndLosses: -55792.14800000001
+    GainsAndLosses: -41643.054000000004
+    GainsAndLosses: -27626.286
+    GainsAndLosses: -13721.829999999998
+    GainsAndLosses: 0
+    GainsAndLosses: 13803.917999999998
+    GainsAndLosses: 27463.42
+    GainsAndLosses: 41067.874
+    GainsAndLosses: 54632.21400000001
+    GainsAndLosses: 68169.13799999999
+    MorningNAV: 528513.76
+    CreditUtilization: 0.14173618889635256
+    DayPnL: -779.1999999999954
+    DayPnLUtilization: -0.000724245079999241
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 923387.9249999999
+    PositionAggregations: {
+      LongMarketValue: 581604.9400000001
+      ShortMarketValue: -53091.18
+      DeltaLongExposure: 777497.1000000001
+      DeltaShortExposure: 312411.3
+      DeltaLongCount: 3
+      VegaExposure: 116.09586211300143
+      ThetaExposure: 75.89865511670808
+      GammaExposure: 371.01857830387183
+    }
+  }
+  AccountId: 10144
+  AccountNumber: TS4
+  AccountName: Level4Account
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 0.2259
+  }
+}
+YesterdayLiquidationValue: 1107080.8
+Cash: 549127
+IsPMAccount: true
+AccountRiskType: RegTMargin
+AlertLevel: 103
+} 
+MarginManagerInfo: {10145 : AccountId: 10145
+AccountNumber: TS5
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+      ProductGroups: {
+        ProductGroupId: 999
+        ClassGroups: {
+          ClassGroupId: NVDA
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: NVDA
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -2366.3
+            GainsAndLossesScenarios: -1893
+            GainsAndLossesScenarios: -1419.8
+            GainsAndLossesScenarios: -946.5
+            GainsAndLossesScenarios: -473.29999999999995
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 473.29999999999995
+            GainsAndLossesScenarios: 946.5
+            GainsAndLossesScenarios: 1419.8
+            GainsAndLossesScenarios: 1893
+            GainsAndLossesScenarios: 2366.3
+            PriceMovementValues: -23.663
+            PriceMovementValues: -18.93
+            PriceMovementValues: -14.198
+            PriceMovementValues: -9.465
+            PriceMovementValues: -4.733
+            PriceMovementValues: 0
+            PriceMovementValues: 4.733
+            PriceMovementValues: 9.465
+            PriceMovementValues: 14.198
+            PriceMovementValues: 18.93
+            PriceMovementValues: 23.663
+            UnderlyingSymbol: NVDA
+            Quantity: 100
+            Symbol: NVDA
+            Multiplier: 1
+            NAV: 15775
+            UnderlyingPrice: 157.58
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 15775
+            Greeks: {
+            }
+            ProductId: p3239
+            WhatIfAdjustment: {
+            }
+            Requirement: 2366.3
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 157.75
+          }
+          NAV: 15775
+          RiskCharge: -2366.3
+          GainsAndLosses: -2366.3
+          GainsAndLosses: -1893
+          GainsAndLosses: -1419.8
+          GainsAndLosses: -946.5
+          GainsAndLosses: -473.29999999999995
+          GainsAndLosses: 0
+          GainsAndLosses: 473.29999999999995
+          GainsAndLosses: 946.5
+          GainsAndLosses: 1419.8
+          GainsAndLosses: 1893
+          GainsAndLosses: 2366.3
+          ConcentrationPercentage: 0.9798970471400362
+          ConcentrationToNetLiq: 0.007807662846753129
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 15775
+          PositionAggregations: {
+            LongMarketValue: 15775
+            DeltaLongExposure: 15775
+            DeltaLongCount: 1
+          }
+          Requirement: 2366.3
+        }
+        ClassGroups: {
+          ClassGroupId: TSLA
+          ProductGroupId: 999
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: TSLA
+            ProductGroupId: 999
+            GainsAndLossesScenarios: -48.545
+            GainsAndLossesScenarios: -38.836
+            GainsAndLossesScenarios: -29.127
+            GainsAndLossesScenarios: -19.418
+            GainsAndLossesScenarios: -9.709
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 9.709
+            GainsAndLossesScenarios: 19.418
+            GainsAndLossesScenarios: 29.127
+            GainsAndLossesScenarios: 38.836
+            GainsAndLossesScenarios: 48.545
+            PriceMovementValues: -48.545
+            PriceMovementValues: -38.836
+            PriceMovementValues: -29.127
+            PriceMovementValues: -19.418
+            PriceMovementValues: -9.709
+            PriceMovementValues: 0
+            PriceMovementValues: 9.709
+            PriceMovementValues: 19.418
+            PriceMovementValues: 29.127
+            PriceMovementValues: 38.836
+            PriceMovementValues: 48.545
+            UnderlyingSymbol: TSLA
+            Quantity: 1
+            Symbol: TSLA
+            Multiplier: 1
+            NAV: 323.63
+            UnderlyingPrice: 322.71
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MarketMoveAdjustmentFactor: 1
+            MorningNAV: 323.63
+            Greeks: {
+            }
+            ProductId: p3465
+            WhatIfAdjustment: {
+            }
+            Requirement: 48.545
+            IsPMEligible: true
+            IsShockEligible: true
+            Price: 323.63
+          }
+          NAV: 323.63
+          RiskCharge: -48.545
+          GainsAndLosses: -48.545
+          GainsAndLosses: -38.836
+          GainsAndLosses: -29.127
+          GainsAndLosses: -19.418
+          GainsAndLosses: -9.709
+          GainsAndLosses: 0
+          GainsAndLosses: 9.709
+          GainsAndLosses: 19.418
+          GainsAndLosses: 29.127
+          GainsAndLosses: 38.836
+          GainsAndLosses: 48.545
+          ConcentrationPercentage: 0.02010295285996386
+          ConcentrationToNetLiq: 0.00016017537628180308
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 323.63
+          PositionAggregations: {
+            LongMarketValue: 323.63
+            DeltaLongExposure: 323.63
+            DeltaLongCount: 1
+          }
+          Requirement: 48.545
+        }
+        NAV: 16098.63
+        RiskCharge: -2414.8450000000003
+        GainsAndLosses: -2414.8450000000003
+        GainsAndLosses: -1931.836
+        GainsAndLosses: -1448.927
+        GainsAndLosses: -965.918
+        GainsAndLosses: -483.00899999999996
+        GainsAndLosses: 0
+        GainsAndLosses: 483.00899999999996
+        GainsAndLosses: 965.918
+        GainsAndLosses: 1448.927
+        GainsAndLosses: 1931.836
+        GainsAndLosses: 2414.8450000000003
+        AppliedOffsetPercent: 1
+        Requirement: 2414.8450000000003
+        ConcentrationPercentage: 1
+        ConcentrationToNetLiq: 0.007967838223034932
+        ScenariosPercentages: -0.15
+        ScenariosPercentages: -0.12
+        ScenariosPercentages: -0.09
+        ScenariosPercentages: -0.06
+        ScenariosPercentages: -0.03
+        ScenariosPercentages: 0
+        ScenariosPercentages: 0.03
+        ScenariosPercentages: 0.06
+        ScenariosPercentages: 0.09
+        ScenariosPercentages: 0.12
+        ScenariosPercentages: 0.15
+        MorningNAV: 16098.63
+        PositionAggregations: {
+          LongMarketValue: 16098.63
+          DeltaLongExposure: 16098.63
+          DeltaLongCount: 2
+        }
+      }
+    }
+    NAV: 16098.63
+    Requirement: 2414.8450000000003
+    Cash: 286975.42
+    AdvancedValues: {
+    }
+    BuyingPower: 2014416.6735000003
+    NetLiquidity: 303074.05
+    ValueAtRiskResult: {
+    }
+    GainsAndLosses: -2414.8450000000003
+    GainsAndLosses: -1931.836
+    GainsAndLosses: -1448.927
+    GainsAndLosses: -965.918
+    GainsAndLosses: -483.00899999999996
+    GainsAndLosses: 0
+    GainsAndLosses: 483.00899999999996
+    GainsAndLosses: 965.918
+    GainsAndLosses: 1448.927
+    GainsAndLosses: 1931.836
+    GainsAndLosses: 2414.8450000000003
+    MorningNAV: 16098.63
+    CreditUtilization: 0.007967838223034932
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 300659.205
+    PositionAggregations: {
+      LongMarketValue: 16098.63
+      DeltaLongExposure: 16098.63
+      DeltaLongCount: 2
+    }
+  }
+  AccountId: 10145
+  AccountNumber: TS5
+  AccountName: Level5Account
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 0.991
+  }
+}
+YesterdayLiquidationValue: 303074.05
+Cash: 286975.42
+IsPMAccount: true
+AccountRiskType: PMCPM
+AlertLevel: 103
+} 
+MarginManagerInfo: {10139 : AccountId: 10139
+AccountNumber: TS6
+BpValuesResponse: {
+  BpValues: {
+    AggregatedGroupingBpValues: {
+    }
+  }
+  StressTestOutput: {
+  }
+}
+PmBpValuesResponse: {
+  PmBpValues: {
+    Groupings: {
+      ProductGroups: {
+        ProductGroupId: RegT
+        ClassGroups: {
+          ClassGroupId: TSLA
+          ProductGroupId: RegT
+          Products: {
+            ProductType: EQUI
+            ClassGroupId: TSLA
+            ProductGroupId: RegT
+            GainsAndLossesScenarios: -24272.5
+            GainsAndLossesScenarios: -19418
+            GainsAndLossesScenarios: -14563.5
+            GainsAndLossesScenarios: -9709
+            GainsAndLossesScenarios: -4854.5
+            GainsAndLossesScenarios: 0
+            GainsAndLossesScenarios: 4854.5
+            GainsAndLossesScenarios: 9709
+            GainsAndLossesScenarios: 14563.5
+            GainsAndLossesScenarios: 19418
+            GainsAndLossesScenarios: 24272.5
+            PriceMovementValues: -48.545
+            PriceMovementValues: -38.836
+            PriceMovementValues: -29.127
+            PriceMovementValues: -19.418
+            PriceMovementValues: -9.709
+            PriceMovementValues: 0
+            PriceMovementValues: 9.709
+            PriceMovementValues: 19.418
+            PriceMovementValues: 29.127
+            PriceMovementValues: 38.836
+            PriceMovementValues: 48.545
+            UnderlyingSymbol: TSLA
+            Quantity: 500
+            Symbol: TSLA
+            Multiplier: 1
+            NAV: 161815
+            UnderlyingPrice: 322.71
+            InputStrategyComponentType: OpenPosition
+            VolatilityDownShock: {
+            }
+            VolatilityUpShock: {
+            }
+            ScenariosPercentages: -0.15
+            ScenariosPercentages: -0.12
+            ScenariosPercentages: -0.09
+            ScenariosPercentages: -0.06
+            ScenariosPercentages: -0.03
+            ScenariosPercentages: 0
+            ScenariosPercentages: 0.03
+            ScenariosPercentages: 0.06
+            ScenariosPercentages: 0.09
+            ScenariosPercentages: 0.12
+            ScenariosPercentages: 0.15
+            MorningNAV: 161815
+            Greeks: {
+            }
+            ProductId: p3431
+            WhatIfAdjustment: {
+            }
+            IsShockEligible: true
+            Price: 323.63
+          }
+          NAV: 161815
+          RiskCharge: -24272.5
+          GainsAndLosses: -24272.5
+          GainsAndLosses: -19418
+          GainsAndLosses: -14563.5
+          GainsAndLosses: -9709
+          GainsAndLosses: -4854.5
+          GainsAndLosses: 0
+          GainsAndLosses: 4854.5
+          GainsAndLosses: 9709
+          GainsAndLosses: 14563.5
+          GainsAndLosses: 19418
+          GainsAndLosses: 24272.5
+          ScenariosPercentages: -0.15
+          ScenariosPercentages: -0.12
+          ScenariosPercentages: -0.09
+          ScenariosPercentages: -0.06
+          ScenariosPercentages: -0.03
+          ScenariosPercentages: 0
+          ScenariosPercentages: 0.03
+          ScenariosPercentages: 0.06
+          ScenariosPercentages: 0.09
+          ScenariosPercentages: 0.12
+          ScenariosPercentages: 0.15
+          MorningNAV: 161815
+          PositionAggregations: {
+            LongMarketValue: 161815
+            DeltaLongExposure: 161815
+            DeltaLongCount: 1
+          }
+          Requirement: 40338.75
+        }
+        NAV: 161815
+        RiskCharge: -24272.5
+        GainsAndLosses: -24272.5
+        GainsAndLosses: -19418
+        GainsAndLosses: -14563.5
+        GainsAndLosses: -9709
+        GainsAndLosses: -4854.5
+        GainsAndLosses: 0
+        GainsAndLosses: 4854.5
+        GainsAndLosses: 9709
+        GainsAndLosses: 14563.5
+        GainsAndLosses: 19418
+        GainsAndLosses: 24272.5
+        AppliedOffsetPercent: 1
+        ScenariosPercentages: -0.15
+        ScenariosPercentages: -0.12
+        ScenariosPercentages: -0.09
+        ScenariosPercentages: -0.06
+        ScenariosPercentages: -0.03
+        ScenariosPercentages: 0
+        ScenariosPercentages: 0.03
+        ScenariosPercentages: 0.06
+        ScenariosPercentages: 0.09
+        ScenariosPercentages: 0.12
+        ScenariosPercentages: 0.15
+        MorningNAV: 161815
+        PositionAggregations: {
+          LongMarketValue: 161815
+          DeltaLongExposure: 161815
+          DeltaLongCount: 1
+        }
+      }
+    }
+    NAV: 161815
+    Requirement: 40338.75
+    Cash: 87691.79
+    AdvancedValues: {
+    }
+    BuyingPower: 1671695.493
+    NetLiquidity: 249046.78999999998
+    ValueAtRiskResult: {
+    }
+    GainsAndLosses: -24272.5
+    GainsAndLosses: -19418
+    GainsAndLosses: -14563.5
+    GainsAndLosses: -9709
+    GainsAndLosses: -4854.5
+    GainsAndLosses: 0
+    GainsAndLosses: 4854.5
+    GainsAndLosses: 9709
+    GainsAndLosses: 14563.5
+    GainsAndLosses: 19418
+    GainsAndLosses: 24272.5
+    MorningNAV: 161815
+    CreditUtilization: 0.16197257551482597
+    DayPnL: -460.00000000000796
+    DayPnLUtilization: -0.0018470424774397133
+    ScenarioOutputs: {
+      ScenarioDescription: -5
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 1
+      ScenarioDescription: -4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 2
+      ScenarioDescription: -3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 3
+      ScenarioDescription: -2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 4
+      ScenarioDescription: -1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 5
+      ScenarioDescription: 0
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 6
+      ScenarioDescription: 1
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 7
+      ScenarioDescription: 2
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 8
+      ScenarioDescription: 3
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 9
+      ScenarioDescription: 4
+    }
+    ScenarioOutputs: {
+      ScenarioIndex: 10
+      ScenarioDescription: 5
+    }
+    ExcessLiquidity: 208708.03999999998
+    PositionAggregations: {
+      LongMarketValue: 161815
+      DeltaLongExposure: 161815
+      DeltaLongCount: 1
+    }
+  }
+  AccountId: 10139
+  AccountNumber: TS6
+  AccountName: Level6Account
+  MetaInfo: {
+    OCCTPBizDate: 2025-06-27
+    ElapsedTimeInMs: 0.1167
+  }
+}
+YesterdayLiquidationValue: 249506.79
+Cash: 87691.79
+IsPMAccount: true
+AccountRiskType: RegTMargin
+AlertLevel: 103
+} 
+PmBpAggregatedGreeksSummary: Aggregate Data (all accounts)
+PmBpAggregatedGreeksSummary: Long Delta Exposure,2023390.07
+PmBpAggregatedGreeksSummary: Long Delta Groups,25
+PmBpAggregatedGreeksSummary: Short Delta Exposure,0.00
+PmBpAggregatedGreeksSummary: Short Delta Groups,0
+PmBpAggregatedGreeksSummary: Net Delta Exposure,2023390.07
+PmBpAggregatedGreeksSummary: Vega,116.10
+PmBpAggregatedGreeksSummary: 
+PmBpAggregatedGreeksSummary: Delta Exposure by Class Group,Long Delta,Short Delta,Net Delta
+PmBpAggregatedGreeksSummary: Class Group 00018,1229820.00,0.00,1229820.00
+PmBpAggregatedGreeksSummary: Class Group NVDA,173525.00,0.00,173525.00
+PmBpAggregatedGreeksSummary: Class Group AAPL,1608.64,0.00,1608.64
+PmBpAggregatedGreeksSummary: Class Group AMZN,669.90,0.00,669.90
+PmBpAggregatedGreeksSummary: Class Group ARKK,209.52,0.00,209.52
+PmBpAggregatedGreeksSummary: Class Group ARKQ,176.68,0.00,176.68
+PmBpAggregatedGreeksSummary: Class Group BLOK,221.12,0.00,221.12
+PmBpAggregatedGreeksSummary: Class Group COIN,353.43,0.00,353.43
+PmBpAggregatedGreeksSummary: Class Group CSAN,93.29,0.00,93.29
+PmBpAggregatedGreeksSummary: Class Group F,108.00,0.00,108.00
+PmBpAggregatedGreeksSummary: Class Group FINX,101.19,0.00,101.19
+PmBpAggregatedGreeksSummary: Class Group GOOGL,356.54,0.00,356.54
+PmBpAggregatedGreeksSummary: Class Group GWSO,0.01,0.00,0.01
+PmBpAggregatedGreeksSummary: Class Group HAIL,60.76,0.00,60.76
+PmBpAggregatedGreeksSummary: Class Group IBUY,205.08,0.00,205.08
+PmBpAggregatedGreeksSummary: Class Group ICLN,247.38,0.00,247.38
+PmBpAggregatedGreeksSummary: Class Group IDRV,122.84,0.00,122.84
+PmBpAggregatedGreeksSummary: Class Group JETS,114.55,0.00,114.55
+PmBpAggregatedGreeksSummary: Class Group JUSHF,5.80,0.00,5.80
+PmBpAggregatedGreeksSummary: Class Group METV,168.80,0.00,168.80
+PmBpAggregatedGreeksSummary: Class Group TSLA,165051.30,0.00,165051.30
+PmBpAggregatedGreeksSummary: Class Group UBER,457.65,0.00,457.65
+PmBpAggregatedGreeksSummary: Class Group XLV,401.79,0.00,401.79
+PmBpAggregatedGreeksSummary: Class Group AMD,432868.10,0.00,432868.10
+PmBpAggregatedGreeksSummary: Class Group QQQ,328854.00,312411.30,16442.70
+SearchCriteria: {
+  Filter: {
+    JoinOperator: And
+  }
+  Page: {
+  }
+}
+Page: {
+}

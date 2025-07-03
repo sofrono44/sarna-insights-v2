@@ -1,0 +1,46 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "admin/account.proto";
+import "user.proto";
+import "admin/admin_trading_level_change_enums.proto";
+import public "common.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminTradingLevelChange";
+
+message AdminTradingLevelChange {
+  int32 Id = 1;
+  EnumAccountApprovalStatus Status = 2;
+  google.protobuf.Timestamp CreatedTime = 3;
+  EnumBpOptionTradingLevel ExpectedTradingLevel = 4;
+  string Reason = 5;
+  EnumBpOptionTradingLevel RecommendedTradingLevel = 6;
+}
+
+message AdminSearchTradingLevelChange {
+  AdminTradingLevelChange Approval = 1;
+  User User = 2;
+  AdminSearchAccount Account = 3;
+}
+
+message AdminSearchTradingLevelChangeRequest {
+}
+
+message AdminSearchTradingLevelChangeResponse {
+  repeated AdminSearchTradingLevelChange Items = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message ResolveTradingLevelChangeRequest {
+  message ApproveTradingLevelChange {
+  }
+  message RejectTradingLevelChange {
+    string Reason = 1;
+  }
+
+  int32 ApprovalId = 1;
+  oneof Action {
+    ApproveTradingLevelChange Approve = 2;
+    RejectTradingLevelChange Reject = 3;
+  }
+}

@@ -1,0 +1,36 @@
+﻿syntax = "proto3";
+// Imports the necessary protobuf files for the execution API hub and Google API annotations.
+import "execution_api_hub.proto";
+import "google/api/annotations.proto";
+
+// Specifies the C# namespace for the generated code of the ExecutionApiHub DTOs.
+option csharp_namespace = "DTS.Services.ExecutionApiHub.DTO";
+
+// Defines the service for the ExecutionApiHub, facilitating execution-related actions.
+service ExecutionApiHubService {
+  // RPC method for accepting execution requests. This method takes an ExecutionAcceptorRequest and returns an ExecutionAcceptorResponse.
+  // It is exposed over HTTP as a POST request to the "/execution-acceptor" endpoint.
+  // The body of the HTTP request should contain the 'ExecutionUpdateInfo' message.
+  rpc ExecutionAcceptor(ExecutionAcceptorRequest) returns (ExecutionAcceptorResponse) {
+    option (google.api.http) = {
+      post: "/execution-acceptor",
+      body: "ExecutionUpdateInfo"
+    };
+  };
+  // RPC method for initiating execution requests. This method accepts an ExecutionInitiatorRequest and returns an ExecutionInitiatorResponse.
+  // It is exposed over HTTP as a POST request to the "/execution-initiator" endpoint.
+  // The body of the HTTP request should contain the 'Order' message
+  rpc ExecutionInitiator(ExecutionInitiatorRequest) returns (ExecutionInitiatorResponse) {
+    option (google.api.http) = {
+      post: "/execution-initiator",
+      body: "Order"
+    };
+  };
+
+  rpc ExecutionFixDrop(ExecutionFixDropRequest) returns (ExecutionFixDropResponse) {
+    option (google.api.http) = {
+      post: "/execution-fix-drop",
+      body: "FixDropMessages"
+    };
+  };
+}

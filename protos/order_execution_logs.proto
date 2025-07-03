@@ -1,0 +1,119 @@
+﻿syntax = "proto3";
+
+// Import common definitions, order enums, and timestamp proto.
+import "common.proto";
+import "orders_enums.proto"; // to reffer: enumOrderAction, enumOrderStatus, enumPositionEffect
+import "google/protobuf/timestamp.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.OrderExecutionLogs";
+
+// Request message for order execution logs.
+message OrderExecutionLogsRequest {
+  // Types of order execution log requests.
+  repeated EnumOrderExecutionLogsRequestType OrderExecutionLogsRequestTypes = 1;
+  // Criteria for searching order execution logs.
+  OrderExecutionLogsSearchCriteria OrderExecutionLogsSearchCriteria = 2;
+}
+// Defines search criteria for order execution logs.
+message OrderExecutionLogsSearchCriteria {
+  // Optional filter by account IDs.
+  repeated int32 AccountIDs = 1;
+  // Optional filter by account numbers.
+  repeated string AccountNumbers = 2;
+  // Filter by specific order ID.
+  int32 OrderId = 3;
+}
+// Response message containing order execution logs.
+message OrderExecutionLogsResponse {
+  // Indicates if data is present.
+  bool HasData = 1;
+  // Information about each order execution log.
+  repeated OrderExecutionLogInfo OrderExecutionLogInfos = 2;
+  // Indicates if UI repository should be reset.
+  bool ResetUiRepository = 3;
+  // List of warnings related to the request
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+// Contains information for a single order execution log entry to aid UX with filtration.
+message OrderExecutionLogInfo {
+  OrderExecutionLog OrderExecutionLog = 1;
+  // Flag to help UX filter logs from today in UTC.
+  bool IsUtcToday = 2;
+}
+// Detailed order execution log.
+message OrderExecutionLog {
+  // Unique identifier for the log entry.
+  int32 OrderExecutionLogId = 1;
+  // Associated order ID.
+  int32 OrderId = 2;
+  // Last modified time of the log.
+  google.protobuf.Timestamp LastModifiedTime = 3;
+  // Generally, corresponds to FIX: TransactTime <60> Time of execution/order creation (expressed in UTC (Universal Time Coordinated, also known as 'GMT')
+  google.protobuf.Timestamp TransactTime = 4;
+  // Fill/Partial Fill execution report: set based on ExecutionUpdateInfo.TransactionValue
+  // Value from FIX/Market Maker, doesn't include commissions
+  double FilledValue = 5;
+  // Creation time of the log entry.
+  google.protobuf.Timestamp CreatedTime = 6;
+  // Original client order ID.
+  string OrigClOrderId = 7;
+  // Commission charged for the execution.
+  double CommissionCharged = 8;
+  // Execution ID, typically corresponds to ExecID <17> FIX tag.
+  string ExecId = 9;
+  // Cl order ID
+  string ClOrderId = 10;
+  // Type of security involved in the execution.
+  EnumSecurityType SecurityType = 11;
+  // Number of the leg in a multi-leg order.
+  int32 LegNumber = 12;
+  // Position effect resulting from the execution.
+  EnumPositionEffect PositionEffect = 13;
+  // Action of the order that was executed.
+  EnumOrderAction OrderAction = 14;
+  // Status of the order at the time of execution.
+  EnumOrderStatus OrderStatus = 15;
+  // Sign: always positive.
+  double FilledQuantity = 16;
+  // Sign corresponds to LimitPrice field.
+  // For spreads: negative when debit (buy), positive when short (credit)
+  // For singles: always positive (for buy and sell)
+  double FilledPrice = 17;
+  // Symbol of the security.
+  string Symbol = 18;
+  // Commission credit amount, if any.
+  double CommissionCreditAmount = 19;
+  // Quantity of the order at the time of execution.
+  double Quantity = 20;
+  // Used by BusinessHub to append locale-specific formatted symbol. The symbol is appended to the end of existing description, after '|' divider.
+  string Description = 21;
+  // Type of pricing for the order.
+  string PriceType = 22;
+  // ID of the user who created the log entry.
+  int32 CreatedUserId = 23;
+  // Account ID associated with the order.
+  int32 AccountId = 24;
+  // Subaccount ID associated with the order.
+  int32 SubaccountId = 25;
+  // Price type of the order.
+  EnumPriceType OrderPriceType = 26;
+  // For spreads: negative when debit (buy), positive when credit (sell)
+  // For singles: always positive (for buy and sell)
+  // Corresponds to Order.Header.PriceType at the moment of entry to OrderExecutionLogs
+  double LimitPrice = 27;
+  // Sign: always positive, for long and short sides
+  // Corresponds to Order.Header.PriceType at the moment of entry to OrderExecutionLogs
+  double StopPrice = 28;
+
+}
+enum EnumOrderExecutionLogsRequestType {
+  EnumOrderExecutionLogsRequestType_Undefined = 0;
+  EnumOrderExecutionLogsRequestType_BrowseAllByOrderId = 1;
+  // Used for AccountActivity/Trades. Data created today
+  EnumOrderExecutionLogsRequestType_FillEventsByAccountIdToday = 2;
+  // Used for AccountActivity/Trades. Data created before today
+  EnumOrderExecutionLogsRequestType_FillEventsByAccountIdHistorical = 3;
+}

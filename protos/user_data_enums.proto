@@ -1,0 +1,40 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Sessions";
+
+// Defines the types of user data requests that can be made.
+enum EnumUserDataRequestType {
+  // Undefined request type.
+  EnumUserDataRequestType_Undefined = 0;
+  // Request to get the user profile.
+  EnumUserDataRequestType_GetUserProfile = 1;
+  // Request to update the user profile.
+  EnumUserDataRequestType_UpdateUserProfile = 2;
+  // Request to update the user's email address.
+  EnumUserDataRequestType_UpdateUserEmail = 3;
+  // Request to get the investment profile of the user.
+  EnumUserDataRequestType_GetInvestmentProfile = 4;
+  // Request to get all security questions.
+  EnumUserDataRequestType_GetAllSecurityQuestions = 5;
+  // Request to get all MDE form questions.
+  EnumUserDataRequestType_GetAllMdeFormQuestions = 6;
+  // Request to update the user's responses to the MDE form.
+  EnumUserDataRequestType_UpdateMdeFormUserResponses = 7;
+  // Request to get the user's responses to the MDE form.
+  EnumUserDataRequestType_GetMdeFormResponses = 8;
+  // Request to delete the user's responses to MDE form questions.
+  EnumUserDataRequestType_DeleteMdeFormQuestionsUserResponses = 9;
+  // Request to get the user's responses to security questions.
+  EnumUserDataRequestType_GetSecurityQuestionUserResponses = 10;
+  // Request to update the user's responses to security questions.
+  EnumUserDataRequestType_UpdateSecurityQuestionUserResponses = 11;
+  // Request to get the user's notification preferences.
+  EnumUserDataRequestType_GetUserNotificationPreferences = 12;
+  // Request to update the user's notification preferences.
+  EnumUserDataRequestType_UpdateUserNotificationPreferences = 13;
+  // Request to get the user's preferences.
+  EnumUserDataRequestType_GetUserPreferences = 14;
+  // Request to update the user's preferences.
+  EnumUserDataRequestType_UpdateUserPreferences = 15;
+}

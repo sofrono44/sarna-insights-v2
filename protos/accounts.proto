@@ -1,0 +1,448 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import public "common.proto";
+import "accounts_enums.proto";
+import "common_bp_enums.proto";
+import "bh_accounts_enums.proto";
+import "dividends_enums.proto";
+import "common_enums.proto";
+import "account_cash_transactions_enums.proto";
+import "account_ach.proto";
+import "trading_level_change.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Accounts";
+
+// Represents a request for various account and subaccount-related operations including virtual accounts
+message AccountsRequest {
+  // Type of account request
+  EnumAccountsRequestType AccountsRequestType = 1;
+  // Request for account information
+  AccountsInfoRequest AccountsInfoRequest = 2;
+  // Request to create a subaccount
+  CreateSubaccountRequest CreateSubaccountRequest = 3;
+  // Request to delete a subaccount
+  DeleteSubaccountRequest DeleteSubaccountRequest = 4;
+  // Request to update an account or subaccount nickname
+  UpdateNicknameRequest UpdateNicknameRequest = 5;
+  // Request to create a virtual trading account
+  CreateVTAccountRequest CreateVTAccountRequest = 6;
+  // Request for account activity
+  GetAccountsActivityRequest GetAccountActivityRequest = 7;
+  // Request to transfer between subaccounts
+  SubaccountsTransferRequest SubaccountsTransferRequest = 9;
+  // Request to create an ABA account
+  CreateAbaAccountRequest CreateAbaAccountRequest = 10;
+  // Request for ACH transfer
+  CreateAccountAchTransferRequest CreateAccountAchTransferRequest = 11;
+  // Request to change trading level
+  AskForTradingLevelChangeRequest AskForTradingLevelChangeRequest = 12;
+  LinkAccountGroupRequest LinkAccountGroupRequest = 13;
+  ChangeAccountGroupRequest ChangeAccountGroupRequest = 15;
+}
+
+// Represents the response to an AccountsRequest
+message AccountsResponse {
+  // Indicates if the response contains data
+  bool HasData = 1;
+  // Response for account information request
+  AccountsInfoResponse AccountsInfoResponse = 2;
+  // Response for create subaccount request
+  CreateSubaccountResponse CreateSubaccountResponse = 3;
+  // Response for delete subaccount request
+  DeleteSubaccountResponse DeleteSubaccountResponse = 4;
+  // Response for create virtual trading account request
+  CreateVTAccountResponse CreatedForVT = 5;
+  // Response for get account activity request
+  GetAccountsActivityResponse GetAccountsActivityResponse = 6;
+  // Response for subaccounts transfer request
+  SubaccountsTransferResponse SubaccountsTransferResponse = 8;
+  // Response for create ABA account request
+  CreateAbaAccountResponse CreateAbaAccountResponse = 9;
+  // Response for browsing ABA accounts
+  BrowseAbaAccountsResponse BrowseAbaAccountsResponse = 10;
+  // Response for ACH transfer request
+  CreateAccountAchTransferResponse CreateAccountAchTransferResponse = 11;
+  // Response for Link/Unlink/Change account groups
+  LinkAccountGroupResponse LinkAccountGroupResponse = 12;
+}
+
+// Request for account information with optional filters by account IDs or numbers
+message AccountsInfoRequest {
+  // Filter by account ids (optional)
+  repeated int32 AccountIDs = 1;
+  // Filter by account numbers (optional)
+  repeated string AccountNumbers = 2;
+}
+
+// Response containing account information, warnings, and errors if any
+message AccountsInfoResponse {
+  // Indicates if the response contains data
+  bool HasData = 1;
+  // List of accounts
+  repeated Account Accounts = 2;
+  // Warnings related to the request
+  repeated ResponseWarning Warnings = 101;
+  // Errors related to the request
+  repeated ResponseError Errors = 102;
+}
+
+// Defines an account with various attributes and related subaccounts
+message Account {
+  // Unique account ID
+  int32 AccountId = 1;
+  // Account number
+  string AccountNumber = 2;
+  // Type of account
+  EnumAccountType AccountType = 3;
+  // Optional attribute
+  string AccountTypeDescription = 4;
+  // List of subaccounts
+  repeated Subaccount Subaccounts = 5;
+  // Status of the account
+  EnumAccountStatus AccountStatus = 6;
+  // Trading level for options
+  EnumBpOptionTradingLevel TradingLevel = 7;
+  // Nickname of the account
+  string Nickname = 9;
+  // Creation time of the account
+  google.protobuf.Timestamp CreatedTime = 10;
+  // Recommended trading level for options based on responses to suitability and profile questions
+  EnumBpOptionTradingLevel RecommendedTradingLevel = 12;
+  // Leverage factor for PMBP accounts
+  double PmBpLeverageFactor = 13;
+  // Light version of the account Group
+  repeated AccountGroupLight AccountGroups = 14;
+  // Branch ID to which the account belongs
+  int32 BranchId = 15;
+  // Account Risk Type (RegT, PM, Futures)
+  EnumAccountRiskType AccountRiskType = 16;
+}
+
+// Represents a subaccount with basic information
+message Subaccount {
+  // Unique subaccount ID
+  int32 SubaccountId = 1;
+  // Indicates if this is the master subaccount
+  bool IsMaster = 2;
+  // Subaccount code
+  string Code = 3;
+  // Nickname of the subaccount
+  string Nickname = 4;
+}
+
+// Request to create a subaccount with initial settings
+message CreateSubaccountRequest {
+  // Parent account ID
+  int32 AccountId = 1;
+  // Desired nickname for the new subaccount
+  string Nickname = 2;
+  // Initial cash balance for the subaccount
+  double InitialCash = 3;
+}
+// Response for creating a subaccount, includes account details
+message CreateSubaccountResponse {
+  // Indicates if the response contains data
+  bool HasData = 1;
+  // Updated account details including new subaccount
+  Account Account = 2;
+  // Warnings related to the create subaccount request
+  repeated ResponseWarning Warnings = 101;
+  // Errors related to the create subaccount request
+  repeated ResponseError Errors = 102;
+}
+// Request to delete a specific subaccount
+message DeleteSubaccountRequest {
+  // Parent account ID
+  int32 AccountId = 1;
+  // Subaccount ID to delete
+  int32 SubaccountId = 2;
+}
+
+// Response for deleting a subaccount, includes remaining account details
+message DeleteSubaccountResponse {
+  // Indicates if the response contains data
+  bool HasData = 1;
+  // Account details after subaccount deletion
+  Account Account = 2;
+  // Warnings related to the delete subaccount request
+  repeated ResponseWarning Warnings = 101;
+  // Errors related to the delete subaccount request
+  repeated ResponseError Errors = 102;
+}
+
+// Request to update the nickname of an account or subaccount
+message UpdateNicknameRequest {
+  // Account ID
+  int32 AccountId = 1;
+  // New nickname
+  string Nickname = 2;
+  // Subaccount ID (optional)
+  int32 SubaccountId = 3;
+}
+
+// Request to create a virtual trading (VT) account
+message CreateVTAccountRequest {
+  // Desired nickname for the VT account
+  string Nickname = 1;
+}
+
+// Response for creating a virtual trading account
+message CreateVTAccountResponse {
+  // Virtual trading account ID
+  int32 AccountId = 1;
+  // Warnings related to the create VT account request
+  repeated ResponseWarning Warnings = 101;
+  // Errors related to the create VT account request
+  repeated ResponseError Errors = 102;
+}
+
+// Request for accounts activity within a specified date range
+message GetAccountsActivityRequest {
+  // Filter by account IDs (optional)
+  repeated int32 AccountIDs = 1;
+  // Filter by account numbers (optional)
+  repeated string AccountNumbers = 2;
+  // Start date for the activity period
+  google.protobuf.Timestamp From = 3;
+  // End date for the activity period
+  google.protobuf.Timestamp To = 4;
+}
+
+// Response for accounts activity request
+message GetAccountsActivityResponse {
+  // List of trades during the specified period
+  repeated Trade Trades = 1;
+  // List of dividends during the specified period
+  repeated Dividend Dividends = 2;
+  // List of account cash transactions during the specified period
+  repeated AccountCashTransaction AccountCashTransactions = 3;
+  // List of subaccount transfers during the specified period
+  repeated SubaccountTransfer SubaccountTransfers = 4;
+  // Warnings related to the accounts activity request
+  repeated ResponseWarning Warnings = 101;
+  // Errors related to the accounts activity request
+  repeated ResponseError Errors = 102;
+}
+
+// Represents a detailed trade transaction
+message Trade {
+  // Unique identifier for the trade
+  int32 TradeId = 1;
+  // Account ID associated with the trade
+  int32 AccountId = 2;
+  // Trading symbol for the security
+  string Symbol = 3;
+  // CUSIP identifier for the security
+  string Cusip = 4;
+  // Description of the trade
+  string Description = 5;
+  // Quantity of the security traded
+  double Quantity = 6;
+  // Price per unit of the security
+  double Price = 7;
+  // Principal amount of the trade
+  double Principal = 8;
+  // Net amount of the trade
+  double NetAmount = 9;
+  // Tax fee associated with the trade
+  double TaxFee = 10;
+  // SEC fee associated with the trade
+  double SecFee = 11;
+  // NASD fee associated with the trade
+  double NASDFee = 12;
+  // Commission for the trade
+  double Commission = 13;
+  // Timestamp of when the trade occurred
+  google.protobuf.Timestamp TradeTime = 14;
+  // Settlement date of the trade
+  google.protobuf.Timestamp SettlementDate = 15;
+  // Type of security traded
+  int32 SecurityTypeId = 16;
+  // Position effect of the trade
+  int32 PositionEffectId = 17;
+  // External trade identifier
+  string ExternalTradeId = 18;
+  // CL order ID
+  string ClOrderId = 19;
+  // Creation time of the trade record
+  google.protobuf.Timestamp CreatedTime = 20;
+  // Action taken in the order
+  int32 OrderAction = 21;
+}
+
+// Represents a dividend transaction
+message Dividend
+{
+  // Unique identifier for the dividend
+  int32 DividendId = 1;
+  // Account ID associated with the dividend
+  int32 AccountId = 2;
+  // Type of clearing account
+  EnumClearingAccountType ClearingAccountType = 3;
+  // Trading symbol for the security
+  string Symbol = 4;
+  // CUSIP identifier for the security
+  string Cusip = 5;
+  // Accrued dividend amount
+  double DividendAccrued = 6;
+  // Dividend rate
+  double DividendRate = 7;
+  // Quantity of shares eligible for dividend
+  double Quantity = 8;
+  // Payment type of the dividend
+  EnumDividendPaymentType DividendPaymentType = 9;
+  // Type of dividend
+  EnumDividendType DividendType = 10;
+  // Currency of the dividend payment
+  EnumCurrency Currency = 11;
+  // Entry date of the dividend
+  google.protobuf.Timestamp EntryDate = 12;
+  // Ex-dividend date
+  google.protobuf.Timestamp ExDate = 13;
+  // Record date for the dividend
+  google.protobuf.Timestamp RecordDate = 14;
+  // Payment date of the dividend
+  google.protobuf.Timestamp PayDate = 15;
+}
+
+// Represents a cash transaction in an account
+message AccountCashTransaction
+{
+  // Account ID associated with the transaction
+  int32 AccountId = 1;
+  // Date of the activity
+  google.protobuf.Timestamp ActivityDate = 2;
+  // Description of the transaction
+  string Description = 3;
+  // Source of the transaction
+  string Source = 4;
+  // Type of cash transaction
+  EnumAccountCashTransactionType AccountCashTransactionType = 5;
+  // Net amount of the transaction
+  double NetAmount = 6;
+  // Symbol related to the transaction (if applicable)
+  string Symbol = 7;
+  // CUSIP related to the transaction (if applicable)
+  string Cusip = 8;
+  // Quantity related to the transaction (if applicable)
+  double Quantity = 9;
+}
+
+// Represents a transfer of assets or cash between subaccounts
+message SubaccountTransfer
+{
+  // Account ID from which the transfer originates
+  int32 AccountId = 1;
+  // Source subaccount ID for the transfer
+  int32 SubaccountIdSource = 2;
+  // Destination subaccount ID for the transfer
+  int32 SubaccountIdDestination = 3;
+  // User ID initiating the transfer
+  int32 UserId = 4;
+  // Symbol of the asset being transferred (if applicable)
+  string Symbol = 5;
+  // Quantity of the asset being transferred
+  double Quantity = 6;
+  // Cash amount being transferred
+  double Cash = 7;
+  // Open position lot ID (if applicable)
+  int32 OpenPositionLotId = 8;
+  // Creation time of the transfer record
+  google.protobuf.Timestamp CreatedTime = 9;
+}
+
+// Request for transferring assets or cash between subaccounts
+message SubaccountsTransferRequest {
+  // Account ID from which the transfer is requested
+  int32 AccountId = 1;
+  // Destination subaccount ID for the transfer
+  int32 SubaccountIdDestination = 2;
+  // Specific positions to transfer
+  repeated PositionTransfer Positions  = 3;
+  // UX only specifies Symbol and Quantity to transfer.  Backend determines which lots to transfer.
+  repeated PositionBySymbolAndQuantityTransfer PositionsBySymbolAndQuantity = 4;
+  // Determines the order of the lots for transfer if left for the backend to determine.
+  EnumPositionTransferOrderType PositionTransferOrderType = 5;
+  // Cash transfer details
+  CashTransfer CashTransfer = 6;
+}
+
+// Represents a cash transfer between subaccounts
+message CashTransfer {
+  // Cash amount to transfer
+  double CashAmount = 1;
+  // Source subaccount ID for the cash transfer
+  int32 SubaccountIdSource = 2;
+}
+
+// Represents a request to transfer specific lots of a position
+message PositionTransfer {
+  // Open position lot ID to transfer
+  int32 OpenPositionLotId = 1;
+  // Quantity of the lot to transfer
+  int32 QuantityToTransfer  = 2;
+  // Source subaccount ID for the position transfer
+  int32 SubaccountIdSource = 3;
+}
+
+// Response to a subaccounts transfer request
+message SubaccountsTransferResponse {
+  // Status of the transfer request
+  bool Status = 1;
+  // Warnings related to the transfer request
+  repeated ResponseWarning Warnings = 101;
+  // Errors related to the transfer request
+  repeated ResponseError Errors = 102;
+}
+
+// UX leaves to backed to determine which lots to transfer, typically in FIFO order.
+message PositionBySymbolAndQuantityTransfer {
+  // Symbol of the asset to transfer
+  string Symbol = 1;
+  // Quantity of the asset to transfer
+  double QuantityToTransfer = 2;
+  // Order type for lot selection
+  int32 OrderType = 3;
+  // Source subaccount ID for the transfer
+  int32 SubaccountIdSource = 4;
+}
+
+// Link Account / Unlink to Group Request
+message LinkAccountGroupRequest{
+  // Account group id to add account to
+  int32 AccountGroupId = 1;
+  //optional if Numbers are provided
+  repeated int32 AccountIds = 2;
+  //optional if AccountIds are provided
+  repeated string AccountNumbers = 3;
+}
+
+// Change Account Group Request
+message ChangeAccountGroupRequest{
+  // Account group id to remove account from
+  int32 OldAccountGroupId = 1;
+  // Account group id to add account to
+  int32 NewAccountGroupId = 2;
+  //optional if Number is provided
+  int32 AccountId = 3;
+  //optional if AccountId is provided
+  string AccountNumber = 4;
+}
+
+// Link/Unlink/Change Account to Group Response
+message LinkAccountGroupResponse{
+  bool Success = 1;
+
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//AccountGroup
+message AccountGroupLight
+{
+  //Account group id
+  int32 AccountGroupId = 1;
+  //Account group name
+  string Name = 2;
+}

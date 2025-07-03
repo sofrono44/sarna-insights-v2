@@ -1,0 +1,13 @@
+syntax = "proto3";
+import "google/api/annotations.proto";
+import "admin/admin_dashboard.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminDashboard";
+
+service AdminDashboardService {
+	rpc List(AdminDashboardRequest) returns (AdminDashboardResponse){
+		option (google.api.http) = {
+			get: "/admin/dashboard"
+		};
+	}
+}

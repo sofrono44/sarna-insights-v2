@@ -1,0 +1,26 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumExecutionUpdateType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumExecutionUpdateType_Undefined: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_FixInitiator: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_FixInitiator_IntegTest: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_FixInitiator_MarketProviderSim: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_FixInitiator_Volant: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_FillManualTrade: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_ConnectivityTest: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_ExternalOms: _ClassVar[EnumExecutionUpdateType]
+    EnumExecutionUpdateType_OrderInitiation: _ClassVar[EnumExecutionUpdateType]
+EnumExecutionUpdateType_Undefined: EnumExecutionUpdateType
+EnumExecutionUpdateType_FixInitiator: EnumExecutionUpdateType
+EnumExecutionUpdateType_FixInitiator_IntegTest: EnumExecutionUpdateType
+EnumExecutionUpdateType_FixInitiator_MarketProviderSim: EnumExecutionUpdateType
+EnumExecutionUpdateType_FixInitiator_Volant: EnumExecutionUpdateType
+EnumExecutionUpdateType_FillManualTrade: EnumExecutionUpdateType
+EnumExecutionUpdateType_ConnectivityTest: EnumExecutionUpdateType
+EnumExecutionUpdateType_ExternalOms: EnumExecutionUpdateType
+EnumExecutionUpdateType_OrderInitiation: EnumExecutionUpdateType

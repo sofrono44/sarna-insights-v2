@@ -1,0 +1,72 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "common.proto";
+import "bp.proto";
+import "pmbp.proto";
+import "time_machine_enums.proto";
+import "accounts.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.TimeMachine";
+
+message TimeMachineBrowseRequest {
+  // optional if account number is defined
+  int32 AccountId = 1;
+  // optional if account id is defined
+  string AccountNumber = 2;
+  // required
+  google.protobuf.Timestamp From = 3;
+  // required
+  google.protobuf.Timestamp To = 4;
+  EnumTimeMachineRequestOrigin RequestOrigin = 5;
+}
+
+message TimeMachineDownloadRequest {
+  string FileName = 1;
+}
+
+message TimeMachineBrowseResponse {
+  repeated TimeMachineFileInfo Files = 1;
+  repeated AccountGroupLight AccountGroups = 2;
+
+  // Lists warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+message TimeMachineFileInfo
+{
+  string FileName = 1;
+  bool IsArchived = 2;
+  google.protobuf.Timestamp CreatedTime = 3;
+  EnumTimeMachineRequestOrigin RequestOrigin = 4;
+  EnumBpType Type = 5;
+  int32 Requirement = 6;
+  int32 NetLiquidity = 7;
+  int32 DayPnL = 8;
+  double DayPnLUtilization = 9;
+  double CreditUtilization = 10;
+  int32 ExcessLiquidity = 11;
+  repeated int32 AccountGroupIds = 12;
+  int32 WarningCount = 13;
+  int32 ErrorCount = 14;
+}
+
+message TimeMachineDownloadResponse {
+  string FileName = 1;
+  string Request = 2;
+  string Response = 3;//need map
+
+  PmBpValuesResponse PmBpValuesResponse = 4;
+  PmBpForProposedOrderResponse PmBpForProposedOrderResponse = 5;
+  BpValuesResponse BpValuesResponse = 6;
+  RegTBpForProposedOrderResponseInfo RegTBpForProposedOrderResponseInfo = 7;
+
+  string PortfolioReport = 8;//PmBpValues in OCC style report format
+
+  // Lists warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}

@@ -1,0 +1,130 @@
+﻿syntax = "proto3";
+import "accounts.proto";
+import "admin/admin_risk_profiles_enums.proto";
+import "pmbp.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminRiskProfiles";
+
+//Admin request to fetch a risk profile data for editing
+message RiskProfilesRequest{
+  // 0 - fetch all risk profiles
+  // any number - fetch risk profile for given ID
+  int32 RiskProfileId = 1;
+  // 0 - fetch all risk profiles types
+  EnumRiskApplicabilityType RiskApplicabilityType = 2;
+}
+
+//Admin response with a risk profile data for editing
+message RiskProfilesResponse{
+  repeated AdminRiskProfile AdminRiskProfiles = 1;
+  
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//Admin request to add or update a risk profile
+message RiskProfileUpdateRequest{
+  AdminRiskProfile AdminRiskProfile = 1;
+}
+
+//Admin response after updating a risk profile
+message RiskProfileUpdateResponse{
+  // 0 - An error occurred while updating the risk profile (see Errors)
+  // any number - mew risk profile id
+  int32 RiskProfileId = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//Admin request to delete a risk profile
+message RiskProfileDeleteRequest{
+  int32 RiskProfileId = 1;
+}
+
+//Admin request to delete a risk profile
+message RiskProfileCloneRequest{
+  int32 RiskProfileId = 1;
+  string Name = 2;
+}
+
+//Admin response after deleting a risk profile
+message RiskProfileDeleteResponse
+{
+  // False - An error occurred while deleting the risk profile (see Errors)
+  bool Success = 1;
+
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//Admin risk profile used only for risk profile management
+message AdminRiskProfile{
+  //Id of the risk profile
+  //0 - means add new risk profile
+  //Any number - means update existing risk profile  
+  int32 RiskProfileId = 1;
+  //Name of the risk profile
+  string Name = 2;
+  //Flag to indicate if the risk profile is default for house
+  bool IsDefaultHouseProfile = 3;
+  //Flag to indicate if the risk profile is default for monitoring
+  bool IsDefaultMonitoringProfile = 4;
+  //Type of the risk applicability
+  EnumRiskApplicabilityType RiskApplicabilityType = 5;
+  //Flag to indicate if the risk profile includes open orders
+  bool IncludeOpenOrders = 6;
+  //Risk profile scenarios
+  repeated AdminRiskProfileScenario AdminRiskProfileScenarios = 7;
+}
+
+message AdminRiskProfileScenario{
+  //Position of scenario in the list
+  int32 SortOrder = 1;
+  repeated PmBpUnderlyingPriceShockInput UnderlyingPriceShockInputs = 2;
+  repeated PmBpVolatilityShockInput VolatilityShockInputs = 3;
+  repeated YieldShockInput YieldShockInputs = 4;
+  repeated MOVEShockInput MOVEShockInputs = 5;
+  repeated MOVECreditSpreadShockInput MOVECreditSpreadShockInputs = 6;
+}
+
+message ShockInput{
+  // Optional attribute.
+  // If true then the shock is applied globally. Do NOT set to true for Advanced Shock per UnderlyingSymbol, or GroupId.
+  bool ApplyAcrossPortfolio = 1;
+  // Determines upper bound of tested scenario for Price Shock.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double PxPercentUp = 2;
+  // Determines lower bound of tested scenario for Price Shock.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double PxPercentDown = 3;
+  // Determines lower bound of tested scenario for Volatility Shock.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double IVPercentUp = 4;
+  // Determines lower bound of tested scenario for Volatility Shock.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double IVPercentDown = 5;
+  // Optional attribute.
+  // Applies the Shock to all products of this ProductGroup, unless a specific ClassGroup, UnderlyingSymbol or BasketId is specified.
+  string UnderlyingSymbol = 6;
+  // Optional attribute.
+  // This factor is applied to smooth out volatility changes across longer expirations.
+  // The weights are determined from a synthetic 30-day option that is assumed to always have a weighting factor of 1.
+  // Sign: always positive.
+  // Values:
+  // (0) Use Engine's default.
+  // (1) Enable and include into Volatility Shock Calculations.
+  // (2) Disable and do not include into Volatility Shock Calculations.
+  int32 ApplyTimeToExpirationFactor = 7;
+  // Optional attribute.
+  // Applies the Shock to all products of this BasketGroup, unless a specific UnderlyingSymbol or ClassGroupId is specified.
+  string ProductGroupId = 8;
+  // Optional attribute.
+  // Applies the Shock to all products of this ClassGroup, unless a specific UnderlyingSymbol or BasketId is specified.
+  string ClassGroupId = 9;
+  // Applies the Shock to all products of this Underlying Symbol OR across the entire ClassGroup if ClassGroupId equals to UnderlyingSymbol.
+  string BasketId = 10;
+}

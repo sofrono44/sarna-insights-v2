@@ -1,0 +1,4 @@
+Dockerfile text eol=lf
+*.sh       text eol=lf
+# enforce line endings for Flyway/SSMS
+*.sql		text eol=crlf

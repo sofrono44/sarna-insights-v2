@@ -1,0 +1,455 @@
+﻿syntax = "proto3";
+
+import "bp_enums.proto";
+
+option csharp_namespace = "DTS.Services.PMBP.DTO.Protos";
+
+// Basket is a grouping of qualified STOCKS!! (no options in basket) that can offset index options and their related instruments. Basket total gains are haircut by 5% prior to offset with class group total
+// Under the net capital rule, a basket can be added (to OCC listing) so long as the exchange traded product disallows options, futures and other derivatives in the holdings. Note that debt instruments such as fixed-income instruments and T-bills are not permitted in customer account baskets.
+// OCC does not validate baskets. PMC will automatically apply the 95% haircut when a basket ID is applied. It is the responsibility of the end user to verify the validity of the basket they are entering. Select the RBH/CPM Class Groups document. There will be a basket ID column indicating if the class group has a valid basket ID.
+message BasketGroup
+{
+  string BasketId = 1;
+  // BasketGroup must have ClassGroupId assigned to it (from ValidBasketCodesReport)
+  string ClassGroupId = 2;
+  repeated Product Products = 3;
+  // Total NAV of the basket.
+  double NAV = 4;
+  // Total Minimum of the basket.
+  double Minimum = 5;
+  // The projected gain or loss at each of (typically) 10 equidistant data points which represent the underlying price move.
+  repeated double GainsAndLosses = 6;
+  // Format of value: 90% and not 0.9
+  double AppliedOffsetPercent = 8;
+  // Percentages of underlying price movements for each scenario.
+  // Sourced either from ProductGroup report or UnderlyingPriceShockInput (override).
+  repeated double ScenariosPercentages = 9;
+  // Total Morning Net Asset Value of the basket.
+  double MorningNAV = 10;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 11;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 12;
+}
+
+// A Class Group contains options, futures, and equities relating to the same underlying instrument.
+// This is the second layer of aggregation of profit and loss values
+// Within a class group 100% of a position’s gain at any one valuation point is allowed to fully offset another position’s loss at the same valuation point.
+// Gain and loss values are aggregated first at the class group level, then the product group level, and finally at the portfolio group level,
+// if the positions are part of product groups that are contained in a portfolio group.
+message ClassGroup
+{
+  // A Class Group contains options, futures, and equities relating to the same underlying instrument.
+  // Within a class group 100% of a position’s gain at any one valuation point is allowed to fully offset another position’s loss at the same valuation point.
+  // Corresponds to the OCC's "Class Group" column in "Included Products" report.
+  string ClassGroupId = 1;
+  // A product group contains class groups whose underlying securities exhibit a high degree of historical price change correlation.
+  // Product groups are comprised of closely related broad-based index or sector index class groups.
+  // Corresponds to the OCC's "Product Group" column in "Included Products" report.
+  string ProductGroupId = 2;
+  repeated Product Products = 3;
+  // BasketGroup must have ClassGroupId assigned to it (from ValidBasketCodesReport)
+  repeated BasketGroup BasketGroups = 4;
+  // Total NAV of all products in the class group.
+  double NAV = 5;
+  // Total Minimum of all products in the class group.
+  double Minimum = 6;
+  // Risk Charge is the largest projected portfolio loss over the market scenarios at the relevant level of totaling (portfolio, product, or class group).
+  double RiskCharge = 7;
+  // The projected gain or loss at each of (typically) 10 equidistant data points which represent the underlying price move.
+  repeated double GainsAndLosses = 8;
+  // Percentage of the total portfolio NAV that is represented by the class group.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationPercentage= 9;
+  // Concentration of requirement to NetLiq.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationToNetLiq = 10;
+  // Percentages of underlying price movements for each scenario.
+  // Sourced either from ProductGroup report or UnderlyingPriceShockInput (override).
+  repeated double ScenariosPercentages = 11;
+  // Indicates the direction of the IV shock applied to the class group.
+  // Values: 1 for up, 2 for down, 0 for no shock applied.
+  int32 AppliedIVShockDirection = 12;
+  // Indicates the IV shock values applied to the class group's GainsAndLosses.
+  // Values: null for no shock applied.
+  repeated double AppliedIVShockValues = 13;
+  // Total Morning Net Asset Value of all products in the class group.
+  double MorningNAV = 14;
+  // Contains aggregations, additional to the basic aggregations on Class, Product or Portfolio groups.
+  AdvancedAggregations PositionAggregations = 15;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 16;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 17;
+  // In Portfolio Margining as the greatest projected net loss across multiple stress-tested scenarios.
+  double Requirement = 18;
+  // Optional. If null, no advanced shock was applied to override the default shock.  
+  // Otherwise, it contains descriptions of applied advanced shocks (e.g., "Px: -9%|IV: -20%/50%", "Yield 50 BPS").
+  // The index corresponds to the scenario index
+  repeated string AdvShockLabel = 19;
+  // Specifies additional requirements applied to this class group.
+  AppliedAddOns AppliedAddOns = 20;
+}
+
+// Contains all the groups and aggregations used to calculate result Account level values
+message Groupings
+{
+  // The highest level of aggregation. Portfolio Groups assigned to PortfolioAggregation, won't appear in PortfolioGroups list.
+  repeated PortfolioAggregation PortfolioAggregations = 1;
+  // ProductGroups assigned to PortfolioGroup won't appear in ProductGroups list.
+  repeated PortfolioGroup PortfolioGroups = 2;
+  // The lowest level of aggregation, composed of ClassGroups.
+  // ProductGroups assigned to a PortfolioGroup, won't appear in this ProductGroups list.
+  repeated ProductGroup ProductGroups = 3;
+}
+
+// PortfolioAggregation is the highest level of aggregation. Portfolio Groups assigned to PortfolioAggregation, won't appear in PortfolioGroups list.
+// This aggregation provides mechanism to compute values for multiple portfolios, where one portfolio is a subset of another.
+message PortfolioAggregation
+{
+  repeated PortfolioGroup PortfolioGroups = 1;
+  // Total NAV of the portfolio aggregation.
+  double NAV = 2;
+  // Total Minimum of the portfolio aggregation.
+  double Minimum = 3;
+  // Risk Charge is the largest projected portfolio loss over the market scenarios at the relevant level of totaling (portfolio, product, or class group).
+  double RiskCharge = 4;
+  repeated double GainsAndLosses = 5;
+  // Percentage of the total portfolio NAV that is portfolio aggregation.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationPercentage = 10;
+  // Concentration of requirement to NetLiq.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationToNetLiq = 11;
+  // Aggregate values of the IV shocks applied to the portfolio groups. Values: null for no shock applied.
+  repeated double AppliedIVShockValues = 12;
+  // Total Morning Net Asset Value of the portfolio aggregation.
+  double MorningNAV = 13;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 14;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 15;
+}
+
+// Portfolio Group is a combination of product groups whose gains and losses may be offset.
+// This is the fourth layer of aggregation of gain and loss values
+// Portfolio Group contains of closely related product groups.
+// Not all product groups are contained in a portfolio group.
+// Gains and losses of included class groups may be offset at a certain percentage.
+message PortfolioGroup
+{
+  // Corresponds to the OCC's "Portfolio Group" column in "Portfolio Group" report.
+  string PortfolioGroupId = 1;
+  repeated ProductGroup ProductGroups= 2;
+  // Total NAV of the portfolio group.
+  double NAV = 3;
+  // Total Minimum of the portfolio group.
+  double Minimum = 4;
+  // Risk Charge is the largest projected portfolio loss over the market scenarios at the relevant level of totaling (portfolio, product, or class group).
+  double RiskCharge = 5;
+  repeated double GainsAndLosses = 6;
+  // Format of value: 90% and not 0.9
+  double AppliedOffsetPercent = 11;
+  // Percentage of the total portfolio NAV that is represented by the portfolio group.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationPercentage= 12;
+  // Concentration of requirement to NetLiq.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationToNetLiq = 13;
+  // Aggregate values of the IV shocks applied to the product groups. Values: null for no shock applied.
+  repeated double AppliedIVShockValues = 14;
+  // Total Morning Net Asset Value of the portfolio group.
+  double MorningNAV = 15;
+  // Contains aggregations, additional to the basic aggregations on Class, Product or Portfolio groups.
+  AdvancedAggregations PositionAggregations = 16;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 17;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 18;
+  double Requirement = 19;
+}
+
+// Corresponds to a specific financial instrument, such as: option or future contract, stock or future.
+// This is the first layer of aggregation of profit and loss values.
+message Product
+{
+  // The values are defined as constants by PmProductType class.
+  string ProductType = 1;
+  // A Class Group contains options, futures, and equities relating to the same underlying instrument.
+  // Within a class group 100% of a position’s gain at any one valuation point is allowed to fully offset another position’s loss at the same valuation point.
+  // Corresponds to the OCC's "Class Group" column in "Included Products" report.
+  string ClassGroupId = 2;
+  // A product group contains class groups whose underlying securities exhibit a high degree of historical price change correlation.
+  // Product groups are comprised of closely related broad-based index or sector index class groups.
+  // Corresponds to the OCC's "Product Group" column in "Included Products" report.
+  string ProductGroupId = 3;
+  // Optional Attribute
+  // Only set by the caller via input components. Basket is a grouping of qualified stocks that can offset index options and their related instruments.
+  string BasketId = 4;
+  // The projected gain or loss at each of (typically) 10 equidistant data points which represent the underlying price move.
+  // The value is per share/unit by MULTIPLIER.
+  repeated double GainsAndLossesScenarios = 5;
+  // Price movements values used to compute the GainsAndLossesScenarios.
+  // Values are per share/unit by MULTIPLIER. It includes multiplier to be compatible with the OCC style.
+  // Either passed by the caller, or computed by the Engine.
+  // Range of values calculated based on upper and lower percentages from ProductGroupsReport.
+  // Sign: negative for price decrease (left side), positive for price increase (right side), regardless if the position is long or short.
+  repeated double PriceMovementValues = 7;
+  string UnderlyingSymbol = 8;
+  // The number of shares/units of the product.
+  // Sign: positive for long positions, negative for short positions.
+  double Quantity = 9;
+  // Full symbol of the instrument (i.e. "AAPL  150120C00065000").
+  string Symbol = 10;
+  // Corresponds to the multiplier of the security, i.e. 100 for options, 1 for stocks, 1000 for futures, etc.
+  // Used for calculating the minimum requirement for the product.
+  double Multiplier = 11;
+  // Net Asset Value (price * qty * multiplier).
+  // Sign: positive for long positions, negative for short positions.
+  double NAV = 12;
+  // Minimum requirement for the product.
+  // Typically for liquidation risk. For option contract, a minimum charge of $0.25 per contract for noncustomers ("RBH Minimum Charge Per Contract" column)
+  // and $0.375 for customers ("CPM Minimum Charge Per Contract" column) multiplied by the contract multiplier is applied.
+  // Sign: always negative.
+  double Minimum = 13;
+  // "C" for call, "P" for put.
+  string CallPut = 14;
+  double Strike = 15;
+  // Underlying price for derivative products.
+  // NOT multiplied by multiplier.
+  double UnderlyingPrice = 16;
+  EnumInputStrategyComponentType InputStrategyComponentType = 17;
+  // Order Id depends on InputStrategyComponentType<br/>
+  // For orders MUST have the same OrderId value for all legs (and InputStrategyComponents) of the same spread order.<br/>
+  // Unique OrderId must be specified for working or proposed order lot.<br/>
+  string OrderId = 18;
+  // Pending Debit or Credit resulting from potential execution of order product (component). Used for Working and Proposed orders.<br>
+  // Caller responsible for decreasing if order has been partially filled. <br>
+  // Value: either total PT on the order's first leg OR distributed across all legs. Total PT for the order is computed by Sum(legs.PT).<br>
+  // Important: Price attribute need to be set to corresponding price (Limit) used for PT to ensure proper calculations.<br>
+  // Sign: negative for debit (buy), positive for credit (sell)
+  double PendingTransaction = 19;
+  // Percentage of the total portfolio NAV that is represented by this product.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationPercentage = 20;
+  // Concentration of requirement to NetLiq.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationToNetLiq = 21;
+  // Contains the results of optional volatility down shock test, if requested (by VolatilityShockInput)
+  VolatilityShockResult VolatilityDownShock = 22;
+  // Contains the results of optional volatility up shock test, if requested (by VolatilityShockInput)// Contains the results of optional volatility up shock test, if requested (by VolatilityShockInput)
+  VolatilityShockResult VolatilityUpShock = 23;
+  // Percentages of underlying price movements for each scenario.
+  // Sourced either from ProductGroup report or UnderlyingPriceShockInput (override).
+  repeated double ScenariosPercentages = 24;
+  bool IsETF = 26;
+  // Sourced from IncludedProducts report.
+  // Sign: negative for inverse ETF, positive otherwise.
+  double MarketMoveAdjustmentFactor = 27;
+  // General flag indicating that this position was additionally uploaded by the
+  // user in the OCCstyle and is not a position from the database
+  bool IsUserUploaded = 28;
+  // For options, specifies dollar value movement of the underlying securitiy at each scenario. Null otherwise.
+  repeated double UnderlyingPriceMovementValues = 29;
+  // Total Morning Net Asset Value
+  // Sign: positive for long positions, negative for short positions.
+  double MorningNAV = 30;
+  //Value is actual bank name, i.e. "US Bank"
+  string ExternalDataSourceName = 31;
+  ProductGreeks Greeks = 32;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 33;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 34;
+  // Optional attribute. Helps to monitor identify part of portfolios affected by intra-day activity.
+  // Sign: positive for long positions, negative for short positions.
+  double QuantityOpenedToday = 35;
+  // Optional attribute. Helps to monitor identify part of portfolios affected by intra-day activity.
+  // Sign: positive for long positions, negative for short positions.
+  double QuantityClosedToday = 36;
+  string ProductId = 37;
+  ProductWhatIfAdjustment WhatIfAdjustment = 38;
+  // In Portfolio Margining as the greatest projected loss across multiple stress-tested scenarios. This value corresponds to RiskCharge.
+  double Requirement = 39;
+  // Required parameter for option input strategy component. Corresponds to PeriodCode parameter for Futures component.
+  string Expiration = 40;
+  // Some assets passed by the caller via InputStrategyComponent.IsPMEligibleAsset. Otherwise, determined by the Engine.
+  bool IsPMEligible = 41;
+  // This flag allows processing of stress test shocking for PnL and risk exposure analysis.
+  bool IsShockEligible = 42;
+  // Sign: always positive.
+  double Price = 43;
+  // Optional. If null, no advanced shock was applied to override the default shock.
+  // Otherwise, it contains descriptions of applied advanced shocks (e.g., "Px: -9%|IV: -20%/50%", "Yield 50 BPS").
+  // The index corresponds to the scenario index.
+  repeated string AdvShockLabel = 44;
+  // Specifies additional requirements applied to this product.
+  AppliedAddOns AppliedAddOns = 45;
+}
+
+// Specifies additional requirements applied to this product.
+message AppliedAddOns{
+  // Specifies additional requirement for low-priced stock product. Supported only for Portfolio Margin accounts.
+  // Sign: always positive.
+  double LowPricedStocksAddOn = 1;
+  // Applied concentration add-on requirement. Supported only for Portfolio Margin accounts.
+  // Sign: always positive.
+  double ConcentrationAddOn = 2;
+  // Applied liquidity add-on requirement. Supported only for Portfolio Margin accounts.
+  // Sign: always positive.
+  double LiquidityAddOn = 3;
+}
+
+// A combination of class groups that have highly correlated underlying instruments.
+// This is the third layer of aggregation of profit and loss values
+// Gain and loss values are aggregated first at the class group level, then the product group level, and finally at the portfolio group level,
+// Gains and losses of included class groups may be offset at a certain percentage.
+message ProductGroup
+{
+  // A product group contains class groups whose underlying securities exhibit a high degree of historical price change correlation.
+  // Product groups are comprised of closely related broad-based index or sector index class groups.
+  string ProductGroupId = 1;
+  repeated ClassGroup ClassGroups = 2;
+  double NAV = 3;
+  // Total Minimum of the product group.
+  double Minimum = 4;
+  // Risk Charge is the largest projected portfolio loss over the market scenarios at the relevant level of totaling (portfolio, product, or class group).
+  double RiskCharge = 5;
+  // The projected gain or loss at each of (typically) 10 equidistant data points which represent the underlying price move.
+  repeated double GainsAndLosses = 6;
+  // Format of value: 90% and not 0.9
+  double AppliedOffsetPercent = 11;
+  // Lower value of either ClassGroup's RiskCharge or ClassGroup's Minimum.
+  double Requirement = 12;
+  // Percentage of the total portfolio NAV that is represented by the product group.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationPercentage= 13;
+  // Concentration of requirement to NetLiq.
+  // Value: 0.0 - 1.0
+  // Sign: always positive.
+  double ConcentrationToNetLiq = 14;
+  repeated double ScenariosPercentages = 15;
+  // Aggregate values of the IV shocks applied to the class groups. Values: null for no shock applied.
+  repeated double AppliedIVShockValues = 16;
+  // Total Morning Net Asset Value
+  double MorningNAV = 17;
+  // Contains aggregations, additional to the basic aggregations on Class, Product or Portfolio groups.
+  AdvancedAggregations PositionAggregations = 18;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 19;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 20;
+}
+
+message VolatilityShockResult
+{
+  repeated double GainsAndLossesScenarios = 1;
+  // Percentage by which the current volatility is to be adjusted by.
+  // Value BEFORE application of volatility factor.
+  // Format: 4.5 for 4.5%, consistently with the OCCs' files.
+  // Sign: positive for Vol up shock, negative for Vol down shock.
+  repeated double ShockPercentages = 2;
+  //This Vega adjustment factor is applied to smooth out volatility changes across longer expirations.
+  // The weights are determined from a synthetic 30-day option that is assumed to always have a weighting factor of 1.
+  repeated double TimeToExpirationFactors = 3;
+  // Current Implied Volatility. Implied Volatility (IV) of an option contract is a measure derived from option prices, reflecting the market's expectation of the future volatility of the underlying asset.
+  // Value: expressed as a percentage, ranging from 0 to infinity. 0.5 means 50%.
+  double ImpliedVolatility = 4;
+  // Current Vega. Vega is a measure of an option's sensitivity to changes in implied volatility.
+  // It quantifies how much the option price is expected to change for a 1% increase in implied volatility,
+  // reflecting the impact of market expectations on option premiums.
+  // Value: 0 to 1, and represent points per percentage change in implied volatility.
+  double Vega = 5;
+  // Computed shocked Implied Volatility price exposure per contract.
+  // For ShortCall and ShortPut IV down increases price exposure, IV up decreases price exposure.
+  // Formula: IV * ShockPercentage * Vega * TimeToExpirationFactor
+  // Sign: negative for loss, positive for gain.
+  // Sign for Short product: negative for IV up, positive for IV down.
+  // Sign for Long product: negative for IV down, positive for IV up.
+  repeated double ShockValues = 6;
+  // Price inclusive of impact of IV shock.
+  // IV down decreases price; IV up increases price.
+  repeated double Prices = 7;
+}
+
+message ProductGreeks
+{
+  // Delta is a key Greek in options pricing that measures the sensitivity of an option's price to changes in the underlying asset's price.
+  // For example, if an option has a delta of 0.50 (or 50%), it means that for every $1 increase in the underlying asset's price, the option's price is expected to increase by $0.50, and vice versa.
+  // Values: 0 to 1 for calls; -1 to 0 for puts.
+  // Sign: negative for puts, positive for calls.
+  double Delta = 1;
+  // Vega is a measure of an option's sensitivity to changes in implied volatility.
+  // It quantifies how much the option price is expected to change for a 1% increase in implied volatility,
+  // reflecting the impact of market expectations on option premiums.
+  // Value: 0 to 1, and represent points per percentage change in implied volatility.
+  double Vega = 2;
+  //Implied Volatility (IV) of an option contract is a measure derived from option prices, reflecting the market's expectation of the future volatility of the underlying asset.
+  double ImpliedVolatility = 3;
+  // Theta measures how much an option's price decreases each day, assuming all other factors remain constant
+  // Sign: always negative.
+  double Theta = 4;
+  // Gamma (Γ) is a measure of the rate of change in an option's delta for a one-point move in the underlying asset's price.
+  // Essentially, it shows how much the delta of an option will change as the price of the underlying asset changes.
+  // Sign: always positive.
+  double Gamma = 5;
+}
+
+// Contains aggregations, additional to the basic aggregations on Class, Product or Portfolio groups.
+message AdvancedAggregations
+{
+  // Current market value of long positions.
+  double LongMarketValue = 1;
+  // Current market value of short positions.
+  double ShortMarketValue = 2;
+  // Aggregation of the long delta exposure for positions included in the portfolio margin requirements.
+  // For equity products and their current market value we use one delta value (100%).
+  // Represented as a value in dollars.
+  double DeltaLongExposure = 3;
+  // Aggregation of the short delta exposure for positions included in the portfolio margin requirements.
+  // For equity products and their current market value we use one delta value (100%).
+  // Represented as a value in dollars.
+  // Sign: always positive.
+  double DeltaShortExposure = 4;
+  // The number of positions included in calculation of the long delta exposure.
+  double DeltaLongCount = 5;
+  // The number of positions included in calculation of short delta exposure.
+  double DeltaShortCount = 6;
+  // Aggregate value of the change (sensitivity) in value of underlying security, reference instrument, or index for an absolute 1 public int (1%) shift in volatility.
+  // Represented as a value in dollars.
+  // Does not include Equity products.
+  double VegaExposure = 7;
+  double ThetaExposure = 8;
+  double GammaExposure = 9;
+}
+
+// No need for "PM" prefix, as we will have a different message in BP scope.
+message ProductWhatIfAdjustment
+{
+    // Cash Impact based on Product's What-If adjustment.
+    // Sign: negative when spending cash; positive when receiving cash.
+    // - negative for qty increase of long position
+    // - positive for qty increase of short position
+    // - zero for mute feature
+    // - positive for qty decrease of long position
+    // - negative for qty decrease of short position
+    double ChangeInCash = 1;
+
+    // Sign: negative decreases; positive increases; Passing "0" for existing product corresponds to Mute feature.
+    double ChangeInQuantity = 2;
+}

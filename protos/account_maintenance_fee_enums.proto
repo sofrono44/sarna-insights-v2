@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Protos.AccountMaintenanceFees";
+
+// Corresponds to [AccountMaintenanceFeeSchedule] table.
+enum EnumAccountMaintenanceFeeSchedule{
+  EnumAccountMaintenanceFeeSchedule_Undefined = 0;
+  // Based on not reaching minimums in a calendar period, such as: number of transactions or asset level.
+  EnumAccountMaintenanceFeeSchedule_AccountInactivityFee = 1;
+  // Based on active user platform subscription.
+  EnumAccountMaintenanceFeeSchedule_PlatformSubscriptionFee = 2;
+  // Real-time quotations display fee for non-professional user.
+  EnumAccountMaintenanceFeeSchedule_RealTimeQuotesNonProEntitlement = 3;
+  // Real-time quotations display fee for professional user.
+  EnumAccountMaintenanceFeeSchedule_RealTimeQuotesProEntitlement = 4;
+}
+
+enum EnumAccountMaintenanceFeeOverrideLevel {
+  EnumAccountMaintenanceFeeOverrideLevel_Undefined = 0;
+  // AccountMaintenanceFee in [AccountMaintenanceFeeAccountOverrides]
+  EnumAccountMaintenanceFeeOverrideLevel_AccountOverride = 1;
+  // AccountMaintenanceFee in [AccountMaintenanceFeeBranchOverrides]
+  EnumAccountMaintenanceFeeOverrideLevel_BranchOverride = 2;
+  // AccountMaintenanceFee in [AccountMaintenanceFeeDefaults] by User's CountryCode
+  EnumAccountMaintenanceFeeOverrideLevel_CountryCodeDefault = 3;
+  // AccountMaintenanceFee in [AccountMaintenanceFeeDefaults], if no entry for considered CountryCode
+  EnumAccountMaintenanceFeeOverrideLevel_GlobalDefault = 4;
+}

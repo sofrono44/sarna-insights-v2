@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Services.SDR.DTO.Enums";
+
+// Enum for specifying the type of bank account as per ABA (American Bankers Association) standards.
+// Corresponds to [AbaAccountTypes] table.
+enum EnumAbaAccountType {
+  // Undefined bank account type.
+  EnumAbaAccountType_Undefined = 0;
+  // Checking account type.
+  EnumAbaAccountType_Checking = 1;
+  // Savings account type.
+  EnumAbaAccountType_Savings = 2;
+}
+
+// Enum for specifying the ownership type of a bank account as per ABA standards.
+// Corresponds to [AbaAccountOwnerTypes] table.
+enum EnumAbaAccountOwnerType {
+  // Undefined account owner type.
+  EnumAbaAccountOwnerType_Undefined = 0;
+  // Account owned by an individual.
+  EnumAbaAccountOwnerType_Individual = 1;
+  // Account owned by a business entity.
+  EnumAbaAccountOwnerType_Business = 2;
+}

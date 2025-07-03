@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Accounts";
+
+enum EnumAccountApprovalStatus {
+  EnumAccountApprovalStatus_Undefined = 0;
+  EnumAccountApprovalStatus_Pending = 1;
+  EnumAccountApprovalStatus_Approved = 2;
+  EnumAccountApprovalStatus_Rejected = 3;
+  EnumAccountApprovalStatus_Canceled = 4;
+}

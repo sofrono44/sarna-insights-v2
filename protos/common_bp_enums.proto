@@ -1,0 +1,30 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Common.Enums.BuyingPower";
+
+// (!!) Keep in-sync with DTS.Services.BuyingPower.DTO.Enums.enumBpOptionTradingLevel
+// Corresponds to [BpOptionTradingLevels] table
+// Matches options trading levels at clearing firm:
+//   1. COVERED WRITING
+//   2. PURCHASING CALLS AND PUTS
+//   3. SPREADS(PUTS AND CALLS)
+//   4. UNCOVERED PUT WRITING
+//   5. UNCOVERED CALL WRITING
+//   6. UNCOVERED INDEX
+// Enum for option trading levels
+enum EnumBpOptionTradingLevel {
+  // Undefined trading level
+  EnumBpOptionTradingLevel_Undefined = 0;
+  // Writing covered calls
+  EnumBpOptionTradingLevel_WritingCoveredCalls = 1;
+  // Buying calls and puts
+  EnumBpOptionTradingLevel_BuyingCallsAndPuts = 2;
+  // Spreading calls and puts
+  EnumBpOptionTradingLevel_SpreadingCallsAndPuts = 3;
+  // Uncovered put writing
+  EnumBpOptionTradingLevel_UncoveredPutWriting = 4;
+  // Uncovered call writing
+  EnumBpOptionTradingLevel_UncoveredCallWriting = 5;
+  // Uncovered index writing
+  EnumBpOptionTradingLevel_UncoveredIndexWriting = 6;
+}

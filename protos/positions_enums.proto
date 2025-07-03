@@ -1,0 +1,20 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Services.BusinessHub.DTO.Enums";
+
+// Enum for specifying the type of requested positions lots.
+enum EnumRequestedPositionsLots {
+  // Undefined lot type.
+  EnumRequestedPositionsLots_Undefined = 0;
+  // Request for open positions lots.
+  EnumRequestedPositionsLots_OpenPositions = 1;
+  // Request for closed positions lots.
+  EnumRequestedPositionsLots_ClosedPositions = 2;
+  // Request for paired lots.
+  EnumRequestedPositionsLots_PairLots = 3;
+  // Request for unpaired lots.
+  EnumRequestedPositionsLots_UnpairLots = 4;
+  // Request for automatically paired lots.
+  EnumRequestedPositionsLots_AutoPairLots = 5;
+}

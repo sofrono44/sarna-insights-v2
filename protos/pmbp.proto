@@ -1,0 +1,242 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "pmbp_groups.proto";
+
+option csharp_namespace = "DTS.Services.PMBP.DTO.Protos";
+
+message PmBpResponse
+{
+  string Status = 1;
+  repeated PmBpValuesResponse PmBpValuesResponses = 2;
+  repeated PmBpForProposedOrderResponse PmBpForProposedOrderResponses = 3;
+  // Returns the version of the assembly that created this response
+  string Version = 4;
+}
+
+message PmBpForProposedOrderResponse{
+  // Account’s PM BP level Without pre-trade checked proposed order(s)
+  PmBpValues PmBpValuesWithoutProposedLots = 1;
+  // Account’s PM BP level With pre-trade checked proposed order(s)
+  PmBpValues PmBpValuesWithProposedLots = 2;
+  string AccountId = 4;
+  string AccountNumber = 5;
+  string AccountName = 6;
+  // Dictionary of BP results for subaccounts <SubaccountId, PmBpForProposedOrderResponse>
+  map<int32, PmBpForProposedOrderResponse> SubaccountsPmBpForProposedOrderResponses = 9;
+  PmBpMetaInfo MetaInfo = 10;
+
+
+  repeated ResponseError Errors = 7;
+  repeated ResponseWarning Warnings = 8;
+}
+
+// Account’s portfolio buying power calculations response.
+// Result PMBP computed based on passed: positions, orders, quotations and thresholds passed in with the request.
+message PmBpValuesResponse
+{
+  // Highest requirement portfolio values, including impact of passed orders.
+  PmBpValues PmBpValues = 1;
+  string AccountId = 3;
+  string AccountNumber = 4;
+  string AccountName = 5;
+  // Dictionary of BP results for subaccounts <SubaccountId, PmBpValuesResponse>
+  map<int32, PmBpValuesResponse> SubaccountsPmBpValuesResponses = 6;
+
+  PmBpMetaInfo MetaInfo = 7;
+
+  repeated ResponseError Errors = 100;
+  repeated ResponseWarning Warnings = 101;
+}
+
+message PmBpValues{
+  Groupings Groupings = 1;
+  // Total Net Asset Value
+  double NAV = 2;
+  // Total Requirement
+  double Requirement = 3;
+  double Cash = 4;
+  double CreditLimit = 5;
+  AdvancedValues AdvancedValues = 6;
+  // BuyingPower = (Net Liquidation - Requirement) * BP Leverage Factor - Pending Debit Transaction
+  // Or: Buying power (maintenance excess) = net liquidation value – margin requirements
+  // BP Leverage Factor is either specified by the caller (via ExtRequestAppConfig.BpLeverageFactor input) or from Engine's default.
+  double BuyingPower = 7;
+  // Pending net transaction (debit and  credit) resulting from potential execution of passed orders.
+  // Sign: negative for debit (buy), positive for credit (sell)
+  double PendingTransaction = 8;
+  // Pending Debit resulting from potential execution of passed orders.
+  // Used to lower final Buying Power.
+  // Sign: negative for debit (buy).
+  double PendingDebitTransaction = 9;
+  // Total NAV + Cash.
+  double NetLiquidity = 10;
+  ValueAtRiskResult ValueAtRiskResult = 11;
+  // Account's portfolio level GainsAndLosses
+  repeated double GainsAndLosses = 12;
+  // Total Morning Net Asset Value
+  double MorningNAV = 13;
+  // Percentage of utilized credit based on Requirement by NetLiquidation, or Requirement by CreditLimit if set for the account.
+  // AKA Risk Number.
+  // Value: 0.25 for 25%
+  double CreditUtilization = 14;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 15;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 16;
+  // Contains attributes of output scenarios, like Descriptions ("-10% / IV dn 25%")
+  repeated PmBpScenarioOutput ScenarioOutputs = 17;
+  // NetLiquidation less Requirement
+  double ExcessLiquidity = 18;
+  // Contains per accounts aggregations, additional to the basic aggregations on Class, Product or Portfolio groups.
+  AdvancedAggregations PositionAggregations = 19;
+}
+
+// Contains attributes of output scenarios, like Descriptions ("-10% / IV dn 25%")
+message PmBpScenarioOutput {
+  int32 ScenarioIndex = 1;
+  // Typical values for multi-scenario testing: "-2 ,-1, 0, 1, 2". Example of value for custom scenario: "-10%/IVdn25%"
+  string ScenarioDescription = 2;
+  // 0 for default scenario.
+  // Otherwise, RiskPortfolioId corresponding to the scenario.
+  int32  RiskProfileId = 3;
+}
+
+message AdvancedValues{
+  // ClassGroups portfolios considered based on passed orders. Can be use for advanced investigation or debugging.
+  repeated ClassGroup ClassGroupsPortfolios = 1;
+  // All computed VaR scenarios (or PnL days) used to select a final one based on requested confidence level.
+  repeated ValueAtRiskResult ValueAtRiskResults = 2;
+  // Engine configuration values used for the current calculation.
+  repeated string EngineConfigValues = 3;
+  // Aggregate values of the IV shocks applied to the lower level groups.
+  // Values: null for no shock applied.
+  repeated double AppliedIVShockValues = 4;
+}
+
+message ValueAtRiskResult
+{
+  // Sign: negative (-) for loss, positive (+) for gain.
+  double ValueAtRisk = 1;
+  // Corresponds to day of the input DailyPnL data, yielding the result Value At Risks.
+  // Format: mm/dd/YYYY ("2/19/2019").
+  string InputDate =2;
+}
+
+// Provides mechanism triggering stress test for specified levels.
+message PmBpStressTestInput{
+  repeated PmBpUnderlyingPriceShockInput UnderlyingPriceShockInputs = 1;
+  repeated PmBpVolatilityShockInput VolatilityShockInputs = 2;
+  repeated MOVEShockInput MOVEShockInputs = 3;
+  repeated MOVECreditSpreadShockInput MOVECreditSpreadShockInputs = 4;
+  repeated YieldShockInput YieldShockInputs = 5;
+  repeated PmBpRiskProfile PmBpRiskProfiles = 6;
+}
+
+// Specifies custom Risk policies to be applied to the stress test calculations.
+// Policy is a collection of Scenarios.
+// Caller can request multiple policies to be applied to the same stress test.
+// Each scenario appears in the result grid as a separate column.
+message PmBpRiskProfile{
+  int32 RiskProfileId = 1;
+  string Name = 2;
+	repeated PmBpScenario Scenarios = 3;
+  bool IncludeOpenOrders = 4;
+}
+
+// Each scenario appears in the result grid as a separate column.
+message PmBpScenario{
+  repeated PmBpUnderlyingPriceShockInput UnderlyingPriceShockInputs = 1;
+  repeated PmBpVolatilityShockInput VolatilityShockInputs = 2;
+  repeated MOVEShockInput MOVEShockInputs = 3;
+  repeated MOVECreditSpreadShockInput MOVECreditSpreadShockInputs = 4;
+  repeated YieldShockInput YieldShockInputs = 5;
+}
+
+// Optional ability to stress-test a specific Product, Basket, or ClassGroup with extended price range.
+// Typically, stock and options positions are tested by hypothetically moving the price between +/- 15%, or as specified by OCC report.
+// This input allows to test a specific ClassGroup with a wider range, for example, +/- 30%.
+// If passed, the Engine will create 10 equidistant scenarios for all products within the ClassGroup.
+message PmBpUnderlyingPriceShockInput{
+  // Optional attribute.
+  // If true then the shock is applied globally. Do NOT set to true for Advanced Shock per UnderlyingSymbol, or GroupId.
+  bool ApplyAcrossPortfolio = 1;
+  // Optional attribute.
+  // Applies the Shock to all products of this ProductGroup, unless a specific ClassGroup, UnderlyingSymbol or BasketId is specified.
+  string ProductGroupId = 2;
+  // Optional attribute.
+  // Applies the Shock to all products of this ClassGroup, unless a specific UnderlyingSymbol or BasketId is specified.
+  string ClassGroupId = 3;
+  // Applies the Shock to all products of this Underlying Symbol OR across the entire ClassGroup if ClassGroupId equals to UnderlyingSymbol.
+  string UnderlyingSymbol = 4;
+  // Optional attribute.
+  // Applies the Shock to all products of this BasketGroup, unless a specific UnderlyingSymbol or ClassGroupId is specified.
+  string BasketId = 5;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double PercentDown = 6;
+  // Determines upper bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double PercentUp = 7;
+}
+
+// Volatility shock is conducted on each product individually, and not on the whole ClassGroup.
+// ClassGroup calculation is done by aggregating individual product results, looking for the highest requirement for each product based on Volatility shock scenario.
+message PmBpVolatilityShockInput{
+  // Optional attribute.
+  // If true then the shock is applied globally. Do NOT set to true for Advanced Shock per UnderlyingSymbol, or GroupId.
+  bool ApplyAcrossPortfolio = 1;
+  // Optional attribute.
+  // Applies the Shock to all products of this ProductGroup.
+  string ProductGroupId = 2;
+  // Optional attribute.
+  // Underlying Symbol of products to be affected with this shock test.
+  // Typically will set ScenariosPercentages as, if class group corresponds to the underlying symbol.
+  string UnderlyingSymbol = 3;
+
+  // Optional attribute.
+  // This factor is applied to smooth out volatility changes across longer expirations.
+  // The weights are determined from a synthetic 30-day option that is assumed to always have a weighting factor of 1.
+  // Sign: always positive.
+  // Values:
+  // (0) Use Engine's default.
+  // (1) Enable and include into Volatility Shock Calculations.
+  // (2) Disable and do not include into Volatility Shock Calculations.
+  int32 ApplyTimeToExpirationFactor = 4;
+  // Determines ShockPercentage of IV shock to Down-side.
+  // Format:  0.5 means 50%. Sign: always positive
+  double PercentDown = 5;
+  // Determines ShockPercentage of IV shock to Up-side.
+  // Format:  0.5 means 50%. Sign: always positive
+  double PercentUp = 6;
+}
+
+// Meta information about the response
+message PmBpMetaInfo {
+  // Date of the used OCC Theoretical Prices.
+  string OCCTPBizDate = 1;
+  // Time in milliseconds taken to process the request
+  double ElapsedTimeInMs = 2;
+}
+
+message PMAccountWhatIfAdjustment
+{
+  string AccountNumber = 1;
+  repeated PMWhatIfAdjustedProduct PMWhatIfAdjustedProducts = 2;
+}
+
+message PMWhatIfAdjustedProduct
+{
+  string ProductId = 1;
+  // Any security id ie: symbol, CUSIP, SecNo.
+  string Symbol = 2;
+  // if set to true, it will display Product's NAV and change in cash at 0, removing the value from Net Liquidation.
+  bool NoCashImpact = 3;
+  // Sign: negative for short, positive for long; Passing "0" for existing product corresponds to Mute feature.
+  double Quantity = 4;
+  double Price = 5;
+  double UnderlyingPrice = 6;
+}

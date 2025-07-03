@@ -1,0 +1,275 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Company>DTS.Protos</Company>
+    <Product>DTS.Protos</Product>
+    <IsPublishable>false</IsPublishable>
+    <PackageId>Sarna.DTS.Libs.Protos</PackageId>
+    <!-- Sample: dotnet pack -p:Version=2023.10.2-190531-040e2a90e -->
+    <Version>$(Version)</Version>
+    <Company>Sarna Technologies</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.29.1" />
+    <PackageReference Include="Google.Api.Gax.Grpc" Version="4.9.0" />
+    <PackageReference Include="Grpc" Version="2.46.6" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.67.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.68.1">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <!--
+    Hack for not working: OutputOptions="file_extension=.g.cs"
+    https://github.com/grpc/grpc/issues/25950#issuecomment-1142390594
+    Test:
+        cd C:\DTS\Source\BE\Libs\DTS.Libs.Common
+        dotnet build
+        expected file: c:\DTS\Source\BE\Libs\DTS.Libs.Common\Enums\OrderEnums.g.cs
+        generated file: c:\DTS\Source\BE\Libs\DTS.Libs.Common\Enums\OrderEnums.cs
+  -->
+<!--   <ItemDefinitionGroup> -->
+<!--     <Protobuf_Compile> -->
+<!--       <_OutputOptions>%(Protobuf_Compile._OutputOptions);file_extension=.g.cs</_OutputOptions> -->
+<!--     </Protobuf_Compile> -->
+<!--   </ItemDefinitionGroup> -->
+<!--   <Target Name="_test" AfterTargets="Protobuf_PrepareCompile;Protobuf_PrepareClean"> -->
+<!--     <ItemGroup> -->
+<!--       <New_Protobuf_ExpectedOutputs Include="@(Protobuf_ExpectedOutputs -> '%(RootDir)%(Directory)%(Filename).g.cs')" /> -->
+<!--       <Protobuf_ExpectedOutputs Remove="@(Protobuf_ExpectedOutputs)" /> -->
+<!--       <Protobuf_ExpectedOutputs Include="@(New_Protobuf_ExpectedOutputs)" /> -->
+<!--     </ItemGroup> -->
+<!--   </Target> -->
+
+  <!-- DTS.Libs.Common -->
+  <ItemGroup>
+<!--       <Compile Remove="BE\Libs\DTS.Libs.Common\*.g.cs" /> -->
+<!--       <EmbeddedResource Remove="BE\Libs\DTS.Libs.Common\*.g.cs" /> -->
+    <Protobuf Include="admin\admin_management_enums.proto">
+      <GrpcServices>None</GrpcServices>
+      <Access>Public</Access>
+      <ProtoCompile>True</ProtoCompile>
+      <CompileOutputs>True</CompileOutputs>
+      <OutputDir>..\BE\Libs\DTS.Libs.Accounts\Protos</OutputDir>
+      <Generator>MSBuild:Compile</Generator>
+    </Protobuf>
+    <Protobuf Include="common.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="common_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="common_bp_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="openapiv3\annotations.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="openapiv3\OpenAPIv3.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="orders.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="orders_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+    <Protobuf Include="search_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Common\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Services.BuyingPower.DTO -->
+  <ItemGroup>
+    <Protobuf Include="bp_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.BuyingPower\DTS.Services.BuyingPower.DTO\Protos" />
+  </ItemGroup>
+  <ItemGroup>
+    <Protobuf Include="pmbp_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.PMBP\DTS.Services.PMBP.DTO\Enums" />
+  </ItemGroup>
+
+	<!-- DTS.Services.QuoteProxy.DTO -->
+  <ItemGroup>
+    <Protobuf Include="quotes_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Quotes\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Services.SDR.DTO -->
+  <ItemGroup>
+    <Protobuf Include="account_application_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.SDR\DTS.Services.SDR.DTO\Protos" />
+    <Protobuf Include="account_ach_sdr_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.SDR\DTS.Services.SDR.DTO\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Libs.Accounts -->
+  <ItemGroup>
+    <Protobuf Include="accounts_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Accounts\Protos" />
+    <Protobuf Include="account_ach_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Accounts\Protos" />
+    <Protobuf Include="admin\audit_trail_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Accounts\Protos" />
+    <Protobuf Include="admin\admin_trading_level_change_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Accounts\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Libs.Trading -->
+  <ItemGroup>
+    <Protobuf Include="dividends_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Trading\Protos" />
+    <Protobuf Include="commissions_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Trading\Protos" />
+    <Protobuf Include="admin\admin_risk_profiles_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Trading\Protos" />
+    <Protobuf Include="account_cash_transactions_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Trading\Protos" />
+    <Protobuf Include="account_maintenance_fee_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Trading\Protos" />
+    <Protobuf Include="options_en_a_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Trading\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Libs.Notifications -->
+  <ItemGroup>
+    <Protobuf Include="notifications_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Notifications\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Libs.Sessions -->
+  <ItemGroup>
+    <Protobuf Include="sessions.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Sessions\Protos" />
+    <Protobuf Include="sessions_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Sessions\Protos" />
+    <Protobuf Include="user_data_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Sessions\Protos" />
+    <Protobuf Include="market_data_entitlement_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Sessions\Protos" />
+    <Protobuf Include="admin\admin_mde_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Sessions\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Libs.TimeMachine -->
+  <ItemGroup>
+    <Protobuf Include="time_machine_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.TimeMachine\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Services.BusinessHub.DTO -->
+  <ItemGroup>
+    <Protobuf Include="glossary_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.BusinessHub\DTS.Services.BusinessHub.DTO\Protos" />
+    <Protobuf Include="positions_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.BusinessHub\DTS.Services.BusinessHub.DTO\Protos" />
+    <Protobuf Include="trading_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.BusinessHub\DTS.Services.BusinessHub.DTO\Protos" />
+    <Protobuf Include="api_hub_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.BusinessHub\DTS.Services.BusinessHub.DTO\Protos" />
+    <Protobuf Include="bh_accounts_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.BusinessHub\DTS.Services.BusinessHub.DTO\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Services.ExecutionAcceptor.DTO -->
+  <ItemGroup>
+    <Protobuf Include="execution_acceptor_enums.proto" GrpcServices="None" OutputDir="..\BE\Libs\DTS.Libs.Fix\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Services.ApiHub.BL -->
+  <ItemGroup>
+    <!-- Services -->
+    <Protobuf Include="admin\admin_management_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_trading_level_change_service.proto" GrpcServices="Server" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_dashboard_service.proto" GrpcServices="Server" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_bp_symbol_requirements_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\audit_trail_service.proto" GrpcServices="Server" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="api_hub_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="openapi.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="user_data_service.proto" GrpcServices="Server" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_mde_service.proto" GrpcServices="Server" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_margin_manager_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_risk_profiles_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_external_data_source_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_reports_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+
+    <!-- Messages/Enums -->
+    <Protobuf Include="account_application.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="accounts.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="account_ach.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\account.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_management.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_dashboard_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_dashboard.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_bp_symbol_requirements.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_trading_level_change.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\audit_trail.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_margin_manager.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_risk_profiles.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_external_data_source.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_reports_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_reports.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="api_hub.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="balances.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="bp.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+	<Protobuf Include="commissions.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="glossary.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="order_execution_logs.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="positions.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="quotes.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="securities_master.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+	<Protobuf Include="subscriptions.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="trading.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="trading_level_change.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="user.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="user_data.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="market_data_entitlement.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="account_maintenance_fee.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="admin\admin_mde.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="ux_messages.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+
+    <Protobuf Include="pmbp.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="pmbp_groups.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+
+    <Protobuf Include="search.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+    <Protobuf Include="time_machine.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.BL\Protos" />
+  </ItemGroup>
+
+  <!-- DTS.Services.ExecutorApiHub -->
+  <ItemGroup>
+    <!-- Services -->
+    <Protobuf Include="execution_api_hub_service.proto" GrpcServices="Both" OutputDir="..\BE\Services\DTS.Services.ExecutionApiHub\DTS.Services.ExecutionApiHub.DTO\Protos" />
+
+    <!-- Messages/Enums -->
+    <Protobuf Include="execution_api_hub_enums.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ExecutionApiHub\DTS.Services.ExecutionApiHub.DTO\Protos" />
+    <Protobuf Include="execution_api_hub.proto" GrpcServices="None" OutputDir="..\BE\Services\DTS.Services.ExecutionApiHub\DTS.Services.ExecutionApiHub.DTO\Protos" />
+  </ItemGroup>
+
+  <!-- Copy BpEnums.cs generated for BuyingPower to PMBP project (DTS.Services.PMBP.DTO.Enums) -->
+  <Target Name="Copy BpEnums To PMBP" AfterTargets="Protobuf_AfterCompile">
+      <PropertyGroup>
+          <InputFile>..\BE\Services\DTS.Services.BuyingPower\DTS.Services.BuyingPower.DTO\Protos\BpEnums.cs</InputFile>
+          <OutputFile>..\BE\Services\DTS.Services.PMBP\DTS.Services.PMBP.DTO\Protos\BpEnums.cs</OutputFile>
+      </PropertyGroup>
+      <WriteLinesToFile
+          File="$(OutputFile)"
+          Lines="$([System.IO.File]::ReadAllText($(InputFile)).Replace('DTS.Services.BuyingPower.DTO.Enums','DTS.Services.PMBP.DTO.Enums'))"
+          Overwrite="true"
+          Encoding="UTF-8"/>
+  </Target>
+  <Target Name="Cleanup PMBP BpEnums" AfterTargets="Protobuf_Clean">
+      <Delete Files="..\BE\Services\DTS.Services.PMBP\DTS.Services.PMBP.DTO\Protos\BpEnums.cs" TreatErrorsAsWarnings="true" />
+  </Target>
+  <Target Name="Cleanup PMBP EnumPmAccountType" AfterTargets="Protobuf_Clean">
+      <Delete Files="..\BE\Services\DTS.Services.PMBP\DTS.Services.PMBP.DTO\Protos\BpEnums.cs" TreatErrorsAsWarnings="true" />
+  </Target>
+
+  <!-- Copy TimeMachine enums -->
+  <Target Name="Copy TimeMachineEnums To PMBP" AfterTargets="Protobuf_AfterCompile">
+      <PropertyGroup>
+          <InputFile>..\BE\Libs\DTS.Libs.TimeMachine\Protos\TimeMachineEnums.cs</InputFile>
+          <OutputFile>..\BE\Services\DTS.Services.PMBP\DTS.Services.PMBP.DTO\Protos\TimeMachineEnums.cs</OutputFile>
+      </PropertyGroup>
+      <WriteLinesToFile
+          File="$(OutputFile)"
+          Lines="$([System.IO.File]::ReadAllText($(InputFile)).Replace('DTS.Libs.TimeMachine.DTO','DTS.Services.PMBP.DTO.Enums'))"
+          Overwrite="true"
+          Encoding="UTF-8"/>
+  </Target>
+  <Target Name="Cleanup PMBP TimeMachineEnums" AfterTargets="Protobuf_Clean">
+      <Delete Files="..\BE\Services\DTS.Services.PMBP\DTS.Services.PMBP.DTO\Protos\TimeMachineEnums.cs" TreatErrorsAsWarnings="true" />
+  </Target>
+  <Target Name="Copy TimeMachineEnums To BP" AfterTargets="Protobuf_AfterCompile">
+      <PropertyGroup>
+          <InputFile>..\BE\Libs\DTS.Libs.TimeMachine\Protos\TimeMachineEnums.cs</InputFile>
+          <OutputFile>..\BE\Services\DTS.Services.BuyingPower\DTS.Services.BuyingPower.DTO\Protos\TimeMachineEnums.cs</OutputFile>
+      </PropertyGroup>
+      <WriteLinesToFile
+          File="$(OutputFile)"
+          Lines="$([System.IO.File]::ReadAllText($(InputFile)).Replace('DTS.Libs.TimeMachine.DTO','DTS.Services.BuyingPower.DTO.Enums'))"
+          Overwrite="true"
+          Encoding="UTF-8"/>
+  </Target>
+  <Target Name="Cleanup BP TimeMachineEnums" AfterTargets="Protobuf_Clean">
+      <Delete Files="..\BE\Services\DTS.Services.BuyingPower\DTS.Services.BuyingPower.DTO\Protos\TimeMachineEnums.cs" TreatErrorsAsWarnings="true" />
+  </Target>
+
+  <!-- Copy OpenApiDescription.md to BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.AspServer\Config\OpenApiDescription.md -->
+  <Target Name="Copy OpenApiDescription To BE" AfterTargets="Protobuf_AfterCompile">
+      <PropertyGroup>
+          <InputFile>OpenApiDescription.md</InputFile>
+          <OutputFolder>..\BE\Services\DTS.Services.ApiHub\DTS.Services.ApiHub.AspServer\Config\</OutputFolder>
+      </PropertyGroup>
+      <Copy SourceFiles="$(InputFile)" DestinationFolder="$(OutputFolder)" />
+  </Target>
+
+  <Target Name="GenerateDocs" AfterTargets="Protobuf_AfterCompile">
+    <PropertyGroup>
+      <ProtoCCommand>$(Protobuf_ProtocFullPath) -I $(Protobuf_StandardImportsPath) -I . --plugin=protoc-gen-doc=./scripts/protoc-gen-doc.exe --doc_opt=scripts/protoc-gen-doc-html.tmpl,grpc.html --doc_out=../BE/Services/DTS.Services.ApiHub/DTS.Services.ApiHub.AspServer/wwwroot/docs/ *.proto</ProtoCCommand>
+    </PropertyGroup>
+    <Message Importance="high" Text="Generate gRPC Documentation" />
+    <!-- <Message Importance="high" Text="$(ProtoCCommand)" /> -->
+    <Exec Command="$(ProtoCCommand)" />
+  </Target>
+
+</Project>

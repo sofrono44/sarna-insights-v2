@@ -1,0 +1,14 @@
+syntax = "proto3";
+import "admin/audit_trail.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminTrail";
+
+service AdminRegulatoryAuditTrailService {
+  rpc Search(AdminRegulatoryAuditTrailRequest) returns (AdminRegulatoryAuditTrailResponse)
+  {
+    option (google.api.http) = {
+      get: "/admin/audit-trail"
+    };
+  }
+}

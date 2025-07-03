@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+// Import the common protobuf definitions.
+import "common.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.Glossary";
+
+// Request message for getting provinces based on a country ID.
+message GetProvincesRequest {
+  // The ID of the country for which provinces are requested.
+  int32 CountryId = 1;
+}
+
+// Response message containing information about provinces, including any warnings or errors encountered.
+message GlossaryResponse {
+  // A list of provinces returned in the response.
+  repeated Province Provinces = 1;
+  // List of warnings related to the glossary response.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the glossary request.
+  repeated ResponseError Errors = 102;
+}
+
+// Represents a province with an ID and a name.
+message Province {
+  // The unique identifier for the province.
+  int32 ProvinceId = 1;
+  // The name of the province.
+  string Name = 2;
+}

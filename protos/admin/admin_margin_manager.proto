@@ -1,0 +1,273 @@
+﻿syntax = "proto3";
+import "common.proto";
+import "accounts.proto";
+import "bp.proto"; // reference to BalancesInfoRequest
+import "pmbp.proto";
+import "bp_enums.proto";
+import "search.proto";
+import "common_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminMarginManager";
+
+message MarginManagerRequest {
+  //Conditions to get data for RegT Accounts
+  MarginManagerStrategyRequest MarginManagerStrategyRequest = 1;
+  //Conditions to get data for PM Accounts
+  MarginManagerPortfolioRequest MarginManagerPortfolioRequest = 2;
+}
+
+message MarginManagerStrategyRequest {
+  // Filter by account ids (optional if AccountNumbers specified)
+  repeated int32 AccountIDs = 1;
+  // Filter by account numbers (optional if AccountIDs specified)
+  repeated string AccountNumbers = 2;
+  // Optional parameter. Provides users ability to upload OCC-style input.
+  // The file is in the same format as required by the OCC's calculator (https://apps.theocc.com/pmc/pmc.do).
+  // Each item corresponds to a single line in the CSV file and represents a single position to be added to the portfolio.
+  repeated ExtraPositionsInOCCStyleCSV ExtraPositionsInOCCStyleCSVs = 3;
+  // Provides mechanism triggering stress test accross the entire portfolio or specified underlying symbol groupings.
+  BpStressTestInput StressTestInput = 4;
+  // To override numbers of PriceMovements scenarios
+  int32 NumberOfScenarios = 5;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double UnderlyingPriceShockPercentDown = 6;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double UnderlyingPriceShockPercentUp = 7;
+  // Percentage by which the current volatility is to be adjusted by.
+  // Value: expressed as a percentage, ranging from 0 to infinity. 0.5 means 50%.
+  // Sign: always positive, as negative direction is expressed by VolatilityShockDirection.
+  double VolatilityShockPercentage = 8;
+  // Percentage by which the current volatility is to be adjusted by.
+  // Value: expressed as a percentage, ranging from 0 to infinity. 0.5 means 50%.
+  // Sign: always positive, as negative direction is expressed by VolatilityShockDirection.
+  // The values:
+  // (0) Use Engine's default
+  // (1) Up-side: test volatility increase by ShockPercentage
+  //     Example: for ShockPercentage: 50%, and current volatility: 50, the tested value is 75.
+  // (2) Down side: test volatility decrease by ShockPercentage
+  //     Example: for ShockPercentage: 50%, and current volatility: 50, the tested value is 25.
+  // (3) Both sides: test volatility increase and decrease by ShockPercentage.
+  //     ClassGroup will be evaluated with volatility up-side, then down-side. The side yielding higher requirement is selected as result.
+  int32 VolatilityShockDirection = 9;
+  // Optional attribute.
+  // This factor is applied to smooth out volatility changes across longer expirations.
+  // The weights are determined from a synthetic 30-day option that is assumed to always have a weighting factor of 1.
+  int32 ApplyTimeToExpirationFactor = 10;
+  //Engine does NOT fetch orders and corresponding quotes if it is False
+  bool IncludeOrders  = 11;
+  EnumStressTestCalculationsOptimizationLevel StressTestCalculationsOptimizationLevel = 12;
+  repeated int32 AppliedRiskProfileIds = 13;
+  // Optional.
+  // 0: Use engine's default.
+  // 1: BySymbol
+  // 2: BySymbolAndComponentType.
+  // 3: BySymbolAndComponentTypeSetPriceToAvg
+  // 4: BySymbolAndComponentTypeSetPriceToMax
+  // 5: BySymbolSetPriceToAvg
+  // 6: BySymbolSetPriceToMax
+  // 7: NoLotsAggregation
+  int32 LotsAggregatorAlgo = 14;
+  // Optional.
+  // Positions to be excluded from the calculation.
+  repeated BpAccountWhatIfAdjustment BpAccountWhatIfAdjustments = 15;
+  //Optional attribute. If not empty, the response will include all accounts from the specified account groups.
+  repeated int32 AccountGroupIds = 16;
+  // Optional attribute. If set to true, the response will include all accounts where IsRiskMonitoring is enabled in the system.
+  bool FetchAllAccounts = 17;
+
+  SearchCriteria SearchCriteria = 100;
+}
+
+message MarginManagerPortfolioRequest {
+  // Filter by account ids (optional if AccountNumbers specified)
+  repeated int32 AccountIDs = 1;
+  // Filter by account numbers (optional if AccountIDs specified)
+  repeated string AccountNumbers = 2;
+  //To override numbers of PriceMovements scenarios (default 10 scenarios)
+  int32 NumberOfScenarios = 3;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double UnderlyingPriceShockPercentDown = 4;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double UnderlyingPriceShockPercentUp = 5;
+  // Percentage by which the current volatility is to be adjusted by.
+  // Value: expressed as a percentage, ranging from 0 to infinity. 0.5 means 50%.
+  // Sign: always positive, as negative direction is expressed by VolatilityShockDirection.
+  double VolatilityShockPercentage = 6;
+  // Percentage by which the current volatility is to be adjusted by.
+  // Value: expressed as a percentage, ranging from 0 to infinity. 0.5 means 50%.
+  // Sign: always positive, as negative direction is expressed by VolatilityShockDirection.
+  // The values:
+  // (0) Use Engine's default
+  // (1) Up-side: test volatility increase by ShockPercentage
+  //     Example: for ShockPercentage: 50%, and current volatility: 50, the tested value is 75.
+  // (2) Down side: test volatility decrease by ShockPercentage
+  //     Example: for ShockPercentage: 50%, and current volatility: 50, the tested value is 25.
+  // (3) Both sides: test volatility increase and decrease by ShockPercentage.
+  //     ClassGroup will be evaluated with volatility up-side, then down-side. The side yielding higher requirement is selected as result.
+  int32 VolatilityShockDirection = 7;
+  // Optional attribute.
+  // This factor is applied to smooth out volatility changes across longer expirations.
+  // The weights are determined from a synthetic 30-day option that is assumed to always have a weighting factor of 1.
+  int32 ApplyTimeToExpirationFactor = 8;
+  // Optional attribute. If set to true, the response will include downloadable OccReport for the PM (Portfolio Margin) Account result.
+  // Values:
+  // (0) Use Engine's default.
+  // (1) Enable and include into Volatility Shock Calculations.
+  // (2) Disable and do not include into Volatility Shock Calculations.
+  bool ReturnOccStyleReportForPM = 9;
+  bool ReturnOccStyleInputForPM = 10;
+  // Optional attribute. Provides users ability to upload OCC-style input.
+  // The file is in the same format as required by the OCC's calculator (https://apps.theocc.com/pmc/pmc.do).
+  // Each item corresponds to a single line in the CSV file and represents a single position to be added to the portfolio.
+  repeated ExtraPositionsInOCCStyleCSV ExtraPositionsInOCCStyleCSVs = 11;
+  // Provides mechanism triggering stress test for specified ClassGroups.
+  PmBpStressTestInput StressTestInput = 12;
+  // Optional attribute. If set to true, the response will include all PM or BPMonitoredEnabled accounts in the system.
+  bool FetchAllAccounts = 13;
+  //Engine does NOT fetch orders and corresponding quotes if it is False
+  bool IncludeOrders  = 14;
+  // Optional parameter.
+  // Allows to override default Option Pricing Model.
+  // Possible models (if enabled on server side):
+  // 0: Engine Default, 1: Option Chains Analysis, 2: Delta, 3: OCCPriceMovements, 4: OCCPriceMovementsWithLiveGreeks, 5: BlackScholes, 6: BlackScholesWithOCCPricing, 7: BinomialTree, 8:BinomialTreeWithOCCPricing
+  int32 OptionPricingModel = 15;
+  repeated int32 AppliedRiskProfileIds = 16;
+  // Optional.
+  // 0: Use engine's default.
+  // 1: BySymbol
+  // 2: BySymbolAndComponentType.
+  // 3: BySymbolAndComponentTypeSetPriceToAvg
+  // 4: BySymbolAndComponentTypeSetPriceToMax
+  // 5: BySymbolSetPriceToAvg
+  // 6: BySymbolSetPriceToMax
+  // 7: NoLotsAggregation
+  int32 LotsAggregatorAlgo = 17;
+  // Optional.
+  // Positions to be excluded from the calculation.
+  repeated PMAccountWhatIfAdjustment PMAccountWhatIfAdjustments = 18;
+  //Optional attribute. If not empty, the response will include all accounts from the specified account groups.
+  repeated int32 AccountGroupIds = 19;
+  RequirementAddOns RequirementAddOns = 20;
+
+  SearchCriteria SearchCriteria = 100;
+}
+
+message RequirementAddOns{
+  bool ApplyLowPricedStocksAddOn = 1;
+  bool ApplyConcentrationAddOn = 2;
+  bool ApplyLiquidityAddOn = 3;
+}
+
+message PmAttributeUpdateRequest{
+  repeated PmAttributeUpdate PmAttributeUpdates = 1;
+}
+
+// Request message for PM Attrubute adjustment.
+message PmAttributeUpdate{
+  // The account ID. optional if account number is provided
+  int32 AccountId = 1;
+  // The account number. optional if account id is provided
+  string AccountNumber = 2;
+  // CreditLimit, null means no change needed
+  PmAttributeDecimalValue CreditLimit = 3;
+  // PMBPLeverageFactor, null means no change needed
+  PmAttributeDecimalValue PMBPLeverageFactor = 4;
+  //optional details
+  string Details = 5;
+}
+
+message PmAttributeDecimalValue{
+  // -1 means default
+  double Value = 1;
+}
+
+// Request message for balance cash and SMA information.
+// COMMENTED OUT: Duplicate definition exists in balances.proto
+// message BalanceCashInfoRequest {
+//   // Filter by account id (optional if AccountNumber is provided)
+//   int32 AccountId = 1;
+//   // Filter by account numbers (optional if AccountId is provided
+//   string AccountNumber = 2;
+// }
+
+message PmAttributeUpdateResponse{
+  repeated PmAttributeUpdateStatus PmAttributeUpdateStatuses = 1;
+
+  // List of warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Response message for balance adjustment.
+message PmAttributeUpdateStatus{
+  // The account ID.
+  int32 AccountId = 1;
+  // The account number.
+  string AccountNumber = 2;
+  // The status of the balance adjustment.
+  bool IsSuccess = 3;
+}
+
+// Can be used to stream info for a single account. UX capable of processing.
+message MarginManagerResponse {
+  // <AccountId, BuyingPowerResponse>
+  map<int32, MarginManagerInfo> MarginManagerInfo = 1;
+  repeated string PmBpAggregatedGreeksSummary = 2;
+
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  SearchCriteria SearchCriteria = 110;
+  PageResponse Page = 111;
+}
+
+message MarginManagerInfo {
+  int32 AccountId = 1;
+  string AccountNumber = 2;
+  // Results from BP engine for RegT accounts.
+  BpValuesResponse BpValuesResponse = 3;
+  // Results from PMBP engine for Portfolio Margin accounts.
+  PmBpValuesResponse PmBpValuesResponse = 4;
+  double YesterdayLiquidationValue = 5;
+  double Cash = 6;
+
+  // If requested, contains OCC-style report for PM, that could be downloaded as CSV on UX. Requested via BalancesInfoRequest.ReturnOccStyleReportForPM)
+  string OccStyleReportForPM = 7;
+
+  string OccStyleInputForPM = 8;
+
+  // Flag indicating Portfolio Margin account. If True, PMBP values are provided in PmBpValues.
+  bool IsPMAccount = 9;
+  EnumAccountRiskType AccountRiskType = 10;
+
+  repeated ResponseWarning Alerts = 100;
+  // AlertLevel is a number, between 0 and 100, that represents the severity of the alert.
+  // Note that AlertLevel will return values even if there were no alerts triggered.
+  // It is also meant to warn the user that we are getting close to triggering alert.
+  int32 AlertLevel = 101;
+}
+
+message ExtraPositionsInOCCStyleCSV
+{
+  int32 AccountId = 1;
+  string AccountNumber = 2;
+
+  // Optional parameter.
+  // Allows user to pass a portfolio not corresponding to existing account in DB. This flow is used for evaluation of potential client's portfolio.
+  // AccountId/Number has priority over UploadName, as it would direct the algo to the existing account.
+  // If specified, the algo will ignore AccountId and AccountNumber.
+  string UploadName = 3;
+
+  // Each item corresponds to a single line in the CSV file and represents a single position to be added to the portfolio.
+  repeated string FileContent = 4;
+}

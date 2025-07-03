@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+// Imports common definitions and structures.
+import "common.proto";
+// Imports common business process enums.
+import "common_bp_enums.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.TradingLevelChange";
+
+// Request to ask for a change in trading level for an account.
+message AskForTradingLevelChangeRequest {
+  // Unique identifier for the account requesting a trading level change.
+  // Optional if AccountNumber is provided.
+  int32 AccountId = 1;
+  // Unique account number for the account requesting a trading level change.
+  // Optional if AccountId is provided.
+  string AccountNumber = 2;
+  // The expected trading level to be set for the account.
+  EnumBpOptionTradingLevel ExpectedTradingLevel = 3;
+}
+
+// Response to a request for changing trading level, including warnings and errors if any.
+message AskForTradingLevelChangeResponse {
+  // List of warnings related to the trading level change request.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors encountered during the trading level change request.
+  repeated ResponseError Errors = 102;
+}

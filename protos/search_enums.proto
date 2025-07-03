@@ -1,0 +1,136 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Common.Enums";
+
+enum EnumSearchType
+{
+  EnumSearchType_Undefined = 0;
+  EnumSearchType_Orders = 1;
+  EnumSearchType_Accounts = 2;
+  EnumSearchType_OpenPositionLots = 3;
+  EnumSearchType_Users = 4;
+}
+
+enum EnumSearchServiceResponse
+{
+  EnumSearchServiceResponse_Undefined = 0;
+  EnumSearchServiceResponse_Success = 1;
+  EnumSearchServiceResponse_Failure = 2;
+}
+
+enum EnumJoinOperator {
+  EnumJoinOperator_Undefined = 0;
+  EnumJoinOperator_And = 1;
+  EnumJoinOperator_Or = 2;
+}
+
+enum EnumOperator
+{
+  EnumOperator_Undefined = 0;
+  EnumOperator_Equal = 1;
+  EnumOperator_NotEqual = 2;
+  EnumOperator_GreaterThan = 3;
+  EnumOperator_LessThan = 4;
+  EnumOperator_GreaterThanOrEqual = 5;
+  EnumOperator_LessThanOrEqual = 6;
+  EnumOperator_Like = 7;
+  EnumOperator_NotLike = 8;
+  EnumOperator_StartsWith = 9;
+  EnumOperator_EndsWith = 10;
+  EnumOperator_In = 11;
+  EnumOperator_NotIn = 12;
+}
+
+enum EnumField
+{
+  // Order
+  EnumField_Undefined = 0;
+  EnumField_OrderId = 1;
+  EnumField_UnderlyingSymbol = 2;
+  EnumField_PriceType = 3;
+  EnumField_OrderStatus = 4;
+  //Always positive, use OrderActionId or PositionDirection to determine if it is a buy or sell if it is needed
+  EnumField_Quantity = 5;
+  //ExecutionRoute,
+  //PendingTransaction, // value of the trade
+
+
+  // Order Leg or OPL
+  EnumField_Symbol = 6;
+  EnumField_Cusip = 7;
+
+  // Order Leg
+  EnumField_PositionEffectId = 8;
+  EnumField_OrderActionId = 9;
+  EnumField_LegSecTypeId = 10;
+
+  // Account
+  EnumField_AccountId = 11;
+  EnumField_AccountNumber = 12;
+  EnumField_AccountTypeId = 13;
+  EnumField_AccountRiskType = 14;
+  EnumField_Nickname = 15;
+  EnumField_CreatedTime = 16;
+  EnumField_AccountBranchId = 17;
+  EnumField_AccountRepresentativeId = 18;
+  EnumField_AccountStatus = 19;
+  EnumField_NetLiq = 20;
+  EnumField_Requirement = 21;
+  EnumField_CreditUtilization = 22;
+  EnumField_DayPnL = 38;
+  EnumField_DayPnL_Utilization = 39;
+  EnumField_ExcessLiquidity = 40;
+
+  // Balances
+  EnumField_Cash = 23;
+  EnumField_MorningCash = 24;
+  EnumField_AccountValue = 25;
+  EnumField_MorningBuyingPower = 26;
+  EnumField_Sma = 27;
+
+  // OPL
+  EnumField_OpenQuantity = 28;
+  EnumField_ClosedQuantity = 29;
+  EnumField_OpenPrice = 30;
+  EnumField_ExpirationDate = 31;
+  EnumField_StrikePrice = 32;
+  EnumField_SecurityTypeId = 33;
+  EnumField_CallOrPut = 34;
+  //Use EnumOrderAction values to set a buy or sell
+  EnumField_PositionDirection = 35;
+
+  EnumField_CreditLimit = 36;
+  EnumField_IsRiskMonitoringEnabled = 37;
+
+  EnumField_PersonId = 401;
+  EnumField_PersonName = 402;
+
+  // User
+  EnumField_UserId = 501;
+  EnumField_UserName = 502;
+  EnumField_UserEmail = 503;
+  EnumField_UserType = 504;
+  EnumField_IsBlocked = 505;
+  EnumField_IsEmployee = 506;
+  EnumField_UserBranchId = 507;
+  EnumField_UserRepresentativeId = 508;
+
+  EnumField_Custom = 900;
+}
+
+enum EnumSortDirection
+{
+  EnumSortDirection_Undefined = 0;
+  EnumSortDirection_Asc = 1;
+  EnumSortDirection_Desc = 2;
+}
+
+enum EnumFieldType
+{
+  EnumFieldType_Undefined = 0;
+  EnumFieldType_String = 1;
+  EnumFieldType_Int = 2;
+  EnumFieldType_Double = 3;
+  //yyyymmdd format date string
+  EnumFieldType_Date = 4;
+}

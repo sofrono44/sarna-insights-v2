@@ -1,0 +1,52 @@
+syntax = "proto3";
+import "sessions_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.Users";
+
+// Defines a User entity with basic information.
+message User {
+  // Unique identifier for the user.
+  int32 Id = 1;
+  // Full name of the user.
+  string Name = 2;
+  // Email address of the user.
+  // required
+  string Email = 3;
+  // Flag indicating whether the user is an employee.
+  bool IsEmployee = 4;
+
+  // The user's first name.
+  string FirstName = 5;
+  // The user's last name.
+  string LastName = 6;
+  // The user's username.
+  string Username = 7;
+  string CountryCode = 8;
+  string LanguageCode = 9;
+  // The branch that user belongs to 
+  // 0 means no branch restriction
+  int32 BranchId = 10;
+  //The representative that user belongs to
+  // 0 means no representative restriction
+  int32 RepresentativeId = 11;
+  // The user's password.
+  string Password = 12;
+  // If is true, the user will receive an email with a link to reset the password.
+  bool RequestResetPassword = 13;
+  // The user's role based on existing user types.
+  EnumUserType UserRole = 14;
+  // The user's permissions.
+  repeated UserPermission UserPermissions = 15;
+  // The user's date of birth.
+  google.protobuf.Timestamp DateOfBirth = 16;
+}
+
+// The user's permissions.
+message UserPermission {
+  int32 UserId = 1;
+  EnumUserPermission UserPermissionType = 2;
+  int32 BranchId = 3;
+  int32 RepresentativeId = 4;
+}

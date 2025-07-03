@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+// Imports common definitions and structures.
+import "common.proto";
+
+// Request for retrieving UX messages in a specified language.
+message GetUxMessagesRequest {
+  // ISO language code for the messages, e.g., 'en-US'.
+  string LanguageCode = 1;
+}
+
+// Response containing UX messages, along with any warnings or errors.
+message GetUxMessagesResponse {
+  // Collection of UX messages.
+  repeated UxMessage UxMessages = 1;
+  // List of warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors encountered during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Represents a single UX message.
+message UxMessage {
+  // Unique code identifying the UX message.
+  string Code = 1;
+  // The message content.
+  string Message = 2;
+}

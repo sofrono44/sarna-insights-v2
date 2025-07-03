@@ -1,0 +1,209 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "orders_enums.proto";
+import "positions_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Positions";
+
+message PositionsInfoRequest {
+  repeated EnumRequestedPositionsLots RequestedPositionsLots = 1;
+  PositionsInfoRequestSearchCriteria PositionsInfoRequestSearchCriteria = 2;
+  // Passed along with EnumRequestedPositionsLots_PairLots. Contains the list of lots to pair to spreads and AccountIDs to execute for.
+  repeated PairLotsInfo PairLotsInfo = 3;
+  // Passed along with EnumRequestedPositionsLots_UnpairLots. Contains the list of lots spreads-formation GroupingKeys to unpair, and AccountIDs to execute for.
+  repeated UnpairLotsInfo UnpairLotsInfo = 4;
+}
+
+// Allows displaying position lot in spread-like fashion, with multiple legs.
+// To pair, caller must provide: GroupingKeys of each leg, leg quanties or ratios, affected accountIDs.
+// PairLotsInfo allowes to pair up to 4 GroupingKeys/legs. All lots must be of the same underlying symbol. Allowed to pair option with stock (for Covered Call)
+// Must specifiy LegQuantities OR LegQuantityRatios. LegQuantityRatios is used if both supplied.
+message PairLotsInfo{
+	// AccountId value instructs to pair lots across all account's positions.
+	repeated int32 AccountIds = 1;
+	// SubaccountId value instructs to pair lots across all subaccount's positions.
+	// !! No need to add subaccount's accountId into above AccountIds list.
+	// The logic won't pair lots across other subaccounts.
+	repeated int32 SubaccountIds = 2;
+    // GroupingKeys of lots to pair (i.e. ["GRPN__230915C00003000_s", "GRPN__230915C00004000_l", "GRPN__230915C00005000_s"]). Up to 4 GroupingKeys are allowed
+	repeated string GroupingKeys = 3;
+	// Optional attribute. If not pass, BE logic will use the max possible spread qty of the paired spread.
+    // Allows to set a maximum spready qty for the paired spread.
+    // Sign: always positive, just as Order.Header.Quantity
+	repeated double MaxPairedSpreadQty = 4;
+	// Optional attribute. If not pass, BE logic will determine the most typical ratio for the passed groupings. Format: Dictionary<Symbol, LegQuantityRatio>.
+	map<string, double> LegQuantityRatios = 5;
+	// Optional attribute. Allows a caller to pair to specified spread formation the lots that are already paired to other spread.
+	// !! If provided, must be delivered in the same order as GroupingKeys.
+    // The logic will try to unpair the existing spread, and pair the lots to the specified spread.
+	bool ForceUnpairExistingSpread = 6;
+    // Optional attribute. If set to true, for legs with different contract sizes, the output can result with fractions.
+    // Use with caution, as Instinet won't execute partial qty options!
+    // For example: for "ABC call 10" cs:100, and "ABC call 15" cs:200, the paired spread could be <qty:0.5 ABC call 10><qty:1 ABC call 15>
+	bool PairToFractionalQuantity = 7;
+}
+
+// Allows unpairing position lots currently displayed in spread-like fashion, with multiple legs.
+// To unpair, caller must provide: composite GroupingKey and affected accountIDs.
+message UnpairLotsInfo{
+	// AccountId value instructs to unpair lots across all account's positions.
+	repeated int32 AccountIds = 1;
+	// SubaccountId value instructs to unpair lots across all subaccount's positions. !! No need to add subaccount's accountId into above AccountIds list. The logic won't unpair lots across other subaccounts.
+	repeated int32 SubaccountIds = 2;
+  	// Composite GroupingKey of spread-formation to unpair (i.e. "GRPN__230915C00003000:s|GRPN__230915C00004000:l")
+	repeated string GroupingKeys = 3;
+}
+
+// These are criteria for RPC search, different then search filter in UX
+message PositionsInfoRequestSearchCriteria {
+  // Pass 2 empty arrays to get positions for all accounts visible to user.
+  repeated int32 AccountIDs = 1;
+  repeated string AccountNumbers = 2;
+  // Allows UX to receive individual position lots, unpaired to spreads.
+  // Provides backwards compatibility with the old UX logic.
+  bool IgnoreSpreadPairings = 3;
+}
+message PositionsInfoResponse {
+  bool HasData = 1;
+  bool resetUiRepository = 2;
+  OpenPositionsInfo OpenPositionsInfo = 3;
+  ClosedPositionsInfo ClosedPositionsInfo = 4;
+  // Corresponds to the number of accounts with unpaired spread-formation requested by UnpairLotsInfo.
+  repeated UnpairLotsResponse UnpairLotsResponse = 5;
+  // Corresponds to the number of accounts with pair to spread-formation requested by PairLotsInfo.
+  repeated PairLotsResponse PairLotsResponse = 6;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message UnpairLotsResponse{
+  // Corresponds to the number of accounts with successfully unpaired spread-formation requested by UnpairLotsInfo.
+  int32 AffectedAccountsCount = 1;
+  // Corresponds to the number of subaccounts with successfully unpaired spread-formation requested by UnpairLotsInfo.
+  int32 AffectedSubaccountsCount = 2;
+  // Corresponds to the number of accounts with pair to spread-formation requested by PairLotsInfo.
+  repeated ResponseMessage ResponseMessages = 3;
+}
+
+message PairLotsResponse{
+  // Corresponds to the number of accounts successfully paired to spread-formation requested by PairLotsInfo.
+  int32 AffectedAccountsCount = 1;
+  // Corresponds to the number of subaccounts successfully paired to spread-formation requested by PairLotsInfo.
+  int32 AffectedSubaccountsCount = 2;
+  // Messages to be displayed on UX, example: "Successfully paired in 3 accounts and 2 subaccounts."
+  repeated ResponseMessage ResponseMessages = 3;
+}
+
+message OpenPositionsInfo {
+  // Individual lots <OpenPositionLotId, OpenPositionLot>, aggregated to Symbol/AccountId/SubaccoundId level.
+  // Key composed of OpenPositionLotIDs. Example for single lot: "12", for paired lots: "12_13_14"
+  map<string, OpenPositionLotsInfoList> OpenPositionLotsInfo = 1;
+  // Contains details for OpenPositionLots attribute.
+  // If a lot in OpenPositionLots has IsAggregated==true, this below map contains list of lots used for the aggregation.
+  // OpenPositionLotId of lot from OpenPositionLots is used as the key in LotsUsedForAggregation.
+  map<int32, OpenPositionLotsInfoList> LotsUsedForAggregation = 2;
+  // Allows sending/streaming only current value/quote/last of the position lots already in UX repo/bloc.
+  map<string, double> CurrentPositionValueBySymbol = 3;
+}
+message OpenPositionLotsInfoList {
+  repeated OpenPositionLotInfo OpenPositionLotsInfo = 1;
+}
+// Wrapper of OpenPositionLot, to append additional information needed by UX, such as CurrentPrice or AccountNum.
+message OpenPositionLotInfo {
+  OpenPositionLot OpenPositionLot = 1;
+  double CurrentPricePerShare = 2;
+  int64 Timestamp = 3; // Allows UX to track and verify if a lot has been refreshed and perform UI rebuild. Int64 represents long.
+  bool IsLongTerm = 4; // Lots opened before the time treshold will be categorized as long term which has potential tax implications
+  string GroupingKey = 5; // Determines which orders can be aggregated on PositionsBySymbol screen
+  repeated bool AllowedActions = 6; // Helps UX determine which action links should be visible for this open position
+  PairedPositionInfo PairedPositionInfo = 7; // Data for UX/Positions screen to display paired/linked Postion Lots in spread-like fashion.
+  //string AccountNumber = 3; (!!) Rather than pass duplicate info for each lot, UX gets info from AccountsInfoBloc. Caller must append AccountsInfo requstType to load account info AccountsInfoBloc as needed.
+  //string AccountTypeDescription = 4;
+}
+message OpenPositionLot {
+  int32 OpenPositionLotId = 1;
+  int32 OrderId = 2;
+  double Multiplier = 3;
+  google.protobuf.Timestamp LastModifiedTime = 4;
+  string Description = 5;
+  google.protobuf.Timestamp Expiration = 6;
+  int32 SubaccountId = 7;
+  double Commission = 8;
+  google.protobuf.Timestamp CreatedTime = 9;
+  int32 AccountId = 10;
+  EnumSecurityType SecurityType = 11;
+  EnumCallOrPut CallOrPut = 12;
+  double CostBasisPerShare = 13;
+  // '+' buy/debit; '-' for sell/credit, Indicates totoal open quantity for the lot (i.e. is increased if partial fills are received). OpenQuantity is not decrease on closing order, as OpenQuantity represents total open qty, even if the lot is partially or completely closed.
+  double OpenQuantity = 14;
+  double PreviousDayClosePrice = 15;
+  double OpenPrice = 16;
+  double StrikePrice = 17;
+  // '+' buy/debit; '-' for sell/credit,
+  double ClosedQuantity = 18;
+  string Symbol = 19;
+  string UnderlyingSymbol = 20;
+  double ContractSize = 21;
+  // Formal Open Position Lot date. The investor has took possession of an asset on that date.
+  google.protobuf.Timestamp AcquisitionDate = 22;
+  string Cusip = 23;
+  int32 SpreadPairingKey = 24;
+  string ExternalSecurityId = 25;
+  string AccountNumber = 26;
+}
+
+// Data for UX/Positions screen to display paired/linked Postion Lots in spread-like fashion.
+message PairedPositionInfo {
+ // Used by UX to display the spread quantity for paired position lots.
+  double SpreadQuantity = 1;
+  // Allows UX to specify the spread strategy type for paired position lots.
+  EnumStrategyType StrategyType = 2;
+  // Format: <symbol, LegQuantityRatio>
+  map<string, double> LegQuantityRatios = 3;
+  // Aggregate of CostBasisPerShare of all the legs positions. Sign: the same as OpenQuantity, CostBasisPerShare can be of +/- sign (buy debit / sell credit !!) for spreads and single.
+  double CostBasisPerShare = 4;
+}
+// CLOSED POSITIONS
+message ClosedPositionsInfo {
+  repeated ClosedPositionLotInfo ClosedPositionLotsInfo = 1;
+}
+message ClosedPositionLotInfo {
+  ClosedPositionLot ClosedPositionLot = 1;
+  repeated bool AllowedActions = 2;
+}
+message ClosedPositionLot {
+  int32 ClosedPositionLotId = 1;
+  int32 OpenOrderId = 2;
+  int32 AccountId = 3;
+  int32 SubaccountId = 4;
+  string Symbol = 5;
+  string UnderlyingSymbol = 6;
+  string Description = 7;
+  // Sign: OpenQuantity can be of +/- sign (buy debit / sell credit !!) for spreads and single.
+  double OpenQuantity = 8;
+  // Sign: the same as OpenQuantity.
+  double ClosedQuantity = 9;
+  // Sign: always of positive, which corresponds to quote (pricing the lot) always being positive
+  double OpenPrice = 10;
+  // The same sign as OpenPrice
+  double ClosedPrice = 11;
+  // Postivie sign for long (buy), negative sign for short (sell), includes commission
+  double OpenCostBasisPerShare = 12;
+  // The same sign as OpenCostBasisPerShare
+  double ClosedCostBasisPerShare = 13;
+  // Total commission collected to open the lot. In case of (partial) close, commission value is not decreased.
+  // Negative value: user spent (debit) money to close the position. Positive value: user got money(credit) for closing the position.
+  double OpenCommission = 14;
+  double ClosedCommission = 15;
+  EnumSecurityType SecurityType = 16;
+  EnumCallOrPut CallOrPut = 17;
+  google.protobuf.Timestamp Expiration = 18;
+  double StrikePrice = 19;
+  double Multiplier = 20;
+  google.protobuf.Timestamp OpenPositionLotCreatedTime = 21;
+  google.protobuf.Timestamp CreatedTime = 22;
+  google.protobuf.Timestamp LastModifiedTime = 23;
+  string AccountNumber = 24;
+}

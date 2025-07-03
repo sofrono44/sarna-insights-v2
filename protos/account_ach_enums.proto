@@ -1,0 +1,28 @@
+﻿syntax = "proto3";
+
+// Enum for specifying the type of ACH (Automated Clearing House) transaction.
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Accounts";
+
+// Corresponds to [AccountAchTransactionTypes] table.
+enum EnumAccountAchTransactionType {
+  // Undefined ACH transaction type.
+  EnumAccountAchTransactionType_Undefined = 0;
+  // ACH credit transaction type.
+  EnumAccountAchTransactionType_Credit = 1;
+  // ACH debit transaction type.
+  EnumAccountAchTransactionType_Debit = 2;
+}
+
+// Enum for specifying the status of an ACH transaction.
+// Corresponds to [AccountAchTransactionStatuses] table.
+enum EnumAccountAchTransactionStatus {
+  // Undefined ACH transaction status.
+  EnumAccountAchTransactionStatus_Undefined = 0;
+  // ACH transaction has been initialized but not yet submitted.
+  EnumAccountAchTransactionStatus_Initialized = 1;
+  // ACH transaction has been submitted to the clearing system.
+  EnumAccountAchTransactionStatus_Submitted = 2;
+  // ACH transaction has been fulfilled.
+  EnumAccountAchTransactionStatus_Fulfilled = 3;
+}

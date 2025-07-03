@@ -1,0 +1,106 @@
+﻿syntax = "proto3";
+
+// Imports Session related definitions
+import "sessions.proto";
+// Imports definitions related to Buying Power
+import "bp.proto";
+// Imports Quote related definitions
+import "quotes.proto";
+// Imports Account related definitions
+import "accounts.proto";
+// Imports Order related definitions
+import "orders.proto";
+// Imports Order Execution Logs related definitions
+import "order_execution_logs.proto";
+// Imports Position related definitions
+import "positions.proto";
+// Imports Balance related definitions
+import "balances.proto";
+// Imports Trading related definitions
+import "trading.proto";
+// Imports Securities Master Data related definitions
+import "securities_master.proto";
+// Imports Common definitions used across multiple services
+import "common.proto";
+// Imports Account Application related definitions
+import "account_application.proto";
+// Imports Glossary related definitions
+import "glossary.proto";
+// Imports Subscription related definitions
+import "subscriptions.proto";
+// Imports User Experience Messages definitions
+import "ux_messages.proto";
+// Imports User Data related definitions
+import "user_data.proto";
+// Imports Commission related definitions
+import "commissions.proto";
+// Imports Search related definitions
+import "search.proto";
+// Imports TimMachine related definitions
+import "time_machine.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Api";
+
+// Corresponds to DTS.Services.BusinessHub.DTO.RPC.Response.ApiResponse
+message ApiResponse {
+  // Lazy init, create list when error is to be reported (Apparently, no serialization error in NetMQ when not initializing the lists here.)
+  // Top level errors. If error reported, the execution was not successful for all included accounts.
+  // Links to SessionInfoResponse for session-related information
+  SessionInfoResponse SessionInfoResponse = 3;
+  // Links to AccountsResponse for account-related information
+  AccountsResponse AccountsResponse = 4;
+  // Links to BalancesInfoResponse for balance-related information
+  BalancesInfoResponse BalancesInfoResponse = 5;
+  // Links to QuoteResponse for quote-related information
+  QuoteResponse QuoteResponse = 6;
+  // Links to OrdersInfoResponse for orders-related information
+  OrdersInfoResponse OrdersInfoResponse = 7;
+  // Links to OrderExecutionLogsResponse for order execution logs
+  OrderExecutionLogsResponse OrderExecutionLogsResponse = 8;
+  // Links to PositionsInfoResponse for positions-related information
+  PositionsInfoResponse PositionsInfoResponse = 9;
+  // Links to BuyingPowerResponse for buying power information
+  BuyingPowerResponse BuyingPowerResponse = 10;
+  // Links to SecuritiesMasterDataResponse for securities master data
+  SecuritiesMasterDataResponse SecuritiesMasterDataResponse = 11;
+  // Links to TradeResponse for trade-related information
+  TradeResponse TradeResponse = 12;
+  // Links to AccountApplicationResponse for account application information
+  AccountApplicationResponse AccountApplicationResponse = 14;
+  // Links to GlossaryResponse for glossary terms and definitions
+  GlossaryResponse GlossaryResponse = 15;
+  // Links to CommissionResponse for commission-related information
+  CommissionResponse CommissionResponse = 16;
+  // Links to SubscriptionResponse for subscription-related information
+  SubscriptionResponse SubscriptionResponse = 17;
+  // Additional responses related to quotes for option chains
+  ChainQuoteResponse ChainQuoteResponse = 20;
+  // Links to GetExpirationsResponse for expiration dates information
+  GetExpirationsResponse GetExpirationsResponse = 21;
+  // Links to GetUxMessagesResponse for user experience messages
+  GetUxMessagesResponse GetUxMessagesResponse = 22;
+  // Links to UserDataResponse for user data information
+  UserDataResponse UserDataResponse = 23;
+  // Links to BalanceAdjustmentResponse for balance adjustment information
+  BalanceAdjustmentResponse BalanceAdjustmentResponse = 24;
+  // Links to BalanceShortInfoResponse for balance cash and SMA information
+  BalanceCashInfoResponse BalanceCashInfoResponse = 25;
+
+  SearchServiceResponse SearchServiceResponse = 26;
+  SearchServiceDefinitionResponse SearchServiceDefinitionResponse = 27;
+  TimeMachineBrowseResponse TimeMachineRecentResponse = 28;
+  TimeMachineDownloadResponse TimeMachineDownloadResponse = 29;
+  
+  // List of warnings, applicable at the response level
+  repeated ResponseWarning Warnings = 101;
+  // List of errors, applicable at the response level
+  repeated ResponseError Errors = 102;
+}
+
+// REST error response
+message ErrorResponse {
+  // List of warnings, applicable at the response level
+  repeated ResponseWarning Warnings = 101;
+  // List of errors, applicable at the response level
+  repeated ResponseError Errors = 102;
+}

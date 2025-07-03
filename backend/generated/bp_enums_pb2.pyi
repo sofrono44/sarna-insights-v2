@@ -1,0 +1,206 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumBpStrategy(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumBpStrategy_Undefined: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongStock: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortStock: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCall: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCall: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongPut: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortPut: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongFuture: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortFuture: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongFutureOptionCall: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortFutureOptionCall: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongFutureOptionPut: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortFutureOptionPut: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCrypto: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongStraddle: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortStraddle: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongStrangle: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortStrangle: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCallVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCallVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongPutVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortPutVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCallCalendarVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongPutCalendarVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_CoveredCall: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_MarriedCall: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_CoveredPut: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_MarriedPut: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_Conversion: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ReverseConversion: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCollar: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCollar: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCallButterfly: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCallButterfly: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongPutButterfly: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortPutButterfly: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongIronButterfly: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortIronButterfly: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongCallCondor: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCallCondor: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongPutCondor: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortPutCondor: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongIronCondor: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortIronCondor: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongBoxSpread: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortBoxSpread: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCallCalendarVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortPutCalendarVertical: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongMutualFund: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortMutualFund: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongFixedIncome: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortFixedIncome: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadLcc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadLcb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadLpc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadLpb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadScc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadScb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadSpc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadSpb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadLib: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadSib: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadLic: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadSic: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarLcc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarLcb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarLpc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarLpb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarScc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarScb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarSpc: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarSpb: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarLib: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarSib: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarLic: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_UniversalSpreadCalendarSic: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongFuturesSpread: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortFuturesSpread: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortCrypto: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortStockAgainstTheBox: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongPreciousMetal: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortPreciousMetal: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongRight: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortRight: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongWarrant: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortWarrant: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_LongUit: _ClassVar[EnumBpStrategy]
+    EnumBpStrategy_ShortUit: _ClassVar[EnumBpStrategy]
+
+class EnumInputStrategyComponentType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumInputStrategyComponentType_Undefined: _ClassVar[EnumInputStrategyComponentType]
+    EnumInputStrategyComponentType_OpenPosition: _ClassVar[EnumInputStrategyComponentType]
+    EnumInputStrategyComponentType_ProposedOrder: _ClassVar[EnumInputStrategyComponentType]
+    EnumInputStrategyComponentType_WorkingOrder: _ClassVar[EnumInputStrategyComponentType]
+
+class EnumStressTestCalculationsOptimizationLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumStressTestCalculationsOptimizationLevel_Undefined: _ClassVar[EnumStressTestCalculationsOptimizationLevel]
+    EnumStressTestCalculationsOptimizationLevel_CalculateAllFromScratch: _ClassVar[EnumStressTestCalculationsOptimizationLevel]
+    EnumStressTestCalculationsOptimizationLevel_ReuseUnshockedGroupings: _ClassVar[EnumStressTestCalculationsOptimizationLevel]
+    EnumStressTestCalculationsOptimizationLevel_ReusePairings: _ClassVar[EnumStressTestCalculationsOptimizationLevel]
+EnumBpStrategy_Undefined: EnumBpStrategy
+EnumBpStrategy_LongStock: EnumBpStrategy
+EnumBpStrategy_ShortStock: EnumBpStrategy
+EnumBpStrategy_LongCall: EnumBpStrategy
+EnumBpStrategy_ShortCall: EnumBpStrategy
+EnumBpStrategy_LongPut: EnumBpStrategy
+EnumBpStrategy_ShortPut: EnumBpStrategy
+EnumBpStrategy_LongFuture: EnumBpStrategy
+EnumBpStrategy_ShortFuture: EnumBpStrategy
+EnumBpStrategy_LongFutureOptionCall: EnumBpStrategy
+EnumBpStrategy_ShortFutureOptionCall: EnumBpStrategy
+EnumBpStrategy_LongFutureOptionPut: EnumBpStrategy
+EnumBpStrategy_ShortFutureOptionPut: EnumBpStrategy
+EnumBpStrategy_LongCrypto: EnumBpStrategy
+EnumBpStrategy_LongStraddle: EnumBpStrategy
+EnumBpStrategy_ShortStraddle: EnumBpStrategy
+EnumBpStrategy_LongStrangle: EnumBpStrategy
+EnumBpStrategy_ShortStrangle: EnumBpStrategy
+EnumBpStrategy_LongCallVertical: EnumBpStrategy
+EnumBpStrategy_ShortCallVertical: EnumBpStrategy
+EnumBpStrategy_LongPutVertical: EnumBpStrategy
+EnumBpStrategy_ShortPutVertical: EnumBpStrategy
+EnumBpStrategy_LongCallCalendarVertical: EnumBpStrategy
+EnumBpStrategy_LongPutCalendarVertical: EnumBpStrategy
+EnumBpStrategy_CoveredCall: EnumBpStrategy
+EnumBpStrategy_MarriedCall: EnumBpStrategy
+EnumBpStrategy_CoveredPut: EnumBpStrategy
+EnumBpStrategy_MarriedPut: EnumBpStrategy
+EnumBpStrategy_Conversion: EnumBpStrategy
+EnumBpStrategy_ReverseConversion: EnumBpStrategy
+EnumBpStrategy_LongCollar: EnumBpStrategy
+EnumBpStrategy_ShortCollar: EnumBpStrategy
+EnumBpStrategy_LongCallButterfly: EnumBpStrategy
+EnumBpStrategy_ShortCallButterfly: EnumBpStrategy
+EnumBpStrategy_LongPutButterfly: EnumBpStrategy
+EnumBpStrategy_ShortPutButterfly: EnumBpStrategy
+EnumBpStrategy_LongIronButterfly: EnumBpStrategy
+EnumBpStrategy_ShortIronButterfly: EnumBpStrategy
+EnumBpStrategy_LongCallCondor: EnumBpStrategy
+EnumBpStrategy_ShortCallCondor: EnumBpStrategy
+EnumBpStrategy_LongPutCondor: EnumBpStrategy
+EnumBpStrategy_ShortPutCondor: EnumBpStrategy
+EnumBpStrategy_LongIronCondor: EnumBpStrategy
+EnumBpStrategy_ShortIronCondor: EnumBpStrategy
+EnumBpStrategy_LongBoxSpread: EnumBpStrategy
+EnumBpStrategy_ShortBoxSpread: EnumBpStrategy
+EnumBpStrategy_ShortCallCalendarVertical: EnumBpStrategy
+EnumBpStrategy_ShortPutCalendarVertical: EnumBpStrategy
+EnumBpStrategy_LongMutualFund: EnumBpStrategy
+EnumBpStrategy_ShortMutualFund: EnumBpStrategy
+EnumBpStrategy_LongFixedIncome: EnumBpStrategy
+EnumBpStrategy_ShortFixedIncome: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadLcc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadLcb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadLpc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadLpb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadScc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadScb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadSpc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadSpb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadLib: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadSib: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadLic: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadSic: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarLcc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarLcb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarLpc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarLpb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarScc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarScb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarSpc: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarSpb: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarLib: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarSib: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarLic: EnumBpStrategy
+EnumBpStrategy_UniversalSpreadCalendarSic: EnumBpStrategy
+EnumBpStrategy_LongFuturesSpread: EnumBpStrategy
+EnumBpStrategy_ShortFuturesSpread: EnumBpStrategy
+EnumBpStrategy_ShortCrypto: EnumBpStrategy
+EnumBpStrategy_ShortStockAgainstTheBox: EnumBpStrategy
+EnumBpStrategy_LongPreciousMetal: EnumBpStrategy
+EnumBpStrategy_ShortPreciousMetal: EnumBpStrategy
+EnumBpStrategy_LongRight: EnumBpStrategy
+EnumBpStrategy_ShortRight: EnumBpStrategy
+EnumBpStrategy_LongWarrant: EnumBpStrategy
+EnumBpStrategy_ShortWarrant: EnumBpStrategy
+EnumBpStrategy_LongUit: EnumBpStrategy
+EnumBpStrategy_ShortUit: EnumBpStrategy
+EnumInputStrategyComponentType_Undefined: EnumInputStrategyComponentType
+EnumInputStrategyComponentType_OpenPosition: EnumInputStrategyComponentType
+EnumInputStrategyComponentType_ProposedOrder: EnumInputStrategyComponentType
+EnumInputStrategyComponentType_WorkingOrder: EnumInputStrategyComponentType
+EnumStressTestCalculationsOptimizationLevel_Undefined: EnumStressTestCalculationsOptimizationLevel
+EnumStressTestCalculationsOptimizationLevel_CalculateAllFromScratch: EnumStressTestCalculationsOptimizationLevel
+EnumStressTestCalculationsOptimizationLevel_ReuseUnshockedGroupings: EnumStressTestCalculationsOptimizationLevel
+EnumStressTestCalculationsOptimizationLevel_ReusePairings: EnumStressTestCalculationsOptimizationLevel

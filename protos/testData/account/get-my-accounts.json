@@ -1,0 +1,19 @@
+{
+    "RequestTypes": [
+      2
+    ],
+    "AccountsRequest": {
+      "AccountsRequestType": 1,
+      "AccountsInfoRequest": {
+        "AccountIDs": [
+          500
+        ]
+      }
+    },
+    "SessionInfo": {
+      "SessionId": "500",
+      "LanguageCode": "EN",
+      "CountryCode": "US",
+      "AppMode": 1
+    }
+  }

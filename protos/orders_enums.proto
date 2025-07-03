@@ -1,0 +1,253 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Common.Enums";
+
+// Based on Fix tag <40>
+enum EnumPriceType {
+  EnumPriceType_Undefined = 0;
+  EnumPriceType_Market = 1;
+  // For spreads: negative when debit (buy), positive when credit (sell)
+  EnumPriceType_Limit = 2;
+  EnumPriceType_Stop = 3;
+  // Stop-limit orders are a type of stop-loss, but at the stop price, the sell order becomes a limit order—only executing at the limit price or better.
+  EnumPriceType_StopLimit = 4;
+  EnumPriceType_MarketOnClose = 5;
+  EnumPriceType_Even = 6;
+  EnumPriceType_WithOrWithout = 7;
+  EnumPriceType_LimitOrBetter = 8;
+  EnumPriceType_LimitWithOrWithout = 9;
+  EnumPriceType_OnBasis = 10;
+}
+enum EnumStrategyType {
+  EnumStrategyType_Undefined = 0;
+  EnumStrategyType_Stock = 1;
+  EnumStrategyType_SingleOption = 2;
+  EnumStrategyType_FixedIncome = 3;
+  EnumStrategyType_MutualFund = 4;
+  EnumStrategyType_CoveredCall = 5;
+  EnumStrategyType_MarriedPut = 6;
+  // <97C BTO><97P STO> Strikes can be equal or different, short leg expires before or at the same time as long
+  EnumStrategyType_SyntheticCombo = 7;
+  EnumStrategyType_Vertical = 8;
+  EnumStrategyType_Calendar = 9;
+  // <97C BTO><97P BTO> equal strikes
+  EnumStrategyType_Straddle = 10;
+  // <97C BTO><98P BTO> different strikes
+  EnumStrategyType_Strangle = 11;
+  // <ShortStock>/<LongCall>/<ShortPut>, EnumBpStrategy.ShortCollar
+  EnumStrategyType_HedgeCollar = 12;
+  EnumStrategyType_CallSpread = 13;
+  EnumStrategyType_PutSpread = 14;
+  EnumStrategyType_Diagonal = 15;
+  // <97C STO><97P BTO> Strikes can be equal or different, short leg expires before or at the same time as long
+  EnumStrategyType_Combo = 16;
+  // <LongStock>/<ShortCall>/<LongPut> == LongCollar. A conversion is long stock, a short call, and a long put. The call and the put have the same strike price and expiration. A collar is long stock, a short, out-of-the-money (OTM) call, and a long, out-of-the-money put.
+  EnumStrategyType_Conversion = 17;
+  // Long Collar: <LongStock>/<LongPut>/<ShortCall>; Short Collar: <ShortStock>/<ShortPut>/<LongCall>
+  EnumStrategyType_Collar = 18;
+  EnumStrategyType_Butterfly = 19;
+  EnumStrategyType_Condor = 20;
+  // Short IronButterfly: <LongPut>/<ShortCall>/<ShortPut>/<LongCall>
+  EnumStrategyType_IronButterfly = 21;
+  EnumStrategyType_IronCondor = 22;
+  EnumStrategyType_Box = 23;
+  EnumStrategyType_CustomOptionSpread = 24;
+  EnumStrategyType_CustomCoveredStock = 25;
+  EnumStrategyType_UniversalSpread = 26;
+}
+enum EnumOrderStatus {
+  EnumOrderStatus_Undefined = 0;
+  EnumOrderStatus_New = 1;
+  EnumOrderStatus_PartiallyFilled = 2;
+  EnumOrderStatus_Filled = 3;
+  EnumOrderStatus_DoneForDay = 4;
+  // sent by market provider, indicates that the order has been cancelled by the market provider
+  EnumOrderStatus_Cancelled = 5;
+  // sent by market provider, indicates that the order has been replaced by the market provider
+  EnumOrderStatus_Replaced = 6;
+  // sent by market provider, indicates that the order has been accepted by the market provider for cancellation
+  EnumOrderStatus_PendingCancel = 7;
+  EnumOrderStatus_Stopped = 8;
+  EnumOrderStatus_Rejected = 9;
+  EnumOrderStatus_Suspended = 10;
+  // Sent by market provider, indicates that the order has been accepted by the market provider for new order
+  EnumOrderStatus_PendingNew = 11;
+  EnumOrderStatus_Calculated = 12;
+  EnumOrderStatus_Expired = 13;
+  // sent by market provider, indicates that the order has been accepted by the market provider for replacement
+  EnumOrderStatus_PendingReplace = 14;
+  EnumOrderStatus_Saved = 15;
+  EnumOrderStatus_FilledPriceAdjustment = 16;
+  // Indicates that the position opened by the current order has been closed by another (closing) order. Value used in OrderExecutionLogs with extra information regarding the closing order.
+  EnumOrderStatus_PositionClosed = 17;
+  // Set either based on fix tag ExecTransType <20>=="2" OR (newer way) ExecType<150>=="G"
+  EnumOrderStatus_Corrected = 18;
+  // Set either based on fix tag ExecTransType <20>=="1" OR (newer way) ExecType<150>=="H"
+  EnumOrderStatus_Busted = 19;
+  // Introduced by our user, indicates that the order needs to be sent to the market provider for NEW (to open a live order on market)
+  EnumOrderStatus_Initiated = 20;
+  // Introduced by our user, indicates that the order needs to be sent to the market provider for replace
+  EnumOrderStatus_ReplaceInitiated = 21;
+  // Introduced by our user, indicates that the order needs to be sent to the market provider for cancellation
+  EnumOrderStatus_CancelInitiated = 22;
+  // Sent by market provider, indicates that the order cannot be cancelled. Details are typically provided in the Description field.
+  EnumOrderStatus_CancelRejected = 23;
+  // Sent by market provider, indicates that the order cannot be replaced. Details are typically provided in the Description field.
+  EnumOrderStatus_ReplaceRejected = 24;
+  // Assignment of child orders group into inventory order of Post Execution Allocation with unassigned group thus far (enumOrderAllocationType.GTInventoryPostExecutionAllocationGroupAssigned).
+  EnumOrderStatus_AssignGroupToG_T_PostExecAllocation = 25;
+  // Convertion of GTInventoryPostExecutionAllocationGroupAssigned into GTInventoryIntraExecutionProportionalPriceAllocation or GTInventoryIntraExecutionEvenPriceAllocation
+  EnumOrderStatus_ConvertPostExecToIntraExecAllocation = 26;
+  // OffMarketHourOrderSender inserts a dedicated OrderStatus into OrderExecutionLogs to indicate automatic initiation by, and not user-based initiation.
+  EnumOrderStatus_OffMarketHourOrdersSentToMarket = 27;
+  // Indicates ExecInit cancelling the order without sending out to market provider. Possible in some cases like, cancellation of initiated order, that was not yet sent out and accepted as New by market provider.
+  // Used in [OrderExecutionLogs] table for a detailed entry and CAT support. Should not be used in [Orders] table, where the main state of the cancelled order should be set to EnumOrderStatus.Cancelled
+  EnumOrderStatus_InternallyCancelled = 28;
+}
+enum EnumOrderInitiationType {
+  EnumOrderInitiationType_Undefined = 0;
+  EnumOrderInitiationType_Place = 1;
+  EnumOrderInitiationType_Replace = 2;
+  EnumOrderInitiationType_Cancel = 3;
+  // Request type to assign group of child orders into existing PostExecutionOrderAllocation Inventory order.
+  EnumOrderInitiationType_G_T_AssignGroupToPostExecWithGroupUnassigned = 4;
+  // Request type to convert PostExecution to IntraExecution Order Allocation type. Possible for PostExecutionWithGroupAssigned.
+  EnumOrderInitiationType_G_T_ConvertPostExecToIntraExecAllocation = 5;
+  EnumOrderInitiationType_ReviewPlace = 6;
+  EnumOrderInitiationType_ReviewReplace = 7;
+  EnumOrderInitiationType_ReviewCancel = 8;
+}
+enum EnumPlacedAs {
+  EnumPlacedAs_Undefined = 0;
+  EnumPlacedAs_Unsolicited = 1;
+  EnumPlacedAs_Solicited = 2;
+  EnumPlacedAs_Discretionary = 3;
+}
+enum EnumPositionEffect {
+  EnumPositionEffect_Undefined = 0;
+  EnumPositionEffect_Open = 1;
+  EnumPositionEffect_Close = 2;
+}
+// Enumeration not used on backend, but rather UI.
+// Open: when all legs have Open leg position effect
+// Close: when all legs have Close leg position effect
+// Mixed: when legs have Close and Open position effects (i.e. roll)
+enum EnumSpreadPositionEffect
+{
+  // Non-spread strategy.
+  EnumSpreadPositionEffect_Undefined = 0;
+  EnumSpreadPositionEffect_Open = 1;
+  EnumSpreadPositionEffect_Close = 2;
+  // In case of a roll
+  EnumSpreadPositionEffect_Mixed = 3;
+}
+enum EnumOrderDuration {
+  EnumOrderDuration_Undefined = 0;
+  EnumOrderDuration_Day = 1;
+  // Good Till Cancel
+  EnumOrderDuration_G_T_C = 2;  //EnumOrderDuration_G_T_C
+  // At the Opening
+  EnumOrderDuration_O_P_G = 3;
+  // Immediate or Cancel
+  EnumOrderDuration_I_O_C = 4;
+  // Fill or Kill
+  EnumOrderDuration_F_O_K = 5;
+  // Good Till Crossing
+  EnumOrderDuration_G_T_X = 6;
+  // Good Till Date
+  EnumOrderDuration_G_T_D = 7;
+  // At The Close
+  EnumOrderDuration_A_T_C = 8;
+}
+enum EnumOrderAction {
+  EnumOrderAction_Undefined = 0;
+  EnumOrderAction_Buy = 1;
+  EnumOrderAction_Sell = 2;
+}
+enum EnumCallOrPut {
+  EnumCallOrPut_Undefined = 0;
+  EnumCallOrPut_Call = 1;
+  EnumCallOrPut_Put = 2;
+}
+enum EnumExecutedAs {
+  EnumExecutedAs_Undefined = 0;
+  EnumExecutedAs_Agent = 1;
+  EnumExecutedAs_Principal = 2;
+}
+// We do have almost duplicate enum in: OrderEnums.enumSecurityType
+// The reason for EnumLegSecType disticnt enum is due to pential case of having single EnumLegSecType for more than OrderEnums.enumSecurityType
+enum EnumLegSecType {
+  EnumLegSecType_Undefined = 0;
+  EnumLegSecType_Stock = 1;
+  EnumLegSecType_Option = 2;
+  EnumLegSecType_MutualFund = 3;
+  EnumLegSecType_FixedIncome = 4;
+}
+enum EnumSecurityType {
+  EnumSecurityType_Undefined = 0;
+  EnumSecurityType_Stock = 1;
+  EnumSecurityType_Option = 2;
+  EnumSecurityType_MutualFund = 3;
+  EnumSecurityType_FixedIncome = 4;
+  EnumSecurityType_PreciousMetal = 5;
+  EnumSecurityType_Right = 6;
+  EnumSecurityType_Warrant = 7;
+  EnumSecurityType_UIT = 8;
+  EnumSecurityType_PreferredStock = 9;
+  EnumSecurityType_Future = 10;
+  EnumSecurityType_FutureOption = 11;
+  EnumSecurityType_MoneyMarketFund = 12;
+  EnumSecurityType_ExternalCash = 13;
+  EnumSecurityType_AmericanDepositoryReceipt = 14;
+}
+enum EnumOrderAllocationType {
+  EnumOrderAllocationType_Undefined = 0;
+  // non-GT order
+  EnumOrderAllocationType_Regular = 1;
+  EnumOrderAllocationType_G_T_Child = 2;
+  EnumOrderAllocationType_G_T_InventoryIntraExecutionProportionalPriceAllocation = 3;
+  EnumOrderAllocationType_G_T_InventoryIntraExecutionEvenPriceAllocation = 4;
+  EnumOrderAllocationType_G_T_InventoryPostExecutionAllocationGroupAssigned = 5;
+  EnumOrderAllocationType_G_T_InventoryPostExecutionAllocationGroupUnassigned = 6;
+  // child allocations that will be init and placed individually and not via single inventory order. Mostly for UX to send a single (inventor like) order with child accoutns/subs qty allocations.
+  EnumOrderAllocationType_G_T_NonInventoryParent = 7;
+  EnumOrderAllocationType_G_T_NonInventoryChild = 8;
+}
+enum EnumOrdersInfoRequestType {
+  EnumOrdersInfoRequestType_Undefined = 0;
+  // Live AND with LastModifiedDatetime within current session
+  EnumOrdersInfoRequestType_CurrentOrders = 1;
+  // Not Live AND with LastModifiedDatetime before current session
+  EnumOrdersInfoRequestType_HistoricalOrders = 2;
+}
+enum EnumOrderActionWithPositionEffect {
+  EnumOrderActionWithPositionEffect_Undefined = 0;
+  EnumOrderActionWithPositionEffect_Buy = 1;
+  EnumOrderActionWithPositionEffect_Sell = 2;
+  EnumOrderActionWithPositionEffect_SellShort = 3;
+  EnumOrderActionWithPositionEffect_BuyToOpen = 4;
+  EnumOrderActionWithPositionEffect_BuyToClose = 5;
+  EnumOrderActionWithPositionEffect_SellToOpen = 6;
+  EnumOrderActionWithPositionEffect_SellToClose = 7;
+  EnumOrderActionWithPositionEffect_BuyToCover = 8;
+}
+enum EnumExecutionRoute {
+  EnumExecutionRoute_Undefined = 0;
+  EnumExecutionRoute_IntegTest = 1;
+  EnumExecutionRoute_MarketProviderSim = 2;
+  EnumExecutionRoute_Instinet = 3;
+  // Forwards requests to Fix Initiator specific to clearing firm fix drops.
+  EnumExecutionRoute_ClearingFirmDrops = 4;
+  // Instructs ExecInit not to forwad request to FixInitiator, as the order will be routed by external OMS, only using ExecInit for order initiation.
+  EnumExecutionRoute_ExternalOMS = 5;
+  EnumExecutionRoute_LiquidityBook = 6;
+}
+enum EnumExchangeTape {
+  EnumExchangeTape_Undefined = 0;
+  // NYSE listed securities
+  EnumExchangeTape_A = 1;
+  // NYSE ARCA / NYSE American
+  EnumExchangeTape_B = 2;
+  // NASDAQ
+  EnumExchangeTape_C = 3;
+}

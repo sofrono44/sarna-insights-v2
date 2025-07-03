@@ -1,0 +1,33 @@
+syntax = "proto3";
+import "admin/admin_reports.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Reports.Admin";
+
+service AdminReportsService {
+  rpc ReportSearch(ReportSearchRequest) returns (ReportsResponse){
+    option (google.api.http) = {
+      post: "/admin/reports"
+      body: "*"
+    };
+  }
+
+  rpc GetDetails(ReportRequest) returns (Report){
+    option (google.api.http) = {
+      get: "/admin/reports/{ReportId}"
+    };
+  }
+
+  rpc GetView(ReportViewRequest) returns (ReportViewResponse){
+    option (google.api.http) = {
+      get: "/admin/reports/{ReportId}/view"
+    };
+  }
+
+  rpc Download(ReportsDownloadRequest) returns (ReportsDownloadResponse){
+    option (google.api.http) = {
+      post: "/admin/reports/download"
+      body: "*"
+    };
+  }
+}

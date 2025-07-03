@@ -1,0 +1,25 @@
+﻿syntax = "proto3";
+import "admin/admin_mde.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminMdeService";
+
+service AdminMdeService {
+  rpc Search(AdminSearchMdeRequest) returns (AdminSearchMdeResponse){
+    option (google.api.http) = {
+      get: "/admin/mde"
+    };
+  }
+
+  rpc Resolve(ResolveMdeRequest) returns (AdminSearchMdeResponse){
+    option (google.api.http) = {
+      post: "/admin/mde"
+      body: "*"
+
+      additional_bindings {
+        post: "/admin/mde/{MarketDataEntitlementId}"
+        body: "*"
+      }
+    };
+  }     
+}

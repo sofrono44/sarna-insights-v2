@@ -1,0 +1,60 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Sessions";
+
+// Enum for specifying the type of market data entitlement.
+enum EnumMarketDataEntitlementType {
+  // Undefined entitlement type.
+  EnumMarketDataEntitlementType_Undefined = 0;
+  // Entitlement for non-professional stock real-time quotes.
+  EnumMarketDataEntitlementType_StockRealTimeQuotesNonProEntitlement = 1;
+  // Entitlement for professional stock real-time quotes.
+  EnumMarketDataEntitlementType_StockRealTimeQuotesProEntitlement = 2;
+  // Entitlement for non-professional option real-time quotes.
+  EnumMarketDataEntitlementType_OptionRealTimeQuotesNonProEntitlement = 3;
+  // Entitlement for professional option real-time quotes.
+  EnumMarketDataEntitlementType_OptionRealTimeQuotesProEntitlement = 4;
+  // Entitlement for delayed data for non-professionals.
+  EnumMarketDataEntitlementType_DelayedNonProEntitlement = 5;
+  // Entitlement for delayed data for professionals.
+  EnumMarketDataEntitlementType_DelayedProEntitlement = 6;
+}
+
+// Enum for specifying the approval status of a market data entitlement request.
+enum EnumMarketDataEntitlementApprovalStatus {
+  // Undefined approval status.
+  EnumMarketDataEntitlementApprovalStatus_Undefined = 0;
+  // Pending administrative approval.
+  EnumMarketDataEntitlementApprovalStatus_PendingApproval = 1;
+  // Self-attested by the user.
+  EnumMarketDataEntitlementApprovalStatus_SelfAttested = 2;
+  // Approved by an administrator.
+  EnumMarketDataEntitlementApprovalStatus_ApprovedByAdmin = 3;
+  // Revoked by an administrator.
+  EnumMarketDataEntitlementApprovalStatus_RevokedByAdmin = 4;
+  // Canceled by the user.
+  EnumMarketDataEntitlementApprovalStatus_CanceledByUser = 5;
+  // No approval required.
+  EnumMarketDataEntitlementApprovalStatus_NoApprovalRequired = 6;
+}
+
+// Enum for specifying the type of question in a market data entitlement form.
+enum MarketDataEntitlementFormQuestionType{
+    // Undefined question type.
+    MarketDataEntitlementFormQuestionType_Undefined = 0;
+    // Yes/No question type.
+    MarketDataEntitlementFormQuestionType_YesNo = 1;
+    // Free text response question type.
+    MarketDataEntitlementFormQuestionType_Free = 2;
+}
+
+// Enum for specifying the type of consent required for market data entitlement.
+enum EnumMarketDataEntitlementConsent
+{
+  // Undefined consent type.
+  EnumMarketDataEntitlementConsent_Undefined = 0;
+  // OPRA (Options Price Reporting Authority) consent.
+  EnumMarketDataEntitlementConsent_OPRA_Consent = 1;
+}
+

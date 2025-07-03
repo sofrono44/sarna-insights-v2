@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Trading.Protos";
+
+// Enum for specifying the type of options enablement activity.
+enum EnumOptionsEnaActivityType {
+    // Undefined activity type.
+    EnumOptionsEnaActivityType_Undefined = 0;
+    // Activity type for an options assignment.
+    EnumOptionsEnaActivityType_Assignment = 1;
+    // Activity type for an options exercise.
+    EnumOptionsEnaActivityType_Exercise = 2;
+    // Activity type for an options expiration.
+    EnumOptionsEnaActivityType_Expiration = 3;
+    // Activity type for a trade.
+    EnumOptionsEnaActivityType_Trade = 4;
+}

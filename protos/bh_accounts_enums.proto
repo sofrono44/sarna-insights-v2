@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Services.BusinessHub.DTO.RPC.Request.Accounts";
+
+// Enum for specifying the type of accounts request.
+enum EnumAccountsRequestType {
+  // Undefined request type.
+  EnumAccountsRequestType_Undefined = 0;
+  // Request for accounts information.
+  EnumAccountsRequestType_AccountsInfo = 1;
+  // Request to create a subaccount.
+  EnumAccountsRequestType_CreateSubaccount = 2;
+  // Request to delete a subaccount.
+  EnumAccountsRequestType_DeleteSubaccount = 3;
+  // Request to create a Virtual Trading (V_T) account.
+  EnumAccountsRequestType_CreateV_T_Account = 4;
+  // Request to ask for a trading level change.
+  EnumAccountsRequestType_AskForTradingLevelChangeRequest = 5;
+  // Request to update an account's nickname.
+  EnumAccountsRequestType_UpdateAccountNickname = 6;
+  // Request to get account activity.
+  EnumAccountsRequestType_GetAccountActivity = 7;
+  // Request for cash or positions transfer between subaccounts.
+  EnumAccountsRequestType_SubaccountsTransferCashOrPositions = 8;
+  // Request to create an ABA account.
+  EnumAccountsRequestType_CreateAbaAccount = 9;
+  // Request to browse ABA accounts.
+  EnumAccountsRequestType_BrowseAbaAccounts = 10;
+  // Request to create an account ACH transfer.
+  EnumAccountsRequestType_CreateAccountAchTransfer = 11;
+  // Request to link an account to group.
+  EnumAccountsRequestType_LinkAccountGroup = 12;
+  // Request to unlink an account from group.
+  EnumAccountsRequestType_UnlinkAccountGroup = 13;
+  // Request to change an account group.
+  EnumAccountsRequestType_ChangeAccountGroup = 14;
+}

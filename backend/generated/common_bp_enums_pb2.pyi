@@ -1,0 +1,22 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumBpOptionTradingLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumBpOptionTradingLevel_Undefined: _ClassVar[EnumBpOptionTradingLevel]
+    EnumBpOptionTradingLevel_WritingCoveredCalls: _ClassVar[EnumBpOptionTradingLevel]
+    EnumBpOptionTradingLevel_BuyingCallsAndPuts: _ClassVar[EnumBpOptionTradingLevel]
+    EnumBpOptionTradingLevel_SpreadingCallsAndPuts: _ClassVar[EnumBpOptionTradingLevel]
+    EnumBpOptionTradingLevel_UncoveredPutWriting: _ClassVar[EnumBpOptionTradingLevel]
+    EnumBpOptionTradingLevel_UncoveredCallWriting: _ClassVar[EnumBpOptionTradingLevel]
+    EnumBpOptionTradingLevel_UncoveredIndexWriting: _ClassVar[EnumBpOptionTradingLevel]
+EnumBpOptionTradingLevel_Undefined: EnumBpOptionTradingLevel
+EnumBpOptionTradingLevel_WritingCoveredCalls: EnumBpOptionTradingLevel
+EnumBpOptionTradingLevel_BuyingCallsAndPuts: EnumBpOptionTradingLevel
+EnumBpOptionTradingLevel_SpreadingCallsAndPuts: EnumBpOptionTradingLevel
+EnumBpOptionTradingLevel_UncoveredPutWriting: EnumBpOptionTradingLevel
+EnumBpOptionTradingLevel_UncoveredCallWriting: EnumBpOptionTradingLevel
+EnumBpOptionTradingLevel_UncoveredIndexWriting: EnumBpOptionTradingLevel

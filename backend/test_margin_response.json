@@ -1,0 +1,200 @@
+{
+  "group_id": 10006,
+  "accounts": [
+    {
+      "account_id": "ACCOUNT_10028",
+      "account_number": "1SN10007",
+      "cash": 824819.28,
+      "is_pm_account": true,
+      "risk_type": "Cash",
+      "yesterday_liquidation_value": 935742.38,
+      "alert_level": 103,
+      "margin": 28450.195,
+      "buying_power": 6288467.575,
+      "excess_liquidity": 909705.8650000001,
+      "net_liquidity": 938156.06,
+      "nav": 113757.96999999999,
+      "credit_utilization": 0.030325652855666678,
+      "morning_nav": 113757.96999999999,
+      "position_aggregations": {
+        "long_market_value": 114432.48999999999,
+        "delta_long_exposure": 114432.48999999999,
+        "delta_long_count": 7.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10143",
+      "account_number": "TS3",
+      "cash": 770075.46,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 839060.46,
+      "alert_level": 103,
+      "margin": 5661.0,
+      "buying_power": 5595685.632,
+      "excess_liquidity": 835176.96,
+      "net_liquidity": 840837.96,
+      "nav": 70762.5,
+      "credit_utilization": 0.006732569495316316,
+      "morning_nav": 70762.5,
+      "position_aggregations": {
+        "long_market_value": 70762.5,
+        "delta_long_exposure": 70762.5,
+        "delta_long_count": 1.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10144",
+      "account_number": "TS4",
+      "cash": 290588.9,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 1070850.54,
+      "alert_level": 103,
+      "margin": 52424.33001938885,
+      "buying_power": 6752684.8468700955,
+      "excess_liquidity": 1007863.4099806112,
+      "net_liquidity": 1060287.74,
+      "nav": 769698.84,
+      "credit_utilization": 0.04944349353637613,
+      "morning_nav": 769698.84,
+      "position_aggregations": {
+        "long_market_value": 788375.2,
+        "delta_long_exposure": 788375.2,
+        "delta_long_count": 4.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10141",
+      "account_number": "TS1",
+      "cash": -308073.6,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 996211.4,
+      "alert_level": 103,
+      "margin": 104933.0,
+      "buying_power": 6020994.53,
+      "excess_liquidity": 898655.9,
+      "net_liquidity": 1003588.9,
+      "nav": 1311662.5,
+      "credit_utilization": 0.10455775268140172,
+      "morning_nav": 1311662.5,
+      "position_aggregations": {
+        "long_market_value": 1311662.5,
+        "delta_long_exposure": 1311662.5,
+        "delta_long_count": 2.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10139",
+      "account_number": "TS6",
+      "cash": 87691.79,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 238046.79,
+      "alert_level": 103,
+      "margin": 12626.0,
+      "buying_power": 1560368.2929999998,
+      "excess_liquidity": 232890.78999999998,
+      "net_liquidity": 245516.78999999998,
+      "nav": 157825.0,
+      "credit_utilization": 0.05142621814174094,
+      "morning_nav": 157825.0,
+      "position_aggregations": {
+        "long_market_value": 157825.0,
+        "delta_long_exposure": 157825.0,
+        "delta_long_count": 1.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10142",
+      "account_number": "TS2",
+      "cash": 52867.4098,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 61313.4828,
+      "alert_level": 103,
+      "margin": 693.65688,
+      "buying_power": 407657.908264,
+      "excess_liquidity": 60844.46392,
+      "net_liquidity": 61538.120800000004,
+      "nav": 8670.711,
+      "credit_utilization": 0.011271986712990428,
+      "morning_nav": 8669.2442,
+      "position_aggregations": {
+        "long_market_value": 8670.711,
+        "delta_long_exposure": 8670.711,
+        "delta_long_count": 21.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10145",
+      "account_number": "TS5",
+      "cash": 286975.42,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 302606.13,
+      "alert_level": 103,
+      "margin": 1283.252,
+      "buying_power": 2021609.8806000003,
+      "excess_liquidity": 301732.818,
+      "net_liquidity": 303016.07,
+      "nav": 16040.65,
+      "credit_utilization": 0.004234930510451145,
+      "morning_nav": 16040.65,
+      "position_aggregations": {
+        "long_market_value": 16040.65,
+        "delta_long_exposure": 16040.65,
+        "delta_long_count": 2.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10140",
+      "account_number": "TS0",
+      "cash": 300000.0,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 300000.0,
+      "alert_level": 103,
+      "margin": 0.0,
+      "buying_power": 2010000.0,
+      "excess_liquidity": 300000.0,
+      "net_liquidity": 300000.0,
+      "nav": 0.0,
+      "credit_utilization": 0.0,
+      "morning_nav": 0.0,
+      "position_aggregations": {
+        "long_market_value": 0.0,
+        "delta_long_exposure": 0.0,
+        "delta_long_count": 0.0
+      }
+    },
+    {
+      "account_id": "ACCOUNT_10006",
+      "account_number": "1SN10001",
+      "cash": 50024.0951,
+      "is_pm_account": true,
+      "risk_type": "Type_4",
+      "yesterday_liquidation_value": 58708.2051,
+      "alert_level": 103,
+      "margin": 1638.0048,
+      "buying_power": 410748.19201000006,
+      "excess_liquidity": 61305.700300000004,
+      "net_liquidity": 62943.70510000001,
+      "nav": 12919.610000000011,
+      "credit_utilization": 0.026023329853202427,
+      "morning_nav": 12919.610000000011,
+      "position_aggregations": {
+        "long_market_value": 107894.76,
+        "delta_long_exposure": 375741.9529077148,
+        "delta_long_count": 9.0
+      }
+    }
+  ],
+  "timestamp": "2025-07-03T20:38:53.022985",
+  "total_margin": 207709.43869938885,
+  "total_buying_power": 31068216.8577441,
+  "total_excess_liquidity": 4608175.907200611,
+  "total_net_liquidity": 4815885.3459,
+  "total_margin_utilization": 0.04313006306851182
+}

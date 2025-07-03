@@ -1,0 +1,273 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "orders_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Orders";
+
+// Request for order information, supporting both current and historical data queries.
+message OrdersInfoRequest {
+  // list to allow send request for both current and historical order data in a single request.
+  repeated EnumOrdersInfoRequestType OrdersInfoRequestTypes = 1;
+  
+  // Optional parameter.
+  // Search criteria.
+  // If not specified, all orders for specified OrdersInfoRequestTypes for all user accounts will be retrieved
+  OrdersInfoRequestSearchCriteria OrdersInfoRequestSearchCriteria = 2;
+}
+
+// A set of parameters for searching orders
+message OrdersInfoRequestSearchCriteria {
+  // Optional parameter.
+  // Filter by account ids
+  repeated int32 AccountIDs = 1;
+  // Optional parameter.
+  // Filter by account numbers
+  repeated string AccountNumbers = 2;
+  // Optional parameter.
+  // Specific order IDs to filter by.
+  repeated int32 OrderIDs = 3;
+  // Optional parameter.
+  // Specific external order IDs to filter by.
+  repeated string ExternalOrderIDs = 4;
+  // Optional parameter.
+  // If set to true, results will include GT child allocation orders corresponding to fetched GT inventory orders.
+  bool IncludeGTAllocations = 5;
+  //An optional parameter that allows to skip retrieving data from PriceEngine.
+  bool SkipFetchingCurrentPrices = 6;
+}
+
+// Response containing information about orders, including current and historical data.
+message OrdersInfoResponse {
+  // Indicates if data is present in the response.
+  bool HasData = 1;
+  // Indicates if UI repository should be reset.
+  bool ResetUiRepository = 2;
+  // Information about current orders.
+  CurrentOrdersInfo CurrentOrdersInfo = 3;
+  // Information about historical orders.
+  HistoricalOrdersInfo HistoricalOrdersInfo = 4;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+// Contains current orders information.
+message CurrentOrdersInfo {
+  // OrderInfo contains GroupingKey that OrdersBySymbol uses to aggregate.
+  repeated OrderInfo OrderInfos = 1;
+  // <OrderId, marketPrice> allows to update quote/market value for multiple orders at once
+  map<int32, double> CurrentOrderValueByOrderId = 2;
+}
+// Contains historical orders information.
+message HistoricalOrdersInfo {
+  // List of OrderInfo for historical orders.
+  repeated OrderInfo OrderInfos = 1;  // <OrderInfo>
+}
+// Allows wrapping Order instances with extra layer of data.
+message OrderInfo {
+  // The order instance.
+  Order Order = 1;
+  // Current price per share for the order.
+  double CurrentPricePerShare = 2;
+  // Allows UX to track and verify if a lot has been refreshed and perform UI rebuild. Int length should be sufficient (flutter doesn't handle long)
+  int32 Timestamp = 3;
+  // Determines which orders can be aggregated on OrdersBySymbol screen
+  string GroupingKey = 4;
+  // Helps UX determine which action links should be visible for this order
+  repeated bool AllowedActions = 5;
+  // Position effect for spread orders.
+  EnumSpreadPositionEffect SpreadPositionEffect = 6;
+  // Order action for spread orders.
+  EnumOrderAction SpreadOrderAction = 7;
+  bool IsAnyLegExpired = 8;
+  //string AccountNumber = 3; (!!) Rather than pass duplicate info for each lot, UX gets info from AccountsInfoBloc. Caller must append AccountsInfo requstType to load account info AccountsInfoBloc as needed.
+  //string AccountTypeDescription = 4;
+}
+message Order{
+  OrderHeader Header = 1;
+  // Sorting and indexing corresponds to Fix LegRefID
+  repeated OrderLeg Legs = 2;
+  // Stores and transports data, not directly related to request/response, however needed for proper processing (i.e. session, data for validation, etc.)
+  RequestLifecycleAttributes RequestLifecycleAttributes = 3;
+}
+message OrderHeader{
+  // On Place: OrderId is assigned when initiating order in DB. OrderId remains 0 when validation errors occur, and order is not saved into DB.
+  int32 OrderId = 1;
+  string UnderlyingSymbol = 2;
+  string AccountNumber = 3;
+  int32 AccountId = 4;
+  // Corresponds to SpreadQuantity, always positive sign.
+  double Quantity = 5;
+  EnumPriceType PriceType = 6;
+  // For spreads: negative when debit (buy), positive when credit (sell)
+  // For singles: always positive (for buy and sell)
+  double LimitPrice = 7;
+  // Sign: always positive, for long and short sides
+  double StopPrice = 8;
+  EnumStrategyType StrategyType = 9;
+  bool AllOrNone = 10;
+  // To generate use SymbolUtils.GenerateOrderHeaderDescription(Order order)
+  EnumOrderDuration Duration = 11;
+  // Init Place: optional, will be set to OrderId if not specified by caller. If set by caller, BH needs to check if value unique in DB.
+  // Init Replace: optional, preferably should be left empty (to default by server), or it should be set to new (post-replace) value. Backend Service (BH) will validate if explicit ClOrderId is unique.
+  string ClOrderId = 12;
+  // Previous OrderId during Replace procedure. Corresponds to fix tag <41>.
+  // Init Replace request: optional, preferably should be left empty with passing OrderId to fetch order from DB, OR set to current (pre-replace) value to help fetch order from DB.
+  // During Replace: OrigClOrderId will be set by EI processing Replace request, based on either: current ClOrderId OR (optional) value of ReplacedClOrderId
+  string OrigClOrderId = 13;
+  // Corresponds to fix tag <37> Market OrderID, or orderId in external system.
+  string ExternalOrderId = 14;
+  EnumOrderStatus OrderStatus = 15;
+  EnumExecutionRoute ExecutionRoute = 16;
+  bool IsOffMarketHourOrder = 17;
+  EnumOrderAllocationType OrderAllocationType = 18;
+  // Filled quantity in SpreadQuantity terms.
+  // Always positive sign
+  double FilledQuantity = 19;
+  // Avg Filled Price for header level. In case of a few partial fills, the average of all fills is calculated.
+  // Sign corresponds to LimitPrice field.
+  // For spreads: negative when debit (buy), positive when short (credit/sell)
+  // For singles: always positive (for buy and sell)
+  double FilledPrice = 20;
+  int32 SubaccountId = 21;
+  google.protobuf.Timestamp CreatedTime = 22;
+  int32 CreatedUserId = 23;
+  google.protobuf.Timestamp LastModifiedTime = 24;
+  int32 LastModifiedUserId = 25;
+  // carries ColorCodedOrderDescription
+  string Description = 26;
+  // Represents maximum value to be charged if the entire transaction is filled/completed.
+  // Always positive sign.
+  double CommissionEstimated = 27;
+  // Represents actual charged value, can be incremented through order's lifetime.
+  // Always positive sign.
+  double CommissionCharged = 28;
+  // when placing order, UX doesn't need to set it, as it is calculated by BH
+  double PendingTransaction = 29;
+  // When replacing partially filled order, pass the original quantity and not lowered by partially filled quantity.
+  // Sign: always positive.
+  double ReplacedQuantity = 30;
+  EnumPriceType ReplacedPriceType = 31;
+  // For spreads: negative when debit (buy), positive when credit (sell)
+  // For singles: always positive (for buy and sell)
+  double ReplacedLimitPrice = 32;
+  // For spreads: n/a
+  // For singles: always positive (for buy and sell)
+  double ReplacedStopPrice = 33;
+  // Optional attribute. It can be used to set ClOrderId when replacing the order.
+  // If left empty, ExecutionInitiator will generate the new ClOrderId to place a replace request.
+  // Can be used for Replace and Cancel requests.
+  // !! ReplacedClOrderId does not exist in [Orders] table !!
+  string ReplacedClOrderId = 34;
+  bool IsManualTrade = 35;
+  EnumExecutedAs ExecutedAs = 36;
+  EnumPlacedAs PlacedAs = 37;
+  // True if order active and alive on the market. Dynamic field, not saved into DB.
+  // Used by BusinessHub to determine if the order is currently live before sending out to UX.
+  bool IsLive = 38;
+  // For Non-Inventory GT it corresponds to [OrderNonInventoryGroupings.Id].
+  // OrderNonInventoryGroupingId changes on each Replace. Represents InventoryOrderId for Inventory GT.
+  int32 ParentOrderId = 39;
+  // Indicates order that was created based on Execution Report, marked via ExecutionUpdateInfo.IsTradeAwayExecution or FiX tag (13013), without order initiated in our DB yet.
+  bool IsConstructedFromExecReport = 40;
+}
+message RequestLifecycleAttributes{
+  // Attribute persisted only throughout the lifetime of the order request and not saved into DB.
+  // Required by FixInitiator to determine SendToMarket override.
+  EnumOrderInitiationType OrderInitiationType = 1;
+  // Represent ability to override warnings from whole set of services related to order request lifecycle: ExecutionInitiator, GUI, Margin and Business Validation
+  bool OverrideValidationWarnings = 2;
+  // Required to pass for Place/Replace GT orders (types: GTInventoryIntraExecutionProportionalPriceAllocation, GTInventoryIntraExecutionEvenPriceAllocation, GTInventoryPostExecutionAllocationGroupAssigned)
+  repeated GTOrderAllocation GTOrderAllocations = 3;
+  // Warning returned if OrderAllocationHeader or GTGroupId has not been passed for Place/Replace GT orders (types: GTInventoryIntraExecutionProportionalPriceAllocation, GTInventoryIntraExecutionEvenPriceAllocation, GTInventoryPostExecutionAllocationGroupAssigned)
+  OrderAllocationHeader OrderAllocationHeader = 4;
+  // Admin ability to bypass validation
+  bool BypassInputValidation = 5;
+  //Admin ability to bypass BP check
+  bool BypassBPCheck = 6;
+  // Allows to assign GT allocations based on values stored in DB.[AccountExecutionReportMappings] table ([ExternalAccountNumber])
+  // Usages:
+  // 1) TradeAway flow, based on fix tag ClientID <109>.
+  string ExternalAccountNumber = 7;
+}
+message GTOrderAllocation{
+  int32 AccountId = 1;
+  int32 SubaccountId = 2;
+  int32 OrderId = 3;
+  // Init Place: optional, will be set to OrderId if not specified by caller. If set by caller, BH needs to check if value unique in DB.
+  // Init Replace: optional, preferably should be left empty (to default by server) and populate OrderId. Otherwise, it should be set to current (pre-replace) value to help fetch order from DB.
+  // Must be unique for each child allocation.
+  string ClOrderId = 4;
+  // Used for storing Qty on Place and ReplacedQty on Replace
+  // Sign: allocation quantity must always be positive. Used for storing Qty on Place and ReplacedQty on Replace
+  double Quantity = 5;
+  double PendingTransaction = 6;
+  // Optional. If not passed, the default commission for the corresponding account will be used.
+  int32 CommissionId = 7;
+  // Optional attribute.
+  // If used, must be unique for each child allocation.
+  string ExternalOrderId = 8;
+  // Can be used alternatively to AccountId. If passed, AccountId is ignored.
+  string AccountNumber = 9;
+  
+}
+// Keep in-sync with backend's OrderLeg
+message OrderLeg {
+  // First value 1, and not 0 like in leg index.
+  int32 LegNumber = 1;
+  // Always positive sign
+  double Quantity = 2;
+  // Always positive sign
+  double FilledQuantity = 3;
+  string Symbol = 4;
+  // Used to append locale-specific symbol description
+  string SymbolDescription = 5;
+  int32 OrderId = 6;
+  EnumOrderAction OrderAction = 7;
+  EnumPositionEffect PositionEffect = 8;
+  EnumLegSecType LegSecType = 9;
+  // Always positive sign (!!)
+  // Avg Filled Price for leg level. In case of a few partial fills, the average of all fills is calculated.
+  double FilledPrice = 10;
+  double Multiplier = 11;
+  double ContractSize = 12;
+  oneof subtype {
+    StockOrderLeg StockOrderLeg = 1000;
+    OptionOrderLeg OptionOrderLeg = 1001;
+    MutualFundOrderLeg MutualFundOrderLeg = 1002;
+    FixedIncomeOrderLeg FixedIncomeOrderLeg = 1003;
+  }
+  string LegUniqueKey = 13;
+}
+message OptionOrderLeg {
+  EnumCallOrPut CallOrPut = 1;
+  google.protobuf.Timestamp Expiration = 2;
+  double StrikePrice = 3;
+  int32 OrdersOptionLegId = 4;
+}
+message StockOrderLeg {
+  int32 OrdersStockLegId = 1;
+  string Cusip = 2;
+}
+message FixedIncomeOrderLeg {
+  int32 OrdersFixedIncomeLegId = 1;
+  string Cusip = 2;
+}
+message MutualFundOrderLeg {
+  int32 OrdersMutualFundLegId = 1;
+  string Cusip = 2;
+}
+message OrderAllocationHeader {
+  int32 OrderAllocationHeaderId = 1;
+  // Optional attribute.
+  // If not passed will be defaulted by Adjusting logic.
+  int32 InventoryOrderId = 2;
+  // Required to pass when init GT order.
+  int32 GTGroupId = 3;
+  // Optional attribute.
+  // For inventory GT (block trades), BP is checked for inventory account, which can be skipped by this flag.
+  // If child allocations and orders are passed, BP will still be checked for them.
+  bool BypassInventoryBPCheck = 4;
+}

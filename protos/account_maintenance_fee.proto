@@ -1,0 +1,44 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import "account_maintenance_fee_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AccountMaintenanceFees";
+
+// Holds information about the account maintenance fee associated with an account.
+message AccountMaintenanceFeeInfo{
+  // Identifier for the account to which the maintenance fee applies.
+  int32 AccountId = 1;
+  // Details of the account maintenance fee.
+  AccountMaintenanceFee AccountMaintenanceFee = 2;
+}
+
+// Describes the structure and conditions of an account maintenance fee.
+message AccountMaintenanceFee{
+  // Unique identifier for the account maintenance fee entry.
+  int32 AccountMaintenanceFeeId = 1;
+  // Schedule on which the account maintenance fee is applied.
+  EnumAccountMaintenanceFeeSchedule AccountMaintenanceFeeSchedule = 2;
+  // Amount of the fee to be charged.
+  double FeeAmount = 3;
+  // Period in days over which the fee amount is applicable.
+  int32 FeePeriodInDays = 4;
+  // Minimum number of trades required to avoid the maintenance fee.
+  int32 MinNumberOfTrades = 5;
+  // Period in days over which the minimum number of trades is calculated.
+  int32 MinNumberOfTradesPeriodInDays = 6;
+  // Minimum level of account assets required to avoid the maintenance fee.
+  double MinLevelOfAccountAssets = 7;
+  // Period in days over which the minimum level of account assets is calculated.
+  int32 MinLevelOfAccountAssetsPeriodInDays = 8;
+  // Description of the account maintenance fee.
+  string Description = 9;
+  // Timestamp of when the account maintenance fee was created.
+  google.protobuf.Timestamp CreatedTime = 10;
+  // Timestamp of the last modification to the account maintenance fee.
+  google.protobuf.Timestamp LastModifiedTime = 11;
+  // User ID of the person who last modified the account maintenance fee entry
+  int32 LastModifiedUserId = 12;
+  // Indicates whether the account maintenance fee entry has been soft deleted.
+  bool IsSoftDeleted = 13;
+}

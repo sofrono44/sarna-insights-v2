@@ -1,0 +1,11 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminRiskProfiles";
+
+enum EnumRiskApplicabilityType
+{
+  EnumRiskApplicabilityType_Undefined = 0;
+  EnumRiskApplicabilityType_Pm = 1;
+  EnumRiskApplicabilityType_RegT = 2;
+  EnumRiskApplicabilityType_Futures = 3;
+}

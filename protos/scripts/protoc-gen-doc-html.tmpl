@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+    <title>Sarna gRPC API</title>
+    <link rel="shortcut icon"type="image/x-icon" href="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAAAQAAMMOAADDDgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhz8ZAIJCHACFQBoyhUAawoVAGr+FQBovgz8WAIZBHAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAhUAaAIVAGgSFQBpShUAa1IVAGv+FQBr/hUAa0oVAGlGFPxoEhUAaAAAAAAAAAAAAAAAAAAAAAACDQxkAhUAaAIVBGhKFQBqDhUAa74VAGv+FQBr/hUAa/4VAGv+FQBruhUAag4VAGhOFPxoAhkQZAAAAAACEPxkAgTgVAIVAGi6FQBqxhUAa+4Q/Gf+JRiD+n2RB/Z1iP/yIRR/+hUAa/4VAGvyFQBqzhUAaMHw/HAGEQBsAhUAaAIVAGiSFQBrKhUAa/4U/Gf+PTSj9qXJQ/beFZf+3hWX/o2pH/YdDHf6FQBr/hUAa/4VAGs2EQBoohEAaAIVAGgCFQRsIhD8ZYIZBG9yWWDT9sHtb/biGZv+3hmb/rXhW/5NUL/+FQRv/hT8Z/4U/Gd+EPxlkhEAaCYVAGgDr0bMArnlYALeFZRWtd1artIFh/7iGZv+2hGT/pm1L/4xKJP+EPxn/hUAa/5JSLf+mbkypuYdoFK54VgD/7t0At4VlALeFZiC3hWW1t4Zm/biGZv+zgGD/nWE9/4hEHv+EPxn/h0Md/5peOv+yfl7/uIZm/beFZbC3hWUat4VlALeFZQC3hWUWt4VllriGZvSueVj/lFUx/4VAGv+EPxn/i0kj/6RrSP+2g2P/uIZm/7iGZu63hWWEt4VmD7iFZgAAAAAApGtIAKlxTg6eYj+jjUsm/4Q/Gf+FQBr/klIu/6x2Vf+3hmb/uIZm/696Wf+hZkOanV89C59jQQAAAAAAhUAaAIZBGg+FQBqBhD8Z7YU/Gf+GQhz/m147/7N/Xv+4hmb/t4Vl/6hxT/2OTCf+hD8Z7oU/GoGFPxoNhT8aAIVAGgCFQBochUAatoVAGv6FQBr/h0Md/6BlQ/22g2P+tYJi/qBlQv2JRSD+hD8Z/4VAGv6FQBqyhEAaGYVAGgCGPhoAhEAaAIVAGheFQBqNhUAa84VAGv+GQhz+l1g1/JZXM/2GQRv/hUAa/4VAGvOFQBqLhUAaFoVAGgCHQBwAAAAAAAAAAACFQBoAhUAaBoVAGl2FQBrchUAa/4U/Gf+FPxn/hUAa/4VAGt6FQBpehEAaBoVAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAIRAGwB6OyEAhUAaM4VAGreFQBr8hUAa/YVAGruFQBo1i0IXAIZAGgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAiEMdAIQ/GQCFQBoZhUAamoVAGqCFQBochUAbAIQ/GAAAAAAAAAAAAAAAAAAAAAAA/D8AAPAPAADgBwAAgAEAAIABAACAAQAAwAMAAIABAACAAQAAwAMAAIABAACAAQAAwAMAAOAHAADwDwAA/D8AAA==">
+    <style>
+        html {
+            box-sizing: border-box;
+            overflow: -moz-scrollbars-vertical;
+            overflow-y: scroll;
+        }
+
+        *,
+        *:before,
+        *:after {
+            box-sizing: inherit;
+        }
+
+        body {
+            margin: 0;
+            background: #fafafa;
+        }
+        
+        .swagger-ui a {
+            -webkit-text-decoration-skip: objects;
+            background-color: transparent;
+        }
+                
+        .swagger-ui {
+            color: #3b4151;
+            font-family: sans-serif;
+        }
+         
+        .swagger-ui .topbar {
+            background-color: #DADFE1;
+            padding: 8px 30px;
+        }
+                
+        .swagger-ui .wrapper {
+            box-sizing: border-box;
+            margin: 0 auto;
+            max-width: 1460px;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        .swagger-ui .topbar .topbar-wrapper {
+            align-items: center;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .swagger-ui .topbar .topbar-wrapper {
+            /* background-image: url(https://api.dev.sarnafinance.com/docs/logo.svg); */
+            width: 256px;
+            height: 46px;
+            background-size: 256px 46px;
+            display: block;
+        }
+        
+
+        .swagger-ui .border-box, .swagger-ui a, .swagger-ui article, .swagger-ui body, .swagger-ui code, .swagger-ui dd, .swagger-ui div, .swagger-ui dl, .swagger-ui dt, .swagger-ui fieldset, .swagger-ui footer, .swagger-ui form, .swagger-ui h1, .swagger-ui h2, .swagger-ui h3, .swagger-ui h4, .swagger-ui h5, .swagger-ui h6, .swagger-ui header, .swagger-ui html, .swagger-ui input[type=email], .swagger-ui input[type=number], .swagger-ui input[type=password], .swagger-ui input[type=tel], .swagger-ui input[type=text], .swagger-ui input[type=url], .swagger-ui legend, .swagger-ui li, .swagger-ui main, .swagger-ui ol, .swagger-ui p, .swagger-ui pre, .swagger-ui section, .swagger-ui table, .swagger-ui td, .swagger-ui textarea, .swagger-ui th, .swagger-ui tr, .swagger-ui ul {
+            box-sizing: border-box;
+        }
+
+        .swagger-ui section {
+            display: block;
+        }
+        .swagger-ui .info {
+            margin: 50px 0;
+        }
+
+        .swagger-ui .info hgroup.main {
+            margin: 0 0 20px;
+        }
+
+
+        .swagger-ui .info .title {
+            color: #3b4151;
+            font-family: sans-serif;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .swagger-ui .info .title {
+            color: #3b4151;
+            font-family: sans-serif;
+            font-size: 36px;
+            margin: 0;
+        }
+
+        .swagger-ui .info .title small, 
+        .swagger-ui .info .title small.version-stamp, 
+        .swagger-ui .info .title small pre {
+            background-color: #235098;
+        }
+        .swagger-ui .info .title small {
+            background: #235098;
+            border-radius: 57px;
+            display: inline-block;
+            font-size: 10px;
+            margin: 0 0 0 5px;
+            padding: 2px 4px;
+            position: relative;
+            top: -5px;
+            vertical-align: super;
+        }
+
+        .swagger-ui .info .title small pre {
+            color: #fff;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swagger-ui .info pre {
+            font-size: 14px;
+        }
+
+        .swagger-ui .info>div {
+            margin: 0 0 5px;
+        }
+
+        .swagger-ui .markdown p, .swagger-ui .markdown pre, .swagger-ui .renderedMarkdown p, .swagger-ui .renderedMarkdown pre {
+            margin: 1em auto;
+            word-break: break-all;
+            word-break: break-word;
+        }
+
+        .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+            color: #3b4151;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        .swagger-ui h1 {
+            font-size: 2em;
+            margin: 0.67em 0;
+        }
+
+        .swagger-ui .info h1, .swagger-ui .info h2, .swagger-ui .info h3, .swagger-ui .info h4, .swagger-ui .info h5 {
+            color: #3b4151;
+            font-family: sans-serif;
+        }
+
+        .swagger-ui .info li, .swagger-ui .info p, .swagger-ui .info table {
+            color: #3b4151;
+            font-family: sans-serif;
+            font-size: 14px;
+        }
+
+        .swagger-ui .link, .swagger-ui .link:active, .swagger-ui .link:focus, .swagger-ui .link:hover, .swagger-ui .link:link, .swagger-ui .link:visited {
+            transition: color .15s ease-in;
+        }
+
+        .swagger-ui .info a {
+            font-size: 14px;
+        }
+
+
+        .swagger-ui .scheme-container {
+            display: table;
+            border-bottom: 1px solid #aaa;
+            margin: 4em 0 1.5em 0;
+            padding: 10px 20px 10px 10px;
+            width: 100%;
+            background: #fff;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,.15);
+        }
+
+        .swagger-ui .scheme-container h2 {
+            display: table-cell;
+        }
+
+        .swagger-ui .scheme-container a {
+            text-align: right;
+            display: table-cell;
+        }
+
+
+        .swagger-ui .opblock-tag-section {
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        .swagger-ui .opblock-tag {
+            align-items: center;
+            border-bottom: 1px solid rgba(59,65,81,.3);
+            cursor: pointer;
+            display: flex;
+            padding: 10px 20px 10px 10px;
+            transition: all .2s;
+            font-family: sans-serif;
+            font-size: 24px;
+            margin: 0 0 5px;
+            color: #235098;
+        }
+
+        .swagger-ui .no-margin {
+            border: none;
+            height: auto;
+            margin: 0;
+            padding: 0;
+        }
+
+        .swagger-ui .opblock {
+            border: 1px solid #000;
+            border-radius: 4px;
+            box-shadow: 0 0 3px rgba(0,0,0,.19);
+            margin: 0 0 15px;
+        }
+        .swagger-ui .opblock.opblock-post {
+            border-color: #DADFE1;
+            background: rgba(241, 241, 241, .1);
+        }
+
+        .swagger-ui .opblock .opblock-section-header {
+            align-items: center;
+            background: hsla(0,0%,100%,.8);
+            box-shadow: 0 1px 2px rgba(0,0,0,.1);
+            display: flex;
+            min-height: 50px;
+            padding: 8px 20px;
+        }
+
+        .swagger-ui .opblock .tab-header {
+            display: flex;
+            flex: 1;
+        }
+        .swagger-ui .opblock .tab-header .tab-item:first-of-type {
+            padding: 0 40px 0 0;
+        }
+
+        .swagger-ui .table-container {
+            padding: 20px;
+        }
+
+        .swagger-ui table {
+            border-collapse: collapse;
+            padding: 0 10px;
+            width: 100%;
+        }
+
+        .swagger-ui table thead tr td, .swagger-ui table thead tr th {
+            padding: 1em 0 1em 1em;
+            border-bottom: 1px solid rgba(59,65,81,.2);
+            color: #3b4151;
+            font-family: sans-serif;
+            font-size: 12px;
+            font-weight: 700;
+            text-align: left;
+        }
+            
+        .swagger-ui table tbody tr td {
+            padding: 1em 1em 0;
+            vertical-align: top;
+        }
+
+        .swagger-ui table tbody tr td:first-of-type {
+            padding: 1em 1em 0;
+        }
+                
+
+        #toc li {
+            padding: 0.25em;
+        }
+        a,
+        .swagger-ui .info a {
+            font-family: sans-serif;
+            color: #235098;
+            text-decoration: underline;
+        }
+        a:hover,
+        .swagger-ui .info a:hover {
+            color: #34495E;
+            text-decoration: none;
+        }
+        
+        .swagger-ui table.methods  {
+            table-layout: fixed;
+        }
+
+        .swagger-ui table tbody tr td.method_name {
+            font-weight: 600;
+        }
+        
+        .method_name {
+            width: 28%;
+        }
+        .method_request {
+            
+            width: 25%;
+        }
+        .method_response {
+            width: 20%;
+        }
+        .method_description {
+            width: 27%;
+        }
+
+        .field_name {
+            width: 30%;
+        }
+        .field_type  {
+            width: 20%;
+        }
+        .field_label {
+            width: 10%;
+        }
+        .field_description {
+            width: 40%;
+        }
+        
+        .enum_name {
+            width: 45%;
+        }
+        .enum_number {
+            width: 10%;
+        }
+        .enum_description {
+            width: 45%;
+        }
+    </style>
+</head>
+<body>
+<div>
+  <section class="swagger-ui swagger-container">
+    <div class="topbar">
+      <div class="wrapper">
+        <div class="topbar-wrapper"><img width="256" height="46" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNTBtbSIgaGVpZ2h0PSI0NW1tIiB2aWV3Qm94PSIwIDAgMjUwIDQ1Ij48cGF0aCBzdHlsZT0iZGlzcGxheTppbmxpbmU7ZmlsbDojNjU4NWI3O2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDouMDg5NDY0NXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1vcGFjaXR5OjEiIGQ9Ik0uMDg1IDIyLjU2NyAxOC4wMjcgOS4yMmwxNy44MyAxMy40ODQtMTcuODk0IDEzLjI5MnoiLz48cGF0aCBzdHlsZT0iZGlzcGxheTppbmxpbmU7ZmlsbDojMWE0MDg1O2ZpbGwtb3BhY2l0eToxO3N0cm9rZTpub25lO3N0cm9rZS13aWR0aDouMDg5NDY0NXB4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1vcGFjaXR5OjEiIGQ9Ik0xOC4xNTUuMTQ1LjI2MiAxMy41YzcuOTg2IDYuMDEyIDE1Ljg4OCAxMi4wMzMgMjMuNzY0IDE4LjAwNWwtNi4wNjMgNC40ODktMTEuNzY2LTguODI3LTYuMDE0IDQuNDg1TDE4LjAyNyA0NC45NGwxOC4wMi0xMy4yOTItMjQuMDQ2LTE3LjkyNmE1MjEuMDYxIDUyMS4wNjEgMCAwIDEgNi4wMjYtNC41MDRsMTEuODIyIDguOTQ3IDUuOTQzLTQuNjY1eiIvPjxnIGFyaWEtbGFiZWw9IlNhcm5hIFRlY2hub2xvZ2llcyIgc3R5bGU9ImZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtd2VpZ2h0OjQwMDtmb250LXNpemU6MjIuOTMwNnB4O2xpbmUtaGVpZ2h0OjEuMjU7Zm9udC1mYW1pbHk6c2Fucy1zZXJpZjtmaWxsOiMxYTQwODU7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlOm5vbmU7c3Ryb2tlLXdpZHRoOi4yNjQ1ODMiPjxwYXRoIGQ9Ik01OC40OCAyNi41ODdxMC0uNDkyLS4xNDUtLjg3My0uMTQ2LS4zOTItLjUzOC0uNzE3LS4zOC0uMzI0LTEuMDYzLS42MTUtLjY3Mi0uMzAzLTEuNzM2LS42MjctMS4xNjQtLjM0Ny0yLjE1LS43OTUtLjk4NS0uNDQ4LTEuNzAxLTEuMDQyLS43MDYtLjU5My0xLjEwOS0xLjM2Ni0uNDAzLS43NzItLjQwMy0xLjc2OSAwLS45ODUuNDE0LTEuODE0LjQyNi0uODI4IDEuMTg3LTEuNDMzLjc2Mi0uNjA0IDEuODI1LS45NCAxLjA2NC0uMzM2IDIuMzUyLS4zMzYgMS4zNzcgMCAyLjQ3NC40MDMgMS4wOTcuMzkyIDEuODQ3IDEuMDc1Ljc2Mi42ODMgMS4xNjUgMS41OS40MDMuODk2LjQwMyAxLjkxNEg1OC40OHEwLS41OTMtLjE5LTEuMDg2LS4xOC0uNTA0LS41Ni0uODYyLS4zOC0uMzctLjk2My0uNTctLjU4Mi0uMjAyLTEuMzc3LS4yMDItLjc1IDAtMS4yOTkuMTY4LS41NDguMTY4LS45MTguNDctLjM1OC4zMDItLjUzNy43MTYtLjE2OC40MTUtLjE2OC44OTYgMCAuOTA3Ljg1IDEuNTEyLjg2My42MDQgMi42MiAxLjEyIDEuMzc4LjQwMiAyLjM4Ni44OTUgMS4wMDcuNDkzIDEuNjY4IDEuMTIuNjcyLjYxNi45OTYgMS40LjMyNS43NzIuMzI1IDEuNzQ2IDAgMS4wMy0uNDE0IDEuODU5LS40MDMuODE3LTEuMTY1IDEuNC0uNzUuNTctMS44MjUuODg0LTEuMDc1LjMwMi0yLjM5Ni4zMDItMS4xNzUgMC0yLjMxNy0uMzE0LTEuMTQyLS4zMjQtMi4wNS0uOTYyLS45MDYtLjY1LTEuNDY2LTEuNjEzLS41NDktLjk2My0uNTQ5LTIuMjYxaDIuODMzcTAgLjc3Mi4yNjkgMS4zMzIuMjguNTQ5Ljc1LjkwNy40ODEuMzQ3IDEuMTMuNTE1LjY1LjE1NyAxLjQuMTU3IDEuNDc4IDAgMi4yMTctLjU5NC43NS0uNjA0Ljc1LTEuNTl6TTcwLjc3NCAzMC43ODZxLS4xMTItLjIxMy0uMTktLjUwNC0uMDY3LS4yOS0uMTIzLS42MjctLjI2OS4yOC0uNjA1LjUyNi0uMzI1LjI0Ny0uNzI4LjQzNy0uMzkyLjE4LS44NjIuMjgtLjQ1OS4xMTItLjk4NS4xMTItLjkwNyAwLTEuNjY4LS4yNjktLjc2Mi0uMjgtMS4zMS0uNzYxLS41MzgtLjQ5My0uODUxLTEuMTUzLS4zMDMtLjY2LS4zMDMtMS40MzMgMC0uOTc1LjM3LTEuNzI1LjM3LS43NSAxLjA3NS0xLjI1NHQxLjcyNC0uNzYxcTEuMDMtLjI2OSAyLjM0LS4yNjloMS43MTN2LS43OTVxMC0uOTQtLjUyNi0xLjUtLjUyNi0uNTcxLTEuNjAxLS41NzEtLjQ4MiAwLS44NzQuMTM0LS4zOTEuMTIzLS42NzEuMzQ3LS4yNy4yMTMtLjQyNi41MTUtLjE0NS4zMDMtLjE0NS42NWgtMi43MjFxMC0uNzE3LjM0Ny0xLjM3Ny4zNTgtLjY3MiAxLjAwOC0xLjE4Ny42NS0uNTI3IDEuNTY3LS44NC45My0uMzE0IDIuMDcyLS4zMTQgMS4wMTggMCAxLjg4LjI3Ljg2My4yNTcgMS40OS43ODMuNjI3LjUxNS45NzQgMS4yOTkuMzQ3Ljc3Mi4zNDcgMS44MTR2NS4zNzRxMCAxLjYzNS40NTkgMi42MDl2LjE5em0tMi45OS0xLjk2cS40NzEgMCAuODc0LS4xMjIuNDE0LS4xMjQuNzM5LS4zMjUuMzM2LS4yMDIuNTgyLS40Ni4yNDctLjI2OC4zOTItLjUzN3YtMi4yODRoLTEuNDY3cS0xLjUxMSAwLTIuMjczLjUyNi0uNzYuNTI3LS43NiAxLjQ5IDAgLjM3LjEyMi42ODMuMTIzLjMxMy4zNy41NDguMjQ2LjIyNC41OTMuMzU5LjM1OC4xMjMuODI5LjEyM3pNODIuMjg0IDIxLjE1N3EtLjI2OC0uMDQ1LS41NDgtLjA2Ny0uMjY5LS4wMjMtLjU2LS4wMjMtLjk4NSAwLTEuNjAxLjM4MS0uNjE2LjM4LS45MTggMS4wNTN2OC4yODVoLTIuNzIxVjE4LjY3MWgyLjU5N2wuMDY4IDEuMzU1cS40NTktLjczOSAxLjEzLTEuMTUzLjY4My0uNDI2IDEuNjAyLS40MjYuMjM1IDAgLjUyNi4wNTYuMzAyLjA0NS40MzYuMTAxek04Ni41MjggMTguNjcxbC4wNzggMS40cS42MzgtLjc3MyAxLjUzNC0xLjE5OC44OTYtLjQyNiAxLjk5My0uNDI2Ljg3MyAwIDEuNTc5LjI0Ny43MTYuMjM1IDEuMjIuNzcyLjUwNC41MzguNzczIDEuNC4yOC44NjIuMjggMi4wOTR2Ny44MjZoLTIuNzIxdi03Ljg0OXEwLS42MjctLjE0Ni0xLjA1Mi0uMTM0LS40MzctLjQwMy0uNzA2LS4yNjgtLjI2OC0uNjcxLS4zOC0uMzkyLS4xMjMtLjkwNy0uMTIzLS44NCAwLTEuNDY3LjQwMy0uNjE2LjQwMy0uOTg1IDEuMDg2djguNjIxaC0yLjcyMVYxOC42NzF6TTEwMy45OTQgMzAuNzg2cS0uMTExLS4yMTMtLjE5LS41MDQtLjA2Ny0uMjktLjEyMy0uNjI3LS4yNjkuMjgtLjYwNS41MjYtLjMyNC4yNDctLjcyNy40MzctLjM5Mi4xOC0uODYzLjI4LS40NTkuMTEyLS45ODUuMTEyLS45MDcgMC0xLjY2OC0uMjY5LS43NjItLjI4LTEuMzEtLjc2MS0uNTM4LS40OTMtLjg1MS0xLjE1My0uMzAyLS42Ni0uMzAyLTEuNDMzIDAtLjk3NS4zNy0xLjcyNS4zNjktLjc1IDEuMDc0LTEuMjU0LjcwNS0uNTA0IDEuNzI0LS43NjEgMS4wMy0uMjY5IDIuMzQtLjI2OWgxLjcxM3YtLjc5NXEwLS45NC0uNTI2LTEuNS0uNTI2LS41NzEtMS42LS41NzEtLjQ4MiAwLS44NzQuMTM0LS4zOTIuMTIzLS42NzIuMzQ3LS4yNjkuMjEzLS40MjYuNTE1LS4xNDUuMzAzLS4xNDUuNjVoLTIuNzJxMC0uNzE3LjM0Ni0xLjM3Ny4zNTktLjY3MiAxLjAwOC0xLjE4Ny42NS0uNTI3IDEuNTY3LS44NC45My0uMzE0IDIuMDcyLS4zMTQgMS4wMTkgMCAxLjg4LjI3Ljg2My4yNTcgMS40OS43ODMuNjI3LjUxNS45NzQgMS4yOTkuMzQ3Ljc3Mi4zNDcgMS44MTR2NS4zNzRxMCAxLjYzNS40NiAyLjYwOXYuMTl6bS0yLjk4OS0xLjk2cS40NyAwIC44NzMtLjEyMi40MTUtLjEyNC43NC0uMzI1LjMzNS0uMjAyLjU4Mi0uNDYuMjQ2LS4yNjguMzkxLS41Mzd2LTIuMjg0aC0xLjQ2NnEtMS41MTIgMC0yLjI3My41MjYtLjc2Mi41MjctLjc2MiAxLjQ5IDAgLjM3LjEyNC42ODMuMTIzLjMxMy4zNjkuNTQ4LjI0Ni4yMjQuNTkzLjM1OS4zNTkuMTIzLjgyOS4xMjN6IiBzdHlsZT0iZm9udC1zdHlsZTpub3JtYWw7Zm9udC12YXJpYW50Om5vcm1hbDtmb250LXdlaWdodDo1MDA7Zm9udC1zdHJldGNoOm5vcm1hbDtmb250LXNpemU6MjIuOTMwNnB4O2ZvbnQtZmFtaWx5OlJvYm90bzstaW5rc2NhcGUtZm9udC1zcGVjaWZpY2F0aW9uOidSb2JvdG8gTWVkaXVtJztmaWxsOiMxYTQwODU7ZmlsbC1vcGFjaXR5OjE7c3Ryb2tlLXdpZHRoOi4yNjQ1ODMiLz48cGF0aCBkPSJNMTI2LjYgMTUuNjZoLTUuNTg3djE1LjEyNmgtMS4zNzdWMTUuNjZoLTUuNTc2di0xLjE3NWgxMi41NHpNMTMyLjUwMSAzMS4wMXEtMS4xODcgMC0yLjE4My0uNDM3LS45OTctLjQ0OC0xLjcyNS0xLjIzMS0uNzE2LS43OTUtMS4xMi0xLjg4MS0uNDAyLTEuMDg2LS40MDItMi4zODV2LS40ODJxMC0xLjQuNDE0LTIuNTMuNDI1LTEuMTQyIDEuMTQyLTEuOTM3LjcxNy0uODA2IDEuNjQ2LTEuMjQzLjk0LS40MzcgMS45ODItLjQzNyAxLjE1MyAwIDIuMDQ5LjQxNS44OTUuNDE0IDEuNSAxLjE1My42MTYuNzM5LjkzIDEuNzU4LjMxMyAxLjAxOS4zMTMgMi4yMjh2LjgxN2gtOC42NDR2LjI1OHEwIC45OTYuMzAyIDEuODguMzAzLjg3NC44NTEgMS41MjQuNTQ5LjY0OSAxLjMxIDEuMDMuNzYyLjM3IDEuNjkxLjM3IDEuMDc1IDAgMS44OTItLjM5My44MjktLjM5MiAxLjUtMS4yNTRsLjg0LjYzOHEtLjMwMi40MzctLjcwNS44MjktLjM5Mi4zOTItLjkxOC42ODMtLjUyNi4yOTEtMS4xODcuNDU5LS42Ni4xNjgtMS40NzguMTY4em0tLjI0Ni0xMS40MnEtLjc2MiAwLTEuNDExLjI5LS42NS4yOTItMS4xNTMuODMtLjQ5My41MzctLjgxOCAxLjI5OC0uMzEzLjc1LS40MjUgMS42NjhoNy4yNjZ2LS4xNDVxLS4wMjItLjc2Mi0uMjQ2LTEuNDY3LS4yMjQtLjcxNy0uNjYtMS4yNjUtLjQyNi0uNTQ5LTEuMDY0LS44NzQtLjYzOC0uMzM2LTEuNDktLjMzNnpNMTQ0LjEzNCAyOS44OHEuNjM4IDAgMS4yMi0uMTguNTk0LS4xOSAxLjA1My0uNTQ5LjQ2LS4zNTguNzUtLjg4NC4zMDMtLjUyNi4zNDctMS4yMmgxLjI4OHEtLjA0NS44NjItLjQzNyAxLjU5LS4zOC43MjctMS4wMTkgMS4yNTMtLjYyNy41MjctMS40NTUuODI5LS44MjkuMjkxLTEuNzQ3LjI5MS0xLjI3NiAwLTIuMjQtLjQ2LS45NjItLjQ3LTEuNjIzLTEuMjg3LS42NDktLjgxNy0uOTg1LTEuOTE0LS4zMjUtMS4xMDktLjMyNS0yLjM4NXYtLjQ3cTAtMS4yNzcuMzI1LTIuMzc0LjMzNi0xLjEwOS45ODUtMS45MTUuNjUtLjgxNyAxLjYxMy0xLjI4Ny45NzQtLjQ3IDIuMjM5LS40Ny45NzQgMCAxLjgwMy4zMDIuODQuMzAyIDEuNDU1Ljg2Mi42MjcuNTYuOTk3IDEuMzY2LjM3Ljc5NS40MTQgMS43OGgtMS4yODhxLS4wNDQtLjczOS0uMzI0LTEuMzIxLS4yNjktLjU4Mi0uNzI4LS45OTctLjQ0OC0uNDE0LTEuMDUzLS42MjctLjU5My0uMjI0LTEuMjc2LS4yMjQtMS4wNDEgMC0xLjc2OS40MDQtLjcxNy40MDMtMS4xNzYgMS4wODYtLjQ1OS42ODMtLjY3MSAxLjU2Ny0uMjAyLjg4NS0uMjAyIDEuODQ4di40N3EwIC45NzQuMjAyIDEuODcuMjEyLjg4NC42NiAxLjU2Ny40Ni42NzIgMS4xODcgMS4wNzUuNzM5LjQwMyAxLjc4LjQwM3pNMTUyLjggMjAuNzJxLjMxNC0uNTE1LjcyOC0uOTI5LjQxNC0uNDI1LjkwNy0uNzE3LjUwNC0uMzAyIDEuMDc1LS40NTkuNTgyLS4xNjggMS4yMzItLjE2OC45MDcgMCAxLjYyMy4yNDcuNzE3LjI0NiAxLjIxLjc4NC41MDMuNTM3Ljc2IDEuMzg4LjI3Ljg0LjI3IDIuMDM4djcuODgyaC0xLjMzM3YtNy44OTRxMC0uOTQtLjIwMi0xLjU2Ny0uMjAxLS42MjctLjU3LTEuMDA4LS4zNy0uMzgtLjkwNy0uNTM3LS41MjctLjE2OC0xLjE3Ni0uMTY4LS43MTcgMC0xLjI5OS4yNDYtLjU4Mi4yMzUtMS4wMy42MzgtLjQ0OC40MDMtLjc3My45My0uMzI0LjUxNS0uNTE1IDEuMDYzdjguMjk3aC0xLjMzMlYxMy41ODhoMS4zMzJ6TTE2NS4zMyAxOC42NzFsLjA0NCAyLjA3MnEuMzE0LS41MTUuNzE3LS45NC40MTQtLjQyNi45MTgtLjcyOS41MDQtLjMwMiAxLjA4Ni0uNDU5LjU4Mi0uMTY4IDEuMjMyLS4xNjguOTA2IDAgMS42MjMuMjQ3LjcxNy4yNDYgMS4yMS43ODQuNTAzLjUzNy43NiAxLjM4OC4yNy44NC4yNyAyLjAzOHY3Ljg4MmgtMS4zMzN2LTcuODk0cTAtLjk0LS4yMDItMS41NjctLjIwMS0uNjI3LS41Ny0xLjAwOC0uMzctLjM4LS45MDgtLjUzNy0uNTI2LS4xNjgtMS4xNzUtLjE2OC0uNzE3IDAtMS4yOTkuMjQ2LS41ODIuMjM1LTEuMDMuNjM4LS40NDguNDAzLS43NzMuOTMtLjMyNC41MTUtLjUxNSAxLjA2M3Y4LjI5N2gtMS4zMzJWMTguNjcxek0xNzUuOTEgMjQuNTVxMC0xLjMyMi4zOC0yLjQ0MS4zOTMtMS4xMiAxLjA5OC0xLjkyNi43MDUtLjgxNyAxLjcwMi0xLjI3Ny45OTYtLjQ1OSAyLjIxNy0uNDU5IDEuMjQzIDAgMi4yNC40NiAxLjAwNy40NTkgMS43MTIgMS4yNzYuNzA2LjgwNiAxLjA4NiAxLjkyNi4zODEgMS4xMi4zODEgMi40NHYuMzdxMCAxLjMyMS0uMzggMi40NC0uMzgxIDEuMTItMS4wODcgMS45MzgtLjcwNS44MDYtMS43MDIgMS4yNjUtLjk5Ni40NDgtMi4yMjguNDQ4LTEuMjMxIDAtMi4yMjgtLjQ0OC0uOTk2LS40NTktMS43MTMtMS4yNjUtLjcwNS0uODE3LTEuMDk3LTEuOTM3LS4zOC0xLjEyLS4zOC0yLjQ0em0xLjM0NC4zN3EwIC45OTYuMjY4IDEuOTAyLjI3Ljg5Ni43ODQgMS41OC41MTUuNjcxIDEuMjc3IDEuMDc0Ljc2MS40MDMgMS43NDYuNDAzLjk4NiAwIDEuNzM2LS40MDMuNzYxLS40MDMgMS4yNzYtMS4wNzUuNTE1LS42ODMuNzg0LTEuNTc5LjI2OS0uOTA2LjI2OS0xLjkwM3YtLjM3cTAtLjk3NC0uMjctMS44Ny0uMjY4LS45MDYtLjc4My0xLjU5LS41MTUtLjY4Mi0xLjI4Ny0xLjA4NS0uNzYyLS40MTUtMS43NDctLjQxNS0uOTc0IDAtMS43MzYuNDE1LS43NS40MDMtMS4yNjUgMS4wODYtLjUxNS42ODMtLjc4NCAxLjU5LS4yNjguODk1LS4yNjggMS44N3pNMTkwLjk5MiAzMC43ODZoLTEuMzQ0VjEzLjU4OGgxLjM0NHpNMTkzLjg5MiAyNC41NXEwLTEuMzIyLjM4LTIuNDQxLjM5Mi0xLjEyIDEuMDk4LTEuOTI2LjcwNS0uODE3IDEuNzAyLTEuMjc3Ljk5Ni0uNDU5IDIuMjE3LS40NTkgMS4yNDIgMCAyLjIzOS40NiAxLjAwOC40NTkgMS43MTMgMS4yNzYuNzA1LjgwNiAxLjA4NiAxLjkyNi4zOCAxLjEyLjM4IDIuNDR2LjM3cTAgMS4zMjEtLjM4IDIuNDQtLjM4IDEuMTItMS4wODYgMS45MzgtLjcwNS44MDYtMS43MDIgMS4yNjUtLjk5Ni40NDgtMi4yMjguNDQ4LTEuMjMyIDAtMi4yMjgtLjQ0OC0uOTk3LS40NTktMS43MTMtMS4yNjUtLjcwNi0uODE3LTEuMDk3LTEuOTM3LS4zODEtMS4xMi0uMzgxLTIuNDR6bTEuMzQzLjM3cTAgLjk5Ni4yNyAxLjkwMi4yNjguODk2Ljc4MyAxLjU4LjUxNS42NzEgMS4yNzYgMS4wNzQuNzYyLjQwMyAxLjc0Ny40MDMuOTg1IDAgMS43MzUtLjQwMy43NjItLjQwMyAxLjI3Ny0xLjA3NS41MTUtLjY4My43ODQtMS41NzkuMjY4LS45MDYuMjY4LTEuOTAzdi0uMzdxMC0uOTc0LS4yNjgtMS44Ny0uMjctLjkwNi0uNzg0LTEuNTktLjUxNS0uNjgyLTEuMjg4LTEuMDg1LS43NjEtLjQxNS0xLjc0Ni0uNDE1LS45NzUgMC0xLjczNi40MTUtLjc1LjQwMy0xLjI2NSAxLjA4Ni0uNTE1LjY4My0uNzg0IDEuNTktLjI2OS44OTUtLjI2OSAxLjg3ek0yMDYuOTM2IDI0LjYxN3EwLTEuNDExLjMxMy0yLjU0Mi4zMjUtMS4xNDIuOTMtMS45NDguNjA0LS44MDYgMS40NjYtMS4yNDMuODc0LS40MzcgMS45NzEtLjQzNyAxLjI5OSAwIDIuMjI4LjUyNy45My41MTUgMS41MzQgMS40NDRsLjA2Ny0xLjc0N2gxLjI1NHYxMS45MDJxMCAxLjE3Ni0uMzQ3IDIuMTA1LS4zNDcuOTQtLjk4NSAxLjU5LS42MjcuNjUtMS41MjMuOTk3LS44OTYuMzQ3LTIuMDA0LjM0Ny0uNTcxIDAtMS4xNjQtLjEzNS0uNTk0LS4xMjMtMS4xNTQtLjM4LS41NDgtLjI1OC0xLjA0MS0uNjUtLjQ5My0uMzgtLjg2Mi0uOTA3bC43NS0uODA2cS43MzkuOTA3IDEuNTY4IDEuMzIxLjgyOC40MjYgMS44MTMuNDI2Ljg2MyAwIDEuNTIzLS4yNjkuNjcyLS4yNTcgMS4xMzEtLjc2MS40NTktLjQ5My42OTQtMS4yMS4yNDctLjcwNS4yNDctMS42MTJ2LTEuNDFxLS42MDUuODQtMS41MzQgMS4zMi0uOTMuNDcxLTIuMjE3LjQ3MS0xLjA4NiAwLTEuOTQ5LS40NDgtLjg2Mi0uNDU5LTEuNDY2LTEuMjY1LS42MDUtLjgxNy0uOTMtMS45NDgtLjMxMy0xLjEzMS0uMzEzLTIuNDk3em0xLjM1NS4yMzVxMCAxLjA2NC4yMTIgMS45ODIuMjEzLjkwNy42NSAxLjU3OC40MzYuNjcyIDEuMDk3IDEuMDUzLjY3Mi4zOCAxLjU5LjM4LjY5NCAwIDEuMjQzLS4xNjcuNTYtLjE2OC45ODUtLjQ2LjQyNi0uMzAyLjczOS0uNzA1LjMxNC0uNDAzLjUzNy0uODg0di01LjYzMnEtLjE5LS40Ny0uNDkyLS44OTYtLjI5MS0uNDM3LS43MTctLjc2MS0uNDE0LS4zMzYtLjk3NC0uNTI3LS41Ni0uMjAxLTEuMjk5LS4yMDEtLjkyOSAwLTEuNi4zOTItLjY3My4zOC0xLjExIDEuMDUyLS40MzYuNjcyLS42NDkgMS41OS0uMjEyLjkxOC0uMjEyIDEuOTd6TTIyMS42OTMgMzAuNzg2aC0xLjM0NFYxOC42NzFoMS4zNDR6bS0xLjU3OS0xNS42MnEwLS4zOC4yNDctLjYzNy4yNDYtLjI3LjY3MS0uMjcuNDI2IDAgLjY3Mi4yNy4yNTguMjU3LjI1OC42MzggMCAuMzgtLjI1OC42MzgtLjI0Ni4yNTgtLjY3Mi4yNTgtLjQyNSAwLS42NzEtLjI1OC0uMjQ3LS4yNTctLjI0Ny0uNjM4ek0yMzAuMDIzIDMxLjAxcS0xLjE4NyAwLTIuMTgzLS40MzctLjk5Ny0uNDQ4LTEuNzI0LTEuMjMxLS43MTctLjc5NS0xLjEyLTEuODgxLS40MDMtMS4wODYtLjQwMy0yLjM4NXYtLjQ4MnEwLTEuNC40MTQtMi41My40MjYtMS4xNDIgMS4xNDItMS45MzcuNzE3LS44MDYgMS42NDYtMS4yNDMuOTQtLjQzNyAxLjk4Mi0uNDM3IDEuMTUzIDAgMi4wNDkuNDE1Ljg5Ni40MTQgMS41IDEuMTUzLjYxNi43MzkuOTMgMS43NTguMzEzIDEuMDE5LjMxMyAyLjIyOHYuODE3aC04LjY0NHYuMjU4cTAgLjk5Ni4zMDMgMS44OC4zMDIuODc0Ljg1IDEuNTI0LjU1LjY0OSAxLjMxIDEuMDMuNzYyLjM3IDEuNjkxLjM3IDEuMDc1IDAgMS44OTItLjM5My44MjktLjM5MiAxLjUtMS4yNTRsLjg0LjYzOHEtLjMwMi40MzctLjcwNS44MjktLjM5Mi4zOTItLjkxOC42ODMtLjUyNi4yOTEtMS4xODcuNDU5LS42Ni4xNjgtMS40NzguMTY4em0tLjI0Ni0xMS40MnEtLjc2MSAwLTEuNDEuMjktLjY1LjI5Mi0xLjE1NC44My0uNDkzLjUzNy0uODE3IDEuMjk4LS4zMTQuNzUtLjQyNiAxLjY2OGg3LjI2N3YtLjE0NXEtLjAyMy0uNzYyLS4yNDctMS40NjctLjIyNC0uNzE3LS42Ni0xLjI2NS0uNDI2LS41NDktMS4wNjQtLjg3NC0uNjM4LS4zMzYtMS40OS0uMzM2ek0yNDQuNDMzIDI3LjcwN3EwLS4zNy0uMTM0LS43MzktLjEyMy0uMzctLjQ4Mi0uNjk0LS4zNDctLjMzNi0uOTg1LS42MTYtLjYyNy0uMjkxLTEuNjM1LS41MDQtMS4wMDctLjIxMy0xLjgwMi0uNDkyLS43ODQtLjI4LTEuMzMzLS42NzItLjUzNy0uNDAzLS44MTctLjk1Mi0uMjgtLjU0OS0uMjgtMS4yODggMC0uNjcxLjI5MS0xLjI3Ni4zMDItLjYwNS44NTEtMS4wNTIuNTYtLjQ0OCAxLjM0NC0uNzA2Ljc5NS0uMjY5IDEuNzgtLjI2OSAxLjA1MiAwIDEuODgxLjI4Ljg0LjI3IDEuNDEuNzYyLjU4My40ODEuODg1IDEuMTQyLjMwMy42Ni4zMDMgMS40MzNoLTEuMzQ0cTAtLjQ3LS4yMTMtLjkxOC0uMjAxLS40NDgtLjYwNC0uNzg0LS4zOTItLjM0Ny0uOTg2LS41Ni0uNTgyLS4yMTMtMS4zMzItLjIxMy0uNzg0IDAtMS4zNDQuMTktLjU0OC4xOTEtLjkwNy40OTMtLjM0Ny4zMDMtLjUxNS42ODMtLjE1Ni4zNy0uMTU2Ljc1IDAgLjQwNC4xMjMuNzQuMTIzLjMyNC40Ny42MTUuMzU4LjI4Ljk4NS41MjcuNjM5LjIzNSAxLjY1Ny40NyAxLjA5OC4yNTcgMS44OTMuNTcuNzk1LjMxNCAxLjMxLjc1MS41MjYuNDI2Ljc3Mi45ODUuMjU4LjU0OS4yNTggMS4yNzcgMCAuNzUtLjMxNCAxLjM3Ny0uMzEzLjYxNi0uODk1IDEuMDY0LS41ODMuNDM2LTEuNDExLjY4My0uODI5LjI0Ni0xLjg0OC4yNDYtMS4xNTMgMC0yLjAzNy0uMjkxLS44ODUtLjMwMi0xLjQ5LS44MDYtLjYwNC0uNTA0LS45MTgtMS4xNTQtLjMwMi0uNjYtLjMwMi0xLjM2NWgxLjM0NHEuMDQ0LjcxNi4zNyAxLjE5OC4zMjQuNDcuODA1Ljc2LjQ4Mi4yOCAxLjA2NC40MDQuNTkzLjEyMyAxLjE2NC4xMjMuNzYyIDAgMS4zNDQtLjE3OS41ODItLjE4Ljk3NC0uNDgxLjQwMy0uMzAzLjYwNS0uNjk1LjIwMS0uMzkyLjIwMS0uODE3eiIgc3R5bGU9ImZvbnQtc3R5bGU6bm9ybWFsO2ZvbnQtdmFyaWFudDpub3JtYWw7Zm9udC13ZWlnaHQ6MzAwO2ZvbnQtc3RyZXRjaDpub3JtYWw7Zm9udC1zaXplOjIyLjkzMDZweDtmb250LWZhbWlseTpSb2JvdG87LWlua3NjYXBlLWZvbnQtc3BlY2lmaWNhdGlvbjonUm9ib3RvIExpZ2h0JztmaWxsOiMxYTQwODU7ZmlsbC1vcGFjaXR5OjEiLz48L2c+PC9zdmc+"/></div>
+      </div>
+    </div>
+    <div class="swagger-ui">
+      <div>
+        <div class="information-container wrapper">
+          <section class="block col-12">
+            <div>
+              <div class="info">
+                <hgroup class="main">
+                  <h2 id="title" class="title">Sarna gRPC API <span>
+                      <small>
+                        <pre class="version"> v1 </pre>
+                      </small>
+                      <small class="version-stamp">
+                        <pre class="version">gRPC</pre>
+                      </small>
+                    </span>
+                  </h2>
+                </hgroup>
+                <div class="description">
+                  <div class="renderedMarkdown">
+                    <p>Sarna gRPC API endpoint description.</p>
+                    <h1>Introduction</h1>
+                    <p>Sarna API is a RESTful API that allows you to access Sarna data programmatically. Links:</p>
+                    <ul>
+                      <li>
+                        <a rel="noopener noreferrer" target="_blank" href="https://www.sarnafinance.com/">SarnaFinance</a>
+                      </li>
+                    </ul>
+                    <h1>Authentication</h1>
+                    <p>All endpoints except CreateSessionRequest require authentication. To authenticate, pass the JWT token in the Authorization header using the Bearer scheme.</p>
+                  
+                    <h1>Table of Contents</h1>
+                    <div id="toc-container">
+                      <ul id="toc">
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#messages">Messages</a></li>
+                        <li><a href="#enums">Enums</a></li>
+                        <li><a href="#scalar-value-types">Scalar Value Types</a></li>
+                      </ul>
+                    </div>
+                 </div>
+                 </div>
+                <div class="info__contact">
+                  <a href="mailto:app-support@sarna.io" rel="noopener noreferrer" class="link">Contact Sarna Technologies Support</a>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="wrapper">
+            
+            <div class="scheme-container"><h2 id="services">Services</h2><a href="#title">Top</a></div>
+             {{range .Files}}
+               {{range .Services}}
+              <section>
+                <div>
+                  <span>
+                    <div class="opblock-tag-section">
+                      <h3 class="opblock-tag" id="{{.Name}}">
+                          <span>{{.Name}}</span>
+                      </h3>
+                      <div class="no-margin">
+                        <div class="operation-tag-content">
+                          <span>
+                            <div class="opblock opblock-post">
+                              <div class="no-margin">
+                                <div class="opblock-body">
+                                  <div class="opblock-section">
+                                    <div class="opblock-section-header">
+                                      <div class="tab-header">
+                                        <div class="tab-item active">
+                                          <p>{{p .Description}}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <div class="table-container">
+                                        <table class="methods parameters">
+                                          <thead>
+                                            <tr>
+                                              <th class="method_name">Method Name</th>
+                                              <th class="method_request">Request Type</th>
+                                              <th class="method_response">Response Type</th>
+                                              <th class="method_description">Description</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                         {{range .Methods}}
+                                            <tr>
+                                              <td class="method_name">{{.Name}}</td>
+                                              <td class="method_request"><a href="#{{.RequestFullType}}">{{.RequestFullType}}</a>{{if .RequestStreaming}} stream{{end}}</td>  
+                                              <td class="method_response"><a href="#{{.ResponseFullType}}">{{.ResponseFullType}}</a>{{if .ResponseStreaming}} stream{{end}}</td>  
+                                              <td class="method_description">{{.Description}}</td>
+                                            </tr>
+                                         {{end}}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </section>
+               {{end}}
+             {{end}}
+
+            <div class="scheme-container"><h2 id="messages">Messages</h2><a href="#title">Top</a></div>
+            {{range .Files}}
+              {{range .Messages}}
+              <section>
+                <div>
+                  <span>
+                    <div class="opblock-tag-section">
+                      <h3 class="opblock-tag" id="{{.LongName}}">
+                          <span>{{.LongName}}</span>
+                      </h3>
+                      <div class="no-margin">
+                        <div class="operation-tag-content">
+                          <span>
+                            <div class="opblock opblock-post">
+                              <div class="no-margin">
+                                <div class="opblock-body">
+                                  <div class="opblock-section">
+                                    <div class="opblock-section-header">
+                                      <div class="tab-header">
+                                        <div class="tab-item active">
+                                          <p>{{p .Description}}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                   {{if .HasFields}}
+                                    <div>
+                                      <div class="table-container">
+                                        <table class="parameters">
+                                          <thead>
+                                            <tr>
+                                              <th class="field_name">Field</th>
+                                              <th class="field_type">Type</th>
+                                              <th class="field_label">Label</th>
+                                              <th class="field_description">Description</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                         {{range .Fields}}
+                                            <tr>
+                                              <td class="field_name">{{.Name}}</td>
+                                              <td class="field_type"><a href="#{{.FullType}}">{{.LongType}}</a></td>
+                                              <td class="field_label">{{.Label}}</td>
+                                              <td class="field_description">{{if (index .Options "deprecated"|default false)}}<strong>Deprecated.</strong> {{end}}{{.Description}} {{if .DefaultValue}}Default: {{.DefaultValue}}{{end}}</td>
+                                            </tr>
+                                         {{end}}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  {{end}}
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </section>
+              {{end}}
+            {{end}}
+            
+            <div class="scheme-container"><h2 id="enums">Enums</h2><a href="#title">Top</a></div>
+            {{range .Files}}
+              {{range .Enums}}
+              <section>
+                <div>
+                  <span>
+                    <div class="opblock-tag-section">
+                      <h3 class="opblock-tag" id="{{.LongName}}">
+                          <span>{{.LongName}}</span>
+                      </h3>
+                      <div class="no-margin">
+                        <div class="operation-tag-content">
+                          <span>
+                            <div class="opblock opblock-post">
+                              <div class="no-margin">
+                                <div class="opblock-body">
+                                  <div class="opblock-section">
+                                    <div class="opblock-section-header">
+                                      <div class="tab-header">
+                                        <div class="tab-item active">
+                                          <p>{{p .Description}}</p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div>
+                                      <div class="table-container">
+                                        <table class="parameters">
+                                          <thead>
+                                            <tr>
+                                              <th class="enum_name">Name</th>
+                                              <th class="enum_number">Number</th>
+                                              <th class="enum_description">Description</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                         {{range .Values}}
+                                            <tr>
+                                              <td class="enum_name">{{.Name}}</td>
+                                              <td class="enum_number">{{.Number}}</td>
+                                              <td class="enum_description">{{if (index .Options "deprecated"|default false)}}<strong>Deprecated.</strong> {{end}}{{.Description}}</td>
+                                            </tr>
+                                         {{end}}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </section>
+              {{end}}
+            {{end}}
+
+
+            <div class="scheme-container"><h2 id="scalar-value-types">Scalar Value Types</h2><a href="#title">Top</a></div>
+              <section>
+                <div>
+                  <span>
+                    <div class="opblock-tag-section">
+                      <div class="no-margin">
+                        <div class="operation-tag-content">
+                          <span>
+                            <div class="opblock opblock-post">
+                              <div class="no-margin">
+                                <div class="opblock-body">
+                                  <div class="opblock-section">
+                                    <div>
+                                      <div class="table-container">
+                                        <table class="parameters">
+                                          <thead>
+                                            <tr>
+                                              <th>.proto Type</th><th>Notes</th><th>C++</th><th>Java</th><th>Python</th><th>Go</th><th>C#</th><th>PHP</th><th>Ruby</th>
+                                            </tr>
+                                          </thead>
+                                          <tbody>
+                                            {{range .Scalars}}
+                                              <tr id="{{.ProtoType}}">
+                                                <td>{{.ProtoType}}</td>
+                                                <td>{{.Notes}}</td>
+                                                <td>{{.CppType}}</td>
+                                                <td>{{.JavaType}}</td>
+                                                <td>{{.PythonType}}</td>
+                                                <td>{{.GoType}}</td>
+                                                <td>{{.CSharp}}</td>
+                                                <td>{{.PhpType}}</td>
+                                                <td>{{.RubyType}}</td>
+                                              </tr>
+                                            {{end}}
+                                          </tbody>
+                                        </table>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </span>
+                </div>
+              </section>            
+
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+  </body>
+</html>
+
+
+

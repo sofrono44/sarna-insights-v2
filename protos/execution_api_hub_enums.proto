@@ -1,0 +1,36 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Services.ExecutionApiHub.DTO";
+
+enum ExecutionAcceptorRequestType {
+  ExecutionAcceptorRequestType_Undefined = 0;
+  ExecutionAcceptorRequestType_ExecutionUpdateInfo = 1;
+}
+
+enum EnumExecTransType {
+  EnumExecTransType_Undefined = 0;
+  // Indicates Trade Bust
+  // "1" for Cancel per fix specifications
+  EnumExecTransType_Cancel = 1;
+  // Indicates Trade Correction
+  // "2" for Correct per fix specifications
+  EnumExecTransType_Correct = 2;
+  //  "3" for Status per fix specifications
+  EnumExecTransType_Status = 3;
+  // "0" for New per fix specifications
+  EnumExecTransType_New = 4;
+}
+
+enum ExecutionInitiatorRequestType {
+  ExecutionInitiatorRequestType_Undefined = 0;
+  // Standard request, with Order info passed.
+  ExecutionInitiatorRequestType_OrderInitiation = 1;
+  //  // Will send ACK set to true in ExecutionInitiatorResponse to confirm service is up and running
+  //  ExecutionInitiatorRequestType_ConnectivityTest = 2;
+  //  // Additionally to ConnectivityTest, it contains of ConnectivityTestResponses of all FixInitiators that this instance of ExecInitiator points/routes to (as determined by Configuration)
+  //  // FixInit.ConnectivityTest provides info on Fix session's state.
+  //  ExecutionInitiatorRequestType_ConnectivityTestToRoutedFixSessions = 3;
+  //  // Loads initiated order from DB, validates and sends to FixInit to pass to market provider.
+  //  // Typically invoked by QueuedOrdersSender.OffMarketHourProcessor
+  //  ExecutionInitiatorRequestType_SendOffMarketHourOrdersToMarket = 4;
+}

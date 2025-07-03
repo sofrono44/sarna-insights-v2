@@ -1,0 +1,447 @@
+syntax = "proto3";
+import "common.proto";
+import "bp_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.BP";
+
+// REQUEST
+message BuyingPowerRequest {
+  // for bprtCalculateRegTBpValues
+  BpValuesRequest BpValuesRequest = 1;
+  // for bprtCalculateRegTBpForProposedOrder
+  BpForProposedOrderRequest BpForProposedOrderRequest = 2;
+}
+message BpValuesRequest{
+  repeated BpValuesRequestAccountInfo AccountsInfos = 1;
+}
+message BpForProposedOrderRequest {
+  // For group trading, pass OrderInfo with AccountsInfo that specifies qty participation of each account.
+  BpForProposedOrderRequestOrderInfo ProposedOrderInfo = 1;
+  repeated BpForProposedOrderRequestAccountInfo AccountsInfos = 2;
+}
+message BpValuesRequestAccountInfo {
+  int32 accountId = 1;
+  // subaccountId==-1 to indicate all visible subaccounts, subaccountId==0, account level only.
+  repeated int32 subaccountIDs = 2;
+}
+message BpForProposedOrderRequestAccountInfo {
+  int32 accountId = 1;
+  // subaccountId==-1 to indicate all visible subaccounts, subaccountId==0, account level only.
+  repeated int32 subaccountIDs = 2;
+}
+
+// For group trading, pass OrderInfo with AccountsInfo that specifies qty participation of each account.
+message BpForProposedOrderRequestOrderInfo {
+
+}
+// RESPONSE
+message BuyingPowerResponse {
+  bool hasData = 1;
+  repeated BpValuesResponse BpEngineBpValuesResponseInfos = 2;
+  repeated RegTBpForProposedOrderResponseInfo BpEngineProposedOrderResponseInfos = 3;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+// Account’s portfolio buying power calculations response.
+// Result BP computed based on passed: positions, orders, quotations and thresholds passed in with the request.
+// Includes error and warning level validation(i.e.margin call, unauthorized strategy detected, etc.)
+message BpValuesResponse {
+  repeated OutputGrouping OutputGroupings = 1;
+  OutputSummaryBpValues BpValues = 2;
+  // Dictionary of BP results for subaccounts <SubaccountId, BpValuesResponseInfo>
+  map<int32, BpValuesResponse> SubaccountsBpValuesResponses = 3;
+  int32 AccountId = 4;
+  string AccountNumber = 5;
+  string AccountName = 6;
+  StressTestOutput StressTestOutput = 7;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+// Pre-trade check buying power calculations response.
+// Data demonstrates impact of proposed new order(or orders) on existing portfolio of an account.
+// The determination if pre-trade checked proposed order can actually be placed, is made by comparing values of BP level with the proposed order to BP level without the order.If the new BP level(“With”) drains the account’s all funds available for trading, the trade should not be executed.
+message RegTBpForProposedOrderResponseInfo {
+  // Account’s BP level Without pre-trade checked proposed order(s)
+  // Account’s result BP value Without pre-trade checked proposed order(s)
+  // Typically value equal to result of BpValuesResponseInfo(calculated for CalculateBpValuesRequestInfo) which demonstrates BP level of existing portfolio without consideration to any pre-trade checked proposed order to that account.
+  BpValuesResponse BpValuesWithoutProposedLots = 1;
+  // Account’s result BP value With pre-trade checked proposed order(s), demonstrating the impact of pre-trade check proposed order on account’s portfolio.
+  BpValuesResponse BpValuesWithProposedLots = 2;
+  // Dictionary of BP results for subaccounts <SubaccountId, RegTBpForProposedOrderResponseInfo>
+  map<int32, RegTBpForProposedOrderResponseInfo> SubaccountsRegTBpForProposedOrderResponseInfo = 4;
+  int32 AccountId = 5;
+  string AccountNumber = 6;
+  string AccountName = 7;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message OutputGrouping {
+  string UnderlyingSymbol = 1;
+  // Result composition strategies.
+  repeated OutputStrategy Strategies = 2;
+  //Used on portfolio groupings level.
+  OutputGroupingBpValues BpValues = 3;
+  // Typically corresponds to UnderlyingSymbol that input strategy components are grouped to
+  string GroupingId = 4;
+  OutputGroupingStressTest OutputGroupingStressTest = 5;
+}
+
+//Used on portfolio groupings level.
+message OutputGroupingBpValues {
+  // Highest Requirement of the result composition, per portfolio grouping. Corresponds to portfolio with the highest sum/combined requirement of it's composed strategies.
+  double HighestRequirement = 1;
+  // Option HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementOption = 2;
+  // Stock HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementStock = 3;
+  // ETF HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementEtf = 4;
+  // Fixed Income HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementFixedIncome = 5;
+  // Future HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementFuture = 6;
+  // Future Option HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementFutureOption = 7;
+  // Initial Margin Requirement, typically of proposed orders.
+  double HighestRequirementInitial = 8;
+  // Maintenance Margin Requirement, typically of open positions and working orders.
+  double HighestRequirementMaintenance = 9;
+  // MutualFund HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementMutualFund = 10;
+  // Crypto HighestRequirement HR of groupings Total HighestRequirement.
+  double HighestRequirementCrypto = 11;
+  // Option Highest MR or CR.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementOption = 12;
+  // Stock Highest MR or CR.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementStock = 13;
+  // ETF Highest MR or CR.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementEtf = 14;
+  // Fixed Income Highest MR or CR.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementFixedIncome = 15;
+  // Future Highest MR or CR.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementFuture = 16;
+  // Future Option Highest MR or CR.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementFutureOption = 17;
+  // Initial MR or CR Requirement, typically of proposed orders.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementInitial = 18;
+  // Maintenance MR or CR Requirement, typically of open positions and working orders.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double HighestMarginOrCapitalRequirementMaintenance = 19;
+  double HighestMarginOrCapitalRequirementMutualFund = 20;
+  double HighestMarginOrCapitalRequirementCrypto = 21;
+  // Open Positions Margin or Capital Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirement = 22;
+  // Open Stock Positions Margin or Capital Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementStock = 23;
+  // Open Single Option Positions Margin or Capital Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementSingleOption = 24;
+  // Open Option Spreads Positions Margin or Capital Requirement, comprised with option components only (non CoveredCall, see. OpenPositionsRequirementOptionSpreadWithStockComponent).
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementOptionSpread = 25;
+  // Open Option Spreads Positions Margin or Capital Requirement, comprised with option and stock components (CoveredCall).
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementOptionSpreadWithStockComponent = 26;
+  // Open ETF Positions Margin or Capital  Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementEtf = 27;
+  // Open FixedIncome Positions Margin or Capital Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementFixedIncome = 28;
+  // Open Future Positions Margin or Capital Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementFuture = 29;
+  // Open Future Option Positions Margin or Capital  Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementFutureOption = 30;
+  double OpenPositionsMarginOrCapitalRequirementMutualFund = 31;
+  // Open FixedIncome Positions Margin or Capital Requirement.
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double OpenPositionsMarginOrCapitalRequirementCrypto = 32;
+  double OpenPositionsMarketValue = 33;
+  double OpenPositionsMarketValueLongStock = 34;
+  double OpenPositionsMarketValueShortStock = 35;
+  double OpenPositionsMarketValueLongOption = 36;
+  double OpenPositionsMarketValueShortOption = 37;
+  double OpenPositionsMarketValueLongFixedIncome = 38;
+  double OpenPositionsMarketValueShortFixedIncome = 39;
+  double OpenPositionsMarketValueLongEtf = 40;
+  double OpenPositionsMarketValueShortEtf = 41;
+  double OpenPositionsMarketValueLongFuture = 42;
+  double OpenPositionsMarketValueShortFuture = 43;
+  double OpenPositionsMarketValueLongFututreOption = 44;
+  double OpenPositionsMarketValueShortFututreOption = 45;
+  double OpenPositionsMarketValueLongMutualFund = 46;
+  double OpenPositionsMarketValueShortMutualFund = 47;
+  double OpenPositionsMarketValueLongCrypto = 48;
+  double OpenPositionsMarketValueShortCrypto = 49;
+  double SpecialMemorandumAccountDebit = 50;
+  // Based on openPositions portfolio.
+  // Value of Open Positions that can be can be leveraged by margin. It includes stocks, ETFs, might include leaps (if enabled by input)
+  double OpenPositionsMarginExcess = 51;
+  double PendingTransaction = 52;
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double LowestAvailableFundsPendingTransaction = 53;
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double LowestAvailableFundsPendingMarginExcess = 54;
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double LowestAvailableFundsPendingMarginOrCapitalRequirement = 55;
+  // RegT HighestRequirement is calculated based on Initial Requirement values as RegT applies to initial BP.
+  // RegT HighestRequirement is different than HighestRequirementInitial, requested by flagging ApplyInitialRequirement attribute of inputStrategyComponent.
+  // HighestRequirementInitial applies to ProposedOrders and Input Strategy Components with requirements calculations corresponding to initial premium.
+  // RegT Requirement is similar to maintenance requirement (in terms of logical flow) with the main difference being typically higher requirement thresholds
+  double HighestRequirementRegT = 56;
+  // Final BP must be lowered by value needed to cover ITM (in-the-money) short option, corresponding to a loss.
+  // This loss must be offset by covering underlying position, which in turn cannot be used to generate BP excess.
+  // In default flow, this loss is added to strategy requirement (i.e. CoveredCall), which will then reduce BP.
+  double CoveredOptionLoss = 57;
+  // For Margin account type it indicates Margin Requirement (MR), for other types CapitalRequirement (CR).
+  double LowestAvailableFundsPendingRequirementMaint = 58;
+  // Net Asset Value, including orders (unlike OpenPositionsMarketValue)
+  double NAV = 59;
+  // Total Morning Net Asset Value
+  double MorningNAV = 60;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 61;
+  // Percentage of utilized Day PnL by NAV.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 62;
+}
+
+message OutputSummaryBpValues {
+  // Aggregation of Groupings' BpValues.
+  OutputGroupingBpValues AggregatedGroupingBpValues = 1;
+  // Lowers BP by the amount of pending transactions. Determines available funds for the next transaction when running pre-trade checks.
+  double AvailableFundsForTrading = 2;
+  // Total account value if all open positions were liquidated into cash.
+  double LiquidationValue = 3;
+  // House-based excess BP based on cash and positions holdings, without orders.
+  // Margin type account: cashBalance + houseBasedExcess - openPositionsRequirement - pendingWithdrawalAmount
+  // Non-Margin type account: cashBalance - openPositionsRequirement - pendingWithdrawalAmount
+  double OpenPositionsHsxBP = 4;
+  double OptionsBuyingPower = 5;
+  double StockBuyingPower = 6;
+  double Cash = 7;
+  // Calculated as: Cash + Sum of Open Positions Market Value (stock, ETFs, options)
+  double EquityValueForRequiredLevelCheck = 8;
+  double UnsettledCash = 9;
+  // For requests with SMA data passed in, the Engine ensures intra-day BP does not exceed SMA levels.
+  // In case market value of open positions increases, the Engine will cap result BP values at SMA balance, including this object’s:  AvailableFundsForTrading, OptionsBuyingPower, StockBuyingPower.
+  bool IntradayBpCappedBySMA = 11;
+  // // If SMA was passed in the input, this attribute returns SMA used for BP calculation, equals to passed SMA balance minus PendingWithdrawalAmount. Otherwise it returns 0.
+  double SMA = 12;
+  // House excess based Stocks purchasing power.
+  double StockBuyingPowerHSX = 13;
+  // If SMA was passed in the input, this attribute returns remaining SMA based BP after open orders are considered.
+  double StockBuyingPowerSMA = 14;
+  // HSX based AF considered for the result AvailableFundsForTrading. The result AF (aka. CA) is the lower of the two: AvailableFundsForTradingSMA and AvailableFundsForTradingHSX.
+  double AvailableFundsForTradingHSX = 15;
+  /// If SMA was passed in the input, this attribute returns remaining SMA based AF after open orders are considered.
+  /// The result AF (aka.CA) is the lower of the two: AvailableFundsForTradingSMA and AvailableFundsForTradingHSX.
+  double AvailableFundsForTradingSMA = 16;
+  // Percentage of utilized credit based on Requirement by Equity.
+  // AKA Risk Number.
+  // Value: 0.25 for 25%
+  double CreditUtilization = 17;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 18;
+  // Percentage of utilized Day PnL by NetLiq.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 19;
+  // NetLiquidation less Requirement
+  double ExcessLiquidity = 20;
+}
+message OutputStrategy {
+  EnumBpStrategy StrategyType = 1;
+  double Quantity = 2;
+  double RequirementPerUnit = 3;
+  double SmaDebitPerUnit = 4;
+  repeated OutputStrategyLeg Legs = 5;
+  double Multiplier = 6;
+  double ContractSize = 7;
+  string Description = 8;
+  // Net Asset Value
+  double NAV = 9;
+  // Total Morning Net Asset Value
+  double MorningNAV = 10;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 11;
+  // Percentage of utilized Day PnL by NAV.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 12;
+}
+message OutputStrategyLeg {
+  string Symbol = 1;
+  // Sign: always positive.
+  double Quantity = 2;
+  // To determine buy vs sell (long vs short).
+  EnumBpStrategy StrategyType = 3;
+  string Id = 4;
+  string Description = 5;
+  EnumInputStrategyComponentType InputStrategyComponentType = 6;
+  double Price = 7;
+  OutputStrategyLegGreeks Greeks = 8;
+  // Net Asset Value
+  double NAV = 9;
+  // Total Morning Net Asset Value
+  double MorningNAV = 10;
+  // Day PnL is using current price less previous close day price (or execution price for intra day orders).
+  double DayPnL = 11;
+  // Percentage of utilized Day PnL by NAV.
+  // Value: 0.25 for 25%
+  double DayPnL_Utilization = 12;
+  // Optional attribute. Helps to monitor identify part of portfolios affected by intra-day activity.
+  // Sign: positive for long positions, negative for short positions.
+  double QuantityOpenedToday = 13;
+  // Optional attribute. Helps to monitor identify part of portfolios affected by intra-day activity.
+  // Sign: positive for long positions, negative for short positions.
+  double QuantityClosedToday = 14;
+}
+
+// Greeks used during stress-testing.
+message OutputStrategyLegGreeks {
+    // Delta is a key Greek in options pricing that measures the sensitivity of an option's price to changes in the underlying asset's price.
+    // For example, if an option has a delta of 0.50 (or 50%), it means that for every $1 increase in the underlying asset's price, the option's price is expected to increase by $0.50, and vice versa.
+    // Values: 0 to 1 for calls; -1 to 0 for puts.
+    // Sign: negative for puts, positive for calls.
+	double Delta = 1;
+    // Vega is a measure of an option's sensitivity to changes in implied volatility.
+    // It quantifies how much the option price is expected to change for a 1% increase in implied volatility,
+    // reflecting the impact of market expectations on option premiums.
+    // Value: 0 to 1, and represent points per percentage change in implied volatility.
+    // Sign: always positive.
+    double Vega = 2;
+    // Current Implied Volatility. Implied Volatility (IV) of an option contract is a measure derived from option prices, reflecting the market's expectation of the future volatility of the underlying asset.
+    // Value: expressed as a percentage, ranging from 0 to infinity. 0.5 means 50%.
+    double ImpliedVolatility = 3;
+}
+
+// Provides mechanism triggering stress test accross the entire portfolio or specified underlying symbol groupings.
+message BpStressTestInput{
+  repeated BpUnderlyingPriceShockInput UnderlyingPriceShockInputs = 1;
+  repeated BpVolatilityShockInput VolatilityShockInputs = 2;
+  repeated BpRiskProfile BpRiskProfiles = 3;
+}
+
+// Optional ability to stress-test a specific account or underlying symbols with extended price range.
+// Typically, account's positiosn positions are tested by stress-testing the price between specified range, like +/- 15%.
+// This input allows to test a specific underlying symbol (s) with a wider range, for example, +/- 30%.
+// If passed, the Engine will create 4 equidistant scenarios, or as specfied by the caller.
+message BpUnderlyingPriceShockInput{
+  // Optional attribute.
+  // If true then the shock is applied globally. Do NOT set to true for Advanced Shock per UnderlyingSymbol, or GroupId.
+  bool ApplyAcrossPortfolio = 1;
+  // Applies the Shock to all products of this Underlying Symbol.
+  string UnderlyingSymbol = 2;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double PercentDown = 3;
+  // Determines lower bound of tested scenario.
+  // Format: .045 for 4.5%.
+  // Sign: always positive.
+  double PercentUp = 4;
+}
+
+// Volatility shock is conducted on each product individually, and not on the whole (underlying symbol) grouping.
+// ClassGroup calculation is done by aggregating individual product results, looking for the highest requirement for each product based on Volatility shock scenario.
+message BpVolatilityShockInput{
+  // Optional attribute.
+  // If true then the shock is applied globally. Do NOT set to true for Advanced Shock per UnderlyingSymbol, or GroupId.
+  bool ApplyAcrossPortfolio = 1;
+  // Optional attribute.
+  // Underlying Symbol of products to be affected with this shock test.
+  string UnderlyingSymbol = 2;
+  // Optional attribute.
+  // This factor is applied to smooth out volatility changes across longer expirations.
+  // The weights are determined from a synthetic 30-day option that is assumed to always have a weighting factor of 1.
+  // Sign: always positive.
+  // Values:
+  // (0) Use Engine's default.
+  // (1) Enable and include into Volatility Shock Calculations.
+  // (2) Disable and do not include into Volatility Shock Calculations.
+  int32 ApplyTimeToExpirationFactor = 3;
+  // Determines ShockPercentage of IV shock to Down-side.
+  // Format:  0.5 means 50%. Sign: always positive
+  double PercentDown = 4;
+  // Determines ShockPercentage of IV shock to Up-side.
+  // Format:  0.5 means 50%. Sign: always positive
+  double PercentUp = 5;
+}
+
+// STRESS TEST RESPONSE
+
+// Summary level acros all scenarios. Allows to host attributs that are common or aggregate to all scenarios.
+message StressTestOutput{
+  repeated OutputScenario Scenarios = 1;
+  // The greatest net exposure across all scenarios.
+  double MaxNetExposure = 2;
+}
+
+message OutputScenario {
+  // Complete BP result at the stressed scenario level.
+  BpValuesResponse BpValuesResponse = 1;
+  // Allows sorting output scenarios. Typical values: 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10
+  int32 ScenarioIndex = 2;
+  // Typical values for multi-scenario testing: "-2 ,-1, 0, 1, 2". Example of value for custom scenario: "-10%/IVdn25%"
+  string ScenarioDescription = 3;
+  // Net Exposure is the difference between the long and short positions of a portfolio.
+  double NetExposure = 4;
+}
+
+// Results of the IV shock applied to this grouping.
+message OutputGroupingStressTest {
+  // Indicates the direction of the IV shock applied to the class group.
+  // Values: 1 for up, 2 for down, 0 for no shock applied.
+  double AppliedIVShockDirection = 1;
+  // Indicates the IV shock values applied to the grouping's exposure
+  // Values: null for no shock applied.
+  double AppliedIVShockValue = 2;
+}
+
+// Specifies custom Risk policies to be applied to the stress test calculations.
+// Policy is a collection of Scenarios.
+// Caller can request multiple policies to be applied to the same stress test.
+// Each scenario appears in the result grid as a separate column.
+message BpRiskProfile{
+  int32 RiskProfileId = 1;
+  string Name = 2;
+  repeated BpScenario Scenarios = 3;
+}
+
+// Each scenario appears in the result grid as a separate column.
+message BpScenario{
+  repeated BpUnderlyingPriceShockInput UnderlyingPriceShockInputs = 1;
+  repeated BpVolatilityShockInput VolatilityShockInputs = 2;
+}
+
+
+message BpAccountWhatIfAdjustment
+{
+  string AccountNumber = 1;
+  repeated BpWhatIfAdjustedProduct BpWhatIfAdjustedProducts = 2;
+}
+
+message BpWhatIfAdjustedProduct
+{
+  string ProductId = 1;
+  // Any security id ie: symbol, CUSIP, SecNo.  
+  string Symbol = 2;
+  // if set to true, it will display Product's NAV and change in cash at 0, removing the value from Net Liquidation.
+  bool NoCashImpact = 3;
+  // Sign: negative for short, positive for long; Passing "0" for existing product corresponds to Mute feature.
+  double Quantity = 4;
+  double Price = 5;
+  double UnderlyingPrice = 6;
+}

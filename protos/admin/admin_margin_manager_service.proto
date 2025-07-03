@@ -1,0 +1,19 @@
+﻿syntax = "proto3";
+import "admin/admin_margin_manager.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminMarginManager";
+
+service AdminMarginManagerService {
+  rpc Get(MarginManagerRequest) returns (MarginManagerResponse){
+    option (google.api.http) = {
+      post: "/admin/margin-manager"
+    };
+  }
+  
+  rpc UpdatePmAttributes(PmAttributeUpdateRequest) returns (PmAttributeUpdateResponse){
+    option (google.api.http) = {
+      post: "/admin/margin-manager/update-pm-attributes"
+    };
+  }
+}

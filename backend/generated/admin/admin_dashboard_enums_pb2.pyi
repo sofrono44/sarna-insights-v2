@@ -1,0 +1,18 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumAdminDashboardItemType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumAdminDashboardItemType_Undefined: _ClassVar[EnumAdminDashboardItemType]
+    EnumAdminDashboardItemType_VerificationDecision: _ClassVar[EnumAdminDashboardItemType]
+    EnumAdminDashboardItemType_Account: _ClassVar[EnumAdminDashboardItemType]
+    EnumAdminDashboardItemType_TradingLevelChange: _ClassVar[EnumAdminDashboardItemType]
+    EnumAdminDashboardItemType_Mde: _ClassVar[EnumAdminDashboardItemType]
+EnumAdminDashboardItemType_Undefined: EnumAdminDashboardItemType
+EnumAdminDashboardItemType_VerificationDecision: EnumAdminDashboardItemType
+EnumAdminDashboardItemType_Account: EnumAdminDashboardItemType
+EnumAdminDashboardItemType_TradingLevelChange: EnumAdminDashboardItemType
+EnumAdminDashboardItemType_Mde: EnumAdminDashboardItemType

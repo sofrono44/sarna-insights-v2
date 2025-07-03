@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Services.PMBP.DTO.Enums";
+
+// Order Price Types primarily used by Risk Controls validation.
+enum EnumOrderPriceType{
+	EnumOrderPriceType_Undefined = 0;
+	EnumOrderPriceType_Market = 1;
+	// For spreads: negative when debit (buy); positive when credit (sell)
+	EnumOrderPriceType_Limit = 2;
+	EnumOrderPriceType_Stop = 3;
+	// Stop-limit orders are a type of stop-loss; but at the stop price; the sell order becomes a limit order�only executing at the limit price or better.
+	EnumOrderPriceType_StopLimit = 4;
+	EnumOrderPriceType_MarketOnClose = 5;
+	EnumOrderPriceType_Even = 6;
+	EnumOrderPriceType_WithOrWithout = 7;
+	EnumOrderPriceType_LimitOrBetter = 8;
+	EnumOrderPriceType_LimitWithOrWithout = 9;
+	EnumOrderPriceType_OnBasis = 10;
+}
+
+enum EnumOrderPositionEffect{
+	EnumOrderPositionEffect_Undefined = 0;
+	EnumOrderPositionEffect_Open = 1;
+	EnumOrderPositionEffect_Close = 2;
+}

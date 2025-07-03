@@ -1,0 +1,87 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Services.BusinessHub.DTO.Enums";
+
+// Enum for specifying the type of request to the API Hub.
+enum EnumApiHubRequestType {
+  // Undefined request type.
+  EnumApiHubRequestType_Undefined = 0;
+  // Request to create a session.
+  EnumApiHubRequestType_CreateSession = 1;
+  // Request for accounts information.
+  EnumApiHubRequestType_Accounts = 2;
+  // Request for balances information.
+  EnumApiHubRequestType_BalancesInfo = 3;
+  // Request for orders information.
+  EnumApiHubRequestType_OrdersInfo = 4;
+  // Request for order execution logs.
+  EnumApiHubRequestType_OrderExecutionLogs = 5;
+  // Request for positions information.
+  EnumApiHubRequestType_PositionsInfo = 6;
+  // Request for quotes.
+  EnumApiHubRequestType_GetQuotes = 7;
+  // Request for buying power (BP) or ProposedOrder check; uses BP.DTO.BuyingPowerRequest to pass data.
+  EnumApiHubRequestType_B_P = 8;
+  // Request for securities master data. Usages include: list of symbols and descriptions for symbol lookup search, and previous day prices lookup.
+  EnumApiHubRequestType_SecuritiesMasterDataRequest = 9;
+  // Request for trade.
+  EnumApiHubRequestType_TradeRequest = 10;
+  // Request for identity provider information.
+  EnumApiHubRequestType_IdentityProvider = 11;
+  // Request for account application information.
+  EnumApiHubRequestType_AccountApplication = 12;
+  // Request for glossary information.
+  EnumApiHubRequestType_Glossary = 13;
+  // Request for administrative purposes.
+  EnumApiHubRequestType_Admin = 14;
+  // Request for user data.
+  EnumApiHubRequestType_UserData = 15;
+  // Request for SDR information.
+  EnumApiHubRequestType_Sdr = 16;
+  // Request for commission information.
+  EnumApiHubRequestType_Commission = 17;
+  // Request for subscription information.
+  EnumApiHubRequestType_Subscription = 18;
+  // Request for verification decision.
+  EnumApiHubRequestType_VerificationDecision = 19;
+  // Request for chain quote.
+  EnumApiHubRequestType_GetChainQuote = 20;
+  // Request for expirations for an underlying symbol.
+  EnumApiHubRequestType_GetExpirationsForUnderlyingSymbol = 21;
+  // Request for UX messages.
+  EnumApiHubRequestType_GetUxMessages = 22;
+  // Request for balance adjustment.
+  EnumApiHubRequestType_BalanceAdjustment = 23;
+  // Request for balance cash and SMA info.
+  EnumApiHubRequestType_BalanceCashInfo = 24;
+  EnumApiHubRequestType_Search = 25;
+  EnumApiHubRequestType_SearchDefinition = 26;
+  EnumApiHubRequestType_TimeMachineBrowse = 27;
+  EnumApiHubRequestType_TimeMachineDownload = 28;
+}
+
+// Enum for specifying the type of commission request.
+enum EnumCommissionRequestType {
+    // Undefined request type.
+    EnumCommissionRequestType_Undefined = 0;
+    // Request to claim a promo code.
+    EnumCommissionRequestType_PromoCodeClaim = 1;
+}
+
+// Enum for specifying the type of subscription request.
+enum EnumSubscriptionRequestType
+{
+    // Undefined request type.
+    EnumSubscriptionRequestType_Undefined = 0;
+    // Allows UX to display the current state of user’s subscription:
+    // (1)	Subscriptions already active for the user.
+    // (2)	Subscriptions available for user activation.
+    EnumSubscriptionRequestType_UserStatusCheck = 1;
+    // Request for subscription activation.
+    EnumSubscriptionRequestType_Activation = 2;
+    // Request for subscription deactivation.
+    EnumSubscriptionRequestType_Deactivation = 3;
+    // Request to claim a promo code for subscription.
+    EnumSubscriptionRequestType_PromoCodeClaim = 4;
+}

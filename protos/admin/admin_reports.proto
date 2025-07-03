@@ -1,0 +1,151 @@
+syntax = "proto3";
+import "common.proto";
+import "search.proto";
+import "search_enums.proto";
+import "admin/admin_reports_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Reports";
+
+message ReportSearchRequest {
+  EnumReportType ReportType = 1;
+  EnumReportLevel ReportLevel = 2;
+  google.protobuf.Timestamp From = 3;
+  google.protobuf.Timestamp To = 4;
+  // required if ReportLevel == EnumReportLevel_Account
+  repeated string AccountNumbers = 5;
+  repeated int32 AccountGroupIds = 6;
+
+  PageRequest Page = 110;
+}
+
+message ReportsResponse {
+  // List of reports
+  repeated Report Reports = 1;
+  // List of report definitions for returned reports
+  repeated ReportDefinition ReportDefinitions = 2;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  ReportSearchRequest SearchRequest = 110;
+  PageResponse Page = 111;
+}
+
+// Report instance
+message Report {
+  int32 ReportId = 1;
+  int32 ReportDefinitionId = 2;
+  google.protobuf.Timestamp Date = 3;
+  oneof ReportLevelReference {
+    // provided when ReportLevel == EnumReportLevel_Account
+    string AccountNumber = 4;
+    // provided when ReportLevel == EnumReportLevel_Aggregate
+    int32 AccountGroupId = 5;
+  }
+}
+
+// Report definition/specification
+message ReportDefinition {
+  int32 ReportDefinitionId = 1;
+  EnumReportType ReportType = 2;
+  EnumReportLevel ReportLevel = 3;
+  string Name = 4;
+  repeated ReportVariant ReportVariants = 5;
+  // when ReportLevel == EnumReportLevel_Account: create report for accounts that belong to specified accounts.
+  // when ReportLevel == EnumReportLevel_Aggregate: create report as aggregate for accounts that belong to specified account groups.
+  repeated int32 AccountGroupId = 6;
+}
+
+// Single report may contain multiple variants.
+// For example, a report conain summary.csv, details.csv, and statement.pdf.
+message ReportVariant {
+  string Name = 1;
+  bool IsViewAvailable = 2;
+  // provided when variant IsViewAvailable and report contains account number
+  int32 AccountNumberColumnIndex = 3;
+  EnumReportOutputType OutputType = 4;
+}
+
+message ReportsDownloadRequest {
+  repeated int32 ReportIds = 1;
+}
+
+message ReportsDownloadResponse {
+  repeated ReportsDownloadData ReportDownloads = 1;
+}
+
+message ReportsDownloadData {
+  int32 ReportId = 1;
+  string FileName = 2;
+
+  oneof File {
+    bytes FileContent = 3;
+    string Url = 4;
+  }
+}
+
+message ReportRequest {
+  int32 ReportId = 1;
+}
+
+message ReportViewRequest {
+  int32 ReportId = 1;
+  ReportSearchCriteria SearchCriteria = 110;
+}
+
+message ReportSearchCriteria {
+  // Filter
+  ReportColumnGroup Filter = 1;
+  // Sort order
+  repeated ReportColumnSortOrder SortOrder = 2;
+  // Requested page
+  PageRequest Page = 3;
+}
+
+message ReportFilter {
+  oneof ReportFilterType {
+    ReportColumnGroup FilterGroup = 1;
+    ReportColumnFilter FieldFilter = 2;
+  }
+}
+
+message ReportColumnFilter {
+  int32 ColumnIndex = 1;
+  EnumOperator Operator = 2;
+  repeated string Values = 3;
+}
+
+message ReportColumnGroup {
+  repeated ReportFilter Filters = 1;
+  EnumJoinOperator JoinOperator = 2;
+}
+
+message ReportColumnSortOrder {
+  int32 ColumnIndex = 1;
+  EnumSortDirection SortDirection = 2;
+}
+
+message ReportViewResponse {
+  int32 ReportId = 1;
+  Report Report = 2;
+  int32 AccountNumberColumnIndex = 3;
+
+  repeated string Headers = 4;
+  repeated ReportRow Rows = 5;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+
+  ReportSearchCriteria SearchCriteria = 110;
+  PageResponse Page = 111;
+}
+
+message ReportRow {
+  repeated string Columns = 1;
+}

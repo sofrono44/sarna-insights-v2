@@ -1,0 +1,14 @@
+{
+    "RequestTypes": [
+      9
+    ],
+    "SecuritiesMasterDataRequest": {
+      "GetAllEquities": true
+    },
+    "SessionInfo": {
+      "SessionId": "500",
+      "LanguageCode": "EN",
+      "CountryCode": "US",
+      "AppMode": 0
+    }
+  }

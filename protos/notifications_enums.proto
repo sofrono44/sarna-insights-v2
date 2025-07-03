@@ -1,0 +1,51 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Notifications";
+
+// Mapped to [Sessions].[NotificationTypes] table
+// Enum for specifying the type of notification. Mapped to the [Sessions].[NotificationTypes] table.
+enum EnumNotificationType {
+  // Undefined notification type.
+  EnumNotificationType_Undefined = 0;
+  // Notification type for email confirmation.
+  EnumNotificationType_EmailConfirmation = 1;
+  // Notification type for order filled.
+  EnumNotificationType_OrderFilled = 2;
+  // Notification type for internal application email.
+  EnumNotificationType_InternalApplicationEmail = 3;
+  // Notification type for admin to user email.
+  EnumNotificationType_AdminToUserEmail = 4;
+  // Receipt for user platform subscription renewal processed by DTS.Apps.BOD.Processors
+  EnumNotificationType_UserPlatformSubscriptionRenewalReceipt = 5;
+  // Notice of user platform subscription termination processed by DTS.Apps.BOD.Processors
+  EnumNotificationType_UserPlatformSubscriptionTermination = 6;
+  // Notification type for option assignment.
+  EnumNotificationType_OptionAssignment = 7;
+  // Notification type for option exercise.
+  EnumNotificationType_OptionExercise = 8;
+  // Notification type for option expiry.
+  EnumNotificationType_OptionExpire = 9;
+  //Automatically send notification to customer when account has been opened 
+  EnumNotificationType_AccountApplicationSuccess = 10;
+  // Notification type for account application KYC pending review.
+  EnumNotificationType_AccountApplicationKycPendingReview = 11;
+  // Notification type for email confirmed.
+  EnumNotificationType_EmailConfirmed = 12;
+  // Notification type for account application rejected.
+  EnumNotificationType_AccountApplicationRejected = 13;
+  // Notification type for account application documents needed.
+  EnumNotificationType_AccountApplicationDocumentsNeeded = 14;
+  // Notification type for account application contact us to complete.
+  EnumNotificationType_AccountApplicationContactUsToComplete = 15;
+  // Notification type for account application more information needed.
+  EnumNotificationType_AccountApplicationMoreInfoNeeded = 16;
+  // Notification type for MDE (market data entitlement) form submitted.
+  EnumNotificationType_MdeFormSubmitted = 17;
+  // Notification type for MDE (market data entitlement) form approved.
+  EnumNotificationType_MdeFormApproved = 18;
+  // Notification type for MDE (market data entitlement) form rejected.
+  EnumNotificationType_MdeFormRejected = 19;
+  // Notification type for alerts.
+  EnumNotificationType_Alert = 20;
+}

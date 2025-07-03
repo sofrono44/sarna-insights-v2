@@ -1,0 +1,82 @@
+﻿syntax = "proto3";
+
+import "google/protobuf/any.proto";
+import "common_enums.proto";
+option csharp_namespace = "DTS.Libs.Protos.Common";
+
+// Represents errors in a response
+message ResponseError {
+  // A unique identifier for the error
+  string ErrorCode = 1;
+  // The name of the error, corresponding to an enum item
+  string ErrorName = 2; 
+  // A human-readable message describing the error
+  string ErrorMessage = 3;
+  // Additional data related to the error
+  repeated google.protobuf.Any ErrorArguments = 4;
+}
+
+// Represents warnings in a response
+message ResponseWarning {
+  // A unique identifier for the warning
+  string WarningCode = 1;
+  // The name of the warning, corresponding to an enum item
+  string WarningName = 2; 
+  // A human-readable message describing the warning
+  string WarningMessage = 3;
+  // Additional data related to the warning
+  repeated google.protobuf.Any WarningArguments = 4;
+}
+
+// Represents general messages in a response
+message ResponseMessage{
+  // A unique identifier for the message
+  string MessageCode = 1;
+  // The name or title of the message
+  string MessageName = 2;
+  // The message text
+  string Message = 3;
+}
+
+// The MOVE Index tracks the implied volatility of U.S. Treasury options (yield curve weighted basket of ATM one-month options on the 2-year, 5-year, 10-year, and 30-year constant maturity interest rate swaps).
+// This shock allows to analyze how change in MOVE Index affects correlations between U.S. Treasuries and other asset classes.
+message MOVEShockInput{
+  // MOVE change in percentage.
+  // Format:  0.5 means 50%. Sign: positive for increase in MOVE, negative for decrease
+  double IndexChangePercent = 1;
+  // Specifies products eligible for this yield shock. Futures example: "SR3", will apply to all products with this prefix.
+  repeated string ProductCodes = 2;
+}
+
+// Allows simulating the impact of changes in credit spreads on the portfolio's value.
+// Typically, as Treasury volatility rises (indicating economic uncertainty), credit spreads on corporate bonds as investors demand a higher premium for credit risk. 
+// When credit spreads narrow it signals a shift in market conditions where the difference between the yields on risker assets and safer government securities decreases. Typically, a sign of improved market confidence, economic growth, or a lower perceived credit risk.
+message MOVECreditSpreadShockInput{
+  // Credit spread change affecting Treasury assets in basis points (BPS).
+  // Sign: positive for increase, negative for decrease
+  double TreasuryBPS = 1;
+  // Credit spread change affecting Corporate Debt assets in basis points (BPS).
+  // Sign: positive for increase, negative for decrease
+  double CorporateDebtBPS = 2;
+  // Specifies products eligible for this yield shock. Futures example: "SR3", will apply to all products with this prefix.
+  repeated string ProductCodes = 3;
+  // MOVE change in percentage.
+  // Format:  0.5 means 50%. Sign: positive for increase in MOVE, negative for decrease
+  double IndexChangePercent = 4;
+}
+
+// A significant move in interest rates across specified maturities on the yield curve (short-term, medium-term, and long-term).
+// Either a sharp rate hike or rate cut, often triggered by central bank decisions or economic events
+message YieldShockInput{
+  // Sign: positive for increase in interest rates, negative for decrease
+  double InterestRateChangeBPS = 1;
+  // IV shock to Down-side of affected assets.
+  // Format:  0.5 means 50%. Sign: always positive
+  double IVPercentDown = 2;
+  // IV shock to Up-side of affected assets.
+  // Format:  0.5 means 50%. Sign: always positive
+  double IVPercentUp = 3;
+  EnumMaturityTerm MaturityTerm = 4;
+  // Specifies products eligible for this yield shock. Futures example: "SR3", will apply to all products with this prefix.
+  repeated string ProductCodes = 5;
+}

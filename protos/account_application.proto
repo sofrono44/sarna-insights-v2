@@ -1,0 +1,297 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+import public "common.proto";
+import "accounts_enums.proto";
+import "account_application_enums.proto";
+import "common_enums.proto";
+import public "market_data_entitlement.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AccountApplications";
+
+// Defines the structure for creating a new account application, including comprehensive details such as personal information, security questions, contact details, and market data entitlement responses.
+message CreateAccountApplicationRequest {
+  // The type of request for creating an account application.
+  EnumCreateAccountApplicationRequestType RequestType = 1;
+  // Personal information of the individual applying for the account.
+  AccountApplicationPersonRequest Person = 2;
+  // Security questions and responses for account security.
+  SecurityQuestionUserResponseRequest SecurityQuestions = 3;
+  // Information about a trusted contact for the account.
+  CreateTrustedContactRequest TrustedContact = 4;
+  // Addresses associated with the applicant.
+  repeated CreateAddressRequest Addresses = 5;
+  //repeated Phone Phones = 6;
+  MarketDataEntitlementFormResponses MarketDataEntitlementFormResponses = 7;
+  // Details of the account being applied for.
+  AccountApplicationAccountRequest Account = 8;
+  // Employment information of the applicant.
+  Employment Employment = 9;
+  // Federal disclosure information relevant to the account application.
+  FederalDisclosure FederalDisclosures = 10;
+  // Approximate annual income of the applicant in integer format.
+  int32 ApproximateAnnualIncome = 11;
+  // Investment objective of the applicant.
+  EnumInvestmentObjectiveType InvestmentObjective = 12;
+  // Total net worth of the applicant in integer format.
+  int32 TotalNetWorth = 13;
+  // Investing experience of the applicant in stocks.
+  EnumInvestingExperienceType InvestingExperienceStocks = 14;
+  // Investing experience of the applicant in options.
+  EnumInvestingExperienceType InvestingExperienceOptions = 15;
+  // Investing experience of the applicant in futures.
+  EnumInvestingExperienceType InvestingExperienceFutures = 16;
+  // Risk tolerance level of the applicant.
+  EnumRiskToleranceType RiskTolerance = 17;
+  // Consent requests pertaining to the account application.
+  ConsentRequest Consent = 18;
+  // Summary of the account application in string format.
+  string AccountApplicationSummary = 19;
+  // Liquid net worth of the applicant in integer format.
+  int32 LiquidNetWorth = 20;
+  ExternalBrokerageAccountInfo ExternalBrokerageAccountInfo = 21;
+}
+// Defines the types of account application requests, such as creating a new account or creating an additional account.
+enum EnumCreateAccountApplicationRequestType {
+  EnumCreateAccountApplicationRequestType_Undefined = 0;
+  EnumCreateAccountApplicationRequestType_CreateAccount = 1;
+  EnumCreateAccountApplicationRequestType_CreateAdditionalAccount = 2;
+}
+
+// Represents a request to submit multiple addresses associated with an account application.
+message AccountApplicationAddressesRequest {
+  google.protobuf.Timestamp DateOfBirth = 1;
+  repeated CreateAddressRequest Addresses = 2;
+}
+// Captures the applicant's investment profile for suitability purposes, including income, net worth, investment objectives, and risk tolerance. These details are also used in options trading level recommendation.
+message AccountApplicationInvestmentProfileRequest {
+  // Approximate annual income of the applicant in integer format.
+  int32 ApproximateAnnualIncome = 1;
+  // Investment objective of the applicant.
+  EnumInvestmentObjectiveType InvestmentObjective = 2;
+  // Total net worth of the applicant in integer format.
+  int32 TotalNetWorth = 3;
+  // Investing experience of the applicant for stocks in range of years.
+  EnumInvestingExperienceType InvestingExperienceStocks = 4;
+  // Investing experience of the applicant for options in range of years.
+  EnumInvestingExperienceType InvestingExperienceOptions = 5;
+  // Investing experience of the applicant for futures in range of years.
+  EnumInvestingExperienceType InvestingExperienceFutures = 6;
+  // Risk tolerance level of the applicant in range from low to high.
+  EnumRiskToleranceType RiskTolerance = 7;
+  EnumAccountApplicationInvestmentProfileRequestType InvestmentProfileRequestType = 8;
+  // Liquid net worth of the applicant in integer format.
+  int32 LiquidNetWorth = 9;
+}
+// Response message for a verification session, providing details of the session and any warnings or errors.
+message VerificationSessionResponse {
+  // Unique identifier for the verification session.
+  string VerificationSessionId = 1;
+  // Timestamp of when the verification session was created.
+  google.protobuf.Timestamp CreatedTime = 2;
+  // URL for validation in the verification process.
+  string ValidationUrl = 3;
+  // Warnings encountered during the verification session.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the verification session.
+  repeated ResponseError Errors = 102;
+}
+
+// Provides a comprehensive response with the applicant's investment profile and any associated warnings or errors.
+message GetInvestmentProfileResponse {
+  // Employment information of the applicant.
+  Employment Employment = 1;
+  // Federal disclosure information relevant to the account application.
+  FederalDisclosure FederalDisclosures = 2;
+  // Approximate annual income of the applicant in integer format.
+  int32 ApproximateAnnualIncome = 3;
+  // Investment objective of the applicant.
+  EnumInvestmentObjectiveType InvestmentObjective = 4;
+  // Total net worth of the applicant in integer format.
+  int32 TotalNetWorth = 5;
+  // Investing experience of the applicant in stocks.
+  EnumInvestingExperienceType InvestingExperienceStocks = 6;
+  // Investing experience of the applicant in options.
+  EnumInvestingExperienceType InvestingExperienceOptions = 7;
+  // Investing experience of the applicant in futures.
+  EnumInvestingExperienceType InvestingExperienceFutures = 8;
+  // Risk tolerance level of the applicant.
+  EnumRiskToleranceType RiskTolerance = 9;
+  // Total liquid net worth of the applicant in integer format.
+  int32 LiquidNetWorth = 11;
+
+  // Warnings encountered during the profile retrieval.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the profile retrieval.
+  repeated ResponseError Errors = 102;
+}
+
+// Response for an account application, including the result of the verification session and any warnings or errors.
+message AccountApplicationResponse {
+  // Warnings encountered during the account application process.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the account application process.
+  repeated ResponseError Errors = 102;
+}
+
+message AccountApplicationCreateVerificationSessionRequest{
+  AccountApplicationPersonRequest Person = 1;
+  repeated CreateAddressRequest Addresses = 2;
+  string AccountApplicationSummary = 3;
+}
+
+// Represents a consent request with various legal and regulatory consents required for the account application process.
+message ConsentRequest {
+  // Consent for disclosures and account information.
+  bool DisclosuresAndAccountInformation = 1;
+  // Consent to terms and conditions.
+  bool TermsAndConditions = 2;
+  // Consent for W8-Ben Form.
+  bool W8BenForm = 3;
+  // Consent for W9 Form.
+  bool W9Form = 4;
+  // Consent for Options Account Disclosure and Agreement.
+  bool OptionsAccountDisclosureAndAgreement = 5;
+  // Consent for Clearing House Margin Agreement.
+  bool ClearingHouseMarginAgreement = 6;
+  // Consent for Clearing House Letter A.
+  bool ClearingHouseLetterA = 7;
+  bool ClearingHouseDisclosureStatement = 8;
+  // Consent for Futures Account Disclosure and Agreement.
+  bool FuturesAccountDisclosureAndAgreement1 = 9;
+  bool FuturesAccountDisclosureAndAgreement2 = 10;
+}
+
+message Person {
+  int32 PersonId = 1;
+}
+
+//Represents personal and contact information for a trusted contact. Mandatory for senior citizens of a certain minimum age.
+message CreateTrustedContactRequest {
+  // Example: John
+  string FirstName = 1;
+  // Example: T
+  string LastName = 2;
+  EnumTrustedContactRelationshipType Relationship = 3;
+  // marcin@sarna.io
+  string Email = 4;
+  string Address = 5;
+  string AddressLineTwo = 6;
+  string City = 7;
+  int32 State = 8;
+  string ZipPostalCode = 9;
+  int32 Country = 10;
+  string PhoneNumber = 11;
+}
+
+message AccountApplicationPersonRequest {
+  // Example: John
+  string FirstName = 1;
+  // Example: T
+  string MiddleName = 2;
+  // Example: Smith
+  string LastName = 3;
+  // Example: Mr.
+  string Suffix = 4;
+  google.protobuf.Timestamp DateOfBirth = 5;
+  EnumMaritalStatusType MaritalStatus = 6;
+  EnumUSCitizenshipStatus USCitizenshipStatus = 7;
+  string IdentificationNumber = 8;
+  int32 TaxationCountry = 9;
+  int32 Citizenship = 10;
+  int32 Language = 11;
+  bool IrsWithholding = 12;
+  repeated Phone Phones = 13;
+  int32 NumberOfDependents = 14;
+  // Education information of the applicant.
+  EnumEducationType EducationType = 15;
+}
+
+message SecurityQuestions {
+  repeated SecurityQuestion SecurityQuestion = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message SecurityQuestion {
+  string Key = 1;
+  string Question = 2;
+}
+
+//SecurityQuestions
+message SecurityQuestionUserResponseRequest {
+  string Question1Key = 1;
+  string Answer1 = 2;
+  string Question2Key = 3;
+  string Answer2 = 4;
+  string Question3Key = 5;
+  string Answer3 = 6;
+}
+
+message SecurityQuestionUserResponsesResponse {
+  SecurityQuestionUserResponseRequest SecurityQuestionUserResponse = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message FederalDisclosure {
+  repeated EnumFederalDisclosure FederalDisclosures = 1;
+}
+
+message CreateAddressRequest {
+  string Address = 1;
+  string AddressLineTwo = 2;
+  string City = 3;
+  int32 State = 4;
+  string ZipPostalCode = 5;
+  int32 Country = 6;
+  EnumAddressType AddressType = 7;
+}
+
+message Phone {
+  string PhoneNumber = 1;
+  EnumPhoneType PhoneType = 2;
+}
+
+message Employment {
+  EnumEmploymentType Type = 1;
+  string EmployerName = 2;
+  EnumOccupationType Occupation = 3;
+  string CustomOccupation = 4;
+  string Position = 5;
+  string EmployerAddress = 6;
+  string NatureOfBusiness = 7;
+}
+
+message AccountApplicationAccountRequest {
+  EnumAccountType AccountType = 1;
+  string Nickname = 3;
+  bool TradingOptions = 4;
+  bool TradingFutures = 5;
+  // Account Risk Type (RegT, PM, Futures)
+  EnumAccountRiskType AccountRiskType = 6;
+}
+
+message GetExternalBrokerageAccountInfoResponse {
+  ExternalBrokerageAccountInfo ExternalBrokerageAccountInfo = 1;
+
+  // Warnings encountered during the profile retrieval.
+  repeated ResponseWarning Warnings = 101;
+  // Errors encountered during the profile retrieval.
+  repeated ResponseError Errors = 102;
+}
+
+message ExternalBrokerageAccountInfo {
+  repeated ExternalBrokerageAccountDetail ExternalBrokerageAccountDetails = 1;
+  EnumTradingObjective TradingObjective = 2;
+  EnumCommoditiesType CommoditiesType = 3;
+  EnumNatureOfTrading NatureOfTrading = 4;
+  string CommoditiesOther = 5;
+}
+
+message ExternalBrokerageAccountDetail
+{
+  string AccountName = 1;
+  bool IsActive = 2;
+  int32 AverageEquity = 3;
+}

@@ -1,0 +1,87 @@
+{
+  "RequestTypes": [
+    12
+  ],
+  "SessionInfo": {
+    "SessionId": "500500",
+    "LanguageCode": "EN",
+    "CountryCode": "US",
+    "AppMode": 0
+  },
+  "AccountApplicationRequest": {
+    "RequestType": 14,
+    "Person": {
+      "FirstName": "Hello",
+      "MiddleName": "Hello",
+      "LastName": "Hello",
+      "Suffix": "Hello",
+      "DateOfBirth": {
+        "seconds": 20,
+        "nanos": 10
+      },
+      "MaritalStatus": 1,
+      "USCitizenshipStatus": 1,
+      "IdentificationNumber": "111-11-1111"
+    },
+    "Account": {
+      "AccountType": 1,
+      "BpMarginType": 1,
+      "Nickname": "Hello"
+    },
+    "Address": {
+      "Address": "Hello",
+      "AddressLineTwo": "Hello",
+      "City": "Hello",
+      "State": 10,
+      "ZipPostalCode": "Hello",
+      "Country": 10,
+      "PhoneNumber": "102030"
+    },
+    "Employment": {
+      "Type": 2,
+      "EmployerName": "Hello",
+      "Occupation": 2
+    },
+    "FederalDisclosures": {
+      "FederalDisclosures": [ 4, 2 ]
+    },
+    "ApproximateAnnualIncome": 10,
+    "InvestmentObjective": 3,
+    "TotalNetWorth": 10,
+    "InvestingExperienceStocks": 2,
+    "InvestingExperienceOptions": 2,
+    "InvestingExperienceFutures": 2,
+    "RiskTolerance": 2,
+    "SecurityQuestions": {
+      "Question1Key": "WhatCityWereYouBornIn",
+      "Answer1": "Hello",
+      "Question2Key": "WhatIsYourOldestSiblingsMiddleName",
+      "Answer2": "Hello2",
+      "Question3Key": "WhatWasTheFirstConcertYouAttended",
+      "Answer3": "Hello3"
+    },
+    "TrustedContact": {
+      "FirstName": "John",
+      "LastName": "Smith",
+      "Relationship": 1,
+      "Email": "jogn@smith.com",
+      "Address": "Hello",
+      "AddressLineTwo": "Hello",
+      "City": "Hello",
+      "State": 1,
+      "ZipPostalCode": "Hello",
+      "Country": 1,
+      "PhoneNumber": "Hello"
+    },
+    "Consent": {
+      "DisclosuresAndAccountInformation": true,
+      "TermsAndConditions": true,
+      "W8BenForm": true,
+      "W9Form": true,
+      "OptionsAccountDisclosureAndAgreement": false,
+      "WedbushMarginAgreement": true,
+      "WedbushLetterA": true,
+      "WedbushDisclosureStatement": true
+    }
+  }
+}

@@ -1,0 +1,22 @@
+﻿{
+  "RequestTypes": [
+    2
+  ],
+  "AccountsRequest": {
+    "AccountsRequestType": 7,
+    "Create": {
+      "RequestType": 2,
+      "Account": {
+        "AccountType": 1,
+        "BpMarginType": 1,
+        "Nickname": "create a new account"
+      }
+    }
+  },
+  "SessionInfo": {
+    "SessionId": "500",
+    "LanguageCode": "EN",
+    "CountryCode": "US",
+    "AppMode": 1
+  }
+}

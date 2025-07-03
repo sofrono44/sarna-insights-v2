@@ -1,0 +1,182 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Services.BuyingPower.DTO.Enums";
+
+// Basic bloc for strategies considered by the Engine. <br>
+// Enumeration used for both input and output.<br>
+// Each strategy (i.e. Butterfly) has separate Long and Short value.
+enum EnumBpStrategy {
+  // append 'bp' prefix to avoid protoc compile issue (unique global scope)
+  EnumBpStrategy_Undefined = 0;
+  // single leg/singles
+  EnumBpStrategy_LongStock = 1;
+  EnumBpStrategy_ShortStock = 2;
+  EnumBpStrategy_LongCall = 3;
+  EnumBpStrategy_ShortCall = 4;
+  EnumBpStrategy_LongPut = 5;
+  EnumBpStrategy_ShortPut = 6;
+  EnumBpStrategy_LongFuture = 7;
+  EnumBpStrategy_ShortFuture = 8;
+  EnumBpStrategy_LongFutureOptionCall = 9;
+  EnumBpStrategy_ShortFutureOptionCall = 10;
+  EnumBpStrategy_LongFutureOptionPut = 11;
+  EnumBpStrategy_ShortFutureOptionPut = 12;
+  EnumBpStrategy_LongCrypto = 13;
+  // two legs/doubles with lower requirement, neutral call/put strategies
+  // <ShortCall>/<ShortPut> <97C BTO><97P BTO> equal strikes, equal expirations
+  EnumBpStrategy_LongStraddle = 14;
+  // <LongCall>/<LongPut>
+  EnumBpStrategy_ShortStraddle = 15;
+  // <ShortCall>/<ShortPut> <97C BTO><98P BTO> different strikes, equal expirations
+  EnumBpStrategy_LongStrangle = 16;
+  // <LongCall>/<LongPut>
+  EnumBpStrategy_ShortStrangle = 17;
+  // two legs/doubles with higher requirement, call/call and put/put strategies
+  // Bull Call Spread, Debit Call Spread
+  EnumBpStrategy_LongCallVertical = 18;
+  // Bear Call Spread, Credit Call Spread
+  EnumBpStrategy_ShortCallVertical = 19;
+  // Bear Put Spread, Debit Put Spread
+  EnumBpStrategy_LongPutVertical = 20;
+  // Bull Put Spread, Credit Put Spread
+  EnumBpStrategy_ShortPutVertical = 21;
+  // two legs/doubles calendar spreads
+  EnumBpStrategy_LongCallCalendarVertical = 22;
+  EnumBpStrategy_LongPutCalendarVertical = 23;
+  // two legs/doubles covered spreads
+  // <LongStock>/<ShortCall>
+  EnumBpStrategy_CoveredCall = 24;
+  // <ShortStock>/<LongCall>
+  EnumBpStrategy_MarriedCall = 25;
+  // <ShortStock>/<ShortPut>
+  EnumBpStrategy_CoveredPut = 26;
+  // <LongStock>/<LongPut>
+  EnumBpStrategy_MarriedPut = 27;
+  // three legs/tripples covered spreads
+  // <LongStock>/<ShortCall>/<LongPut> == LongCollar. A conversion is long stock, a short call, and a long put. The call and the put have the same strike price and expiration. A collar is long stock, a short, out-of-the-money (OTM) call, and a long, out-of-the-money put.
+  EnumBpStrategy_Conversion = 28;
+  // <ShortStock>/<LongCall>/<ShortPut> Reversal == ShortCollar
+  EnumBpStrategy_ReverseConversion = 29;
+  // <LongStock>/<LongPut>/<ShortCall> Protective Collar
+  EnumBpStrategy_LongCollar = 30;
+  // <ShortStock>/<ShortPut>/<LongCall>
+  EnumBpStrategy_ShortCollar = 31;
+  // four legs/quadruples
+  // <LongCall/ShortCall>/<ShortCall/LongCall>
+  EnumBpStrategy_LongCallButterfly = 32;
+  // <ShortCall/LongCall>/<LongCall/ShortCall>
+  EnumBpStrategy_ShortCallButterfly = 33;
+  // <LongPut/ShortPut>/<ShortPut/LongPut>
+  EnumBpStrategy_LongPutButterfly = 34;
+  // <ShortPut/LongPut>/<LongPut/ShortPut>
+  EnumBpStrategy_ShortPutButterfly = 35;
+  // <ShortPut/LongPut>/<LongCall/ShortCall>  Intervals between strikes are equal
+  EnumBpStrategy_LongIronButterfly = 36;
+  // <ShortCall/LongCall>/<ShortPut/LongPut> Intervals between strikes are equal
+  EnumBpStrategy_ShortIronButterfly = 37;
+  // <LongCall/ShortCall>/<ShortCall/LongCall> Intervals between outer strikes are equal
+  EnumBpStrategy_LongCallCondor = 38;
+  // <LongCall/ShortCall>/<ShortCall/LongCall> Intervals between outer strikes are equal
+  EnumBpStrategy_ShortCallCondor = 39;
+  // <LongPut/ShortPut>/<ShortPut/LongPut> Intervals between outer strikes are equal
+  EnumBpStrategy_LongPutCondor = 40;
+  // <LongPut/ShortPut>/<ShortPut/LongPut> Intervals between outer strikes are equal
+  EnumBpStrategy_ShortPutCondor = 41;
+  // <ShortCall/LongCall>/<ShortPut/LongPut> Intervals between outer strikes are equal
+  EnumBpStrategy_LongIronCondor = 42;
+  // <ShortCall/LongCall>/<ShortPut/LongPut> Intervals between outer strikes are equal
+  EnumBpStrategy_ShortIronCondor = 43;
+  // <ShortCall/LongCall>/<LongPut/ShortPut>
+  EnumBpStrategy_LongBoxSpread = 44;
+  // <ShortCall/LongCall>/<LongPut/ShortPut>
+  EnumBpStrategy_ShortBoxSpread = 45;
+  EnumBpStrategy_ShortCallCalendarVertical = 46;
+  EnumBpStrategy_ShortPutCalendarVertical = 47;
+  EnumBpStrategy_LongMutualFund = 48;
+  EnumBpStrategy_ShortMutualFund = 49;
+  EnumBpStrategy_LongFixedIncome = 50;
+  EnumBpStrategy_ShortFixedIncome = 51;
+  // Universal Spreads
+  // variation for LongCallCondor
+  EnumBpStrategy_UniversalSpreadLcc = 52;
+  // variation for LongCallButterfly
+  EnumBpStrategy_UniversalSpreadLcb = 53;
+  // variation for LongPutCondor
+  EnumBpStrategy_UniversalSpreadLpc = 54;
+  // variation for LongPutButterfly
+  EnumBpStrategy_UniversalSpreadLpb = 55;
+  // variation for ShortCallCondor, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadScc = 56;
+  // variation for ShortCallButterfly, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadScb = 57;
+  // variation for ShortPutCondor, confirmed to yield req improvement (VerticalsOnly_Lots28_Test())
+  EnumBpStrategy_UniversalSpreadSpc = 58;
+  // variation for ShortPutButterfly, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadSpb = 59;
+  // variation for LongIronButterfly, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadLib = 60;
+  // variation for ShortIronButterfly
+  EnumBpStrategy_UniversalSpreadSib = 61;
+  // variation for LongIronCondor does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadLic = 62;
+  // variation for ShortIronCondor
+  EnumBpStrategy_UniversalSpreadSic = 63;
+  // Calendar Universal Spreads
+  // variation for LongCallCalendarCondor
+  EnumBpStrategy_UniversalSpreadCalendarLcc = 64;
+  // variation for LongCallCalendarButterfly
+  EnumBpStrategy_UniversalSpreadCalendarLcb = 65;
+  // variation for LongPutCalendarCondor
+  EnumBpStrategy_UniversalSpreadCalendarLpc = 66;
+  // variation for LongPutCalendarButterfly
+  EnumBpStrategy_UniversalSpreadCalendarLpb = 67;
+  // variation for ShortCallCalendarCondor does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadCalendarScc = 68;
+  // <ShortCall/LongCall>/<LongCall/ShortCall>   variation for ShortCallCalendarButterfly, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadCalendarScb = 69;
+  // <LongPut/ShortPut>/<ShortPut/LongPut>       variation for ShortPutCalendarCondor, confirmed to yield req improvement (VerticalsOnly_Lots28_Test())
+  EnumBpStrategy_UniversalSpreadCalendarSpc = 70;
+  // <ShortPut/LongPut>/<LongPut/ShortPut>       variation for ShortPutCalendarButterfly, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadCalendarSpb = 71;
+  // variation for LongIronCalendarButterfly, does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadCalendarLib = 72;
+  // variation for ShortIronCalendarButterfly. (Moja interpretacja) For calendar, it doesn't matter which spread expires first, as for 4 legged, the req of the higher 2-legged is picked.  Therefore, regardless which of the two expires first, the requirement will remain the same or decrease for the remaining 2-legged spread.
+  EnumBpStrategy_UniversalSpreadCalendarSib = 73;
+  // variation for LongIronCalendarCondor does NOT yield any req improvement, config allows disabling pairing to it.
+  EnumBpStrategy_UniversalSpreadCalendarLic = 74;
+  // variation for ShortIronCalendarCondor. (Moja interpretacja) For calendar, it doesn't matter which spread expires first, as for 4 legged, the req of the higher 2-legged is picked.  Therefore, regardless which of the two expires first, the requirement will remain the same or decrease for the remaining 2-legged spread.
+  EnumBpStrategy_UniversalSpreadCalendarSic = 75;
+  //Futures Spreads
+  // Bull Futures Spread
+  EnumBpStrategy_LongFuturesSpread = 76;
+  // Bear Futures Spread
+  EnumBpStrategy_ShortFuturesSpread = 77;
+  EnumBpStrategy_ShortCrypto = 78;
+  // <ShortStock>/<LongStock> <LongStock>/<ShortStock>
+  EnumBpStrategy_ShortStockAgainstTheBox = 79;
+  EnumBpStrategy_LongPreciousMetal = 80;
+  EnumBpStrategy_ShortPreciousMetal = 81;
+  EnumBpStrategy_LongRight = 82;
+  EnumBpStrategy_ShortRight = 83;
+  EnumBpStrategy_LongWarrant = 84;
+  EnumBpStrategy_ShortWarrant = 85;
+  EnumBpStrategy_LongUit = 86;
+  EnumBpStrategy_ShortUit = 87;
+}
+
+enum EnumInputStrategyComponentType{
+ // (!!!!) Do NOT re-order, used for sorting.
+ // (!!) Keep enumeration indexed in a standard fashion, so that the value corresponds to index. Needed for proper serialization in Java.
+    EnumInputStrategyComponentType_Undefined = 0;
+    EnumInputStrategyComponentType_OpenPosition = 1;
+    EnumInputStrategyComponentType_ProposedOrder = 2;
+    EnumInputStrategyComponentType_WorkingOrder = 3;
+}
+
+enum EnumStressTestCalculationsOptimizationLevel
+{
+  EnumStressTestCalculationsOptimizationLevel_Undefined = 0;
+  EnumStressTestCalculationsOptimizationLevel_CalculateAllFromScratch = 1;
+  EnumStressTestCalculationsOptimizationLevel_ReuseUnshockedGroupings = 2;
+  EnumStressTestCalculationsOptimizationLevel_ReusePairings = 3;
+}

@@ -1,0 +1,85 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Accounts";
+
+// Enum for specifying the type of account. 
+// Corresponds to [AccountTypes] table.
+enum EnumAccountType {
+  // Undefined account type.
+  EnumAccountType_Undefined = 0;
+  // Individual account.
+  EnumAccountType_Individual = 1;
+  // Traditional IRA account.
+  EnumAccountType_TraditionalI_R_A = 2;
+  // Roth IRA account.
+  EnumAccountType_RothI_R_A = 3;
+  // Error account for correction purposes.
+  EnumAccountType_ErrorAccount = 4;
+  // Deposit account for holding funds.
+  EnumAccountType_DepositAccount = 5;
+  // Payout account for disbursements.
+  EnumAccountType_PayoutAccount = 6;
+  // Test account without suppression features.
+  EnumAccountType_TestAccountWithoutSuppression = 7;
+  // Test account with suppression features.
+  EnumAccountType_TestAccountWithSuppression = 8;
+  // Riskless principal account.
+  EnumAccountType_RisklessPrincipal = 9;
+  // For allocation to customers at OCC (Options Clearing Corporation).
+  EnumAccountType_ForAllocationToCustomersAtO_C_C = 10;
+  // Profit and Loss account.
+  EnumAccountType_ProfitAndLossAccount = 11;
+  // Education IRA account.
+  EnumAccountType_EducationI_R_A = 12;
+  // Coverdell Education Savings Accounts
+  EnumAccountType_CoverdellE_S_A = 13;
+  // College Savings 529 Plan account.
+  EnumAccountType_CollegeSavings529Plan = 14;
+  // Simple IRA account.
+  EnumAccountType_SimpleI_R_A = 15;
+  // Simplified Employee Pension (SEP)
+  EnumAccountType_S_E_P = 16;
+  // Keogh retirement plan
+  EnumAccountType_Keogh = 17;
+  // Spousal account type.
+  EnumAccountType_Spousal = 18;
+  // Dealer account for transactions.
+  EnumAccountType_Dealer = 19;
+  // Clearing account for transaction processing.
+  EnumAccountType_Clearing = 20;
+  // Suspense account for temporary holds.
+  EnumAccountType_Suspense = 21;
+  // General inventory account for transactions executed by external system and dropped to our OMS. Used when external account is not setup internally as inventory account.
+  EnumAccountType_TradeAwayInventoryAccount = 22;
+}
+
+// Enum for specifying the status of an account.
+// Corresponds to [AccountStatuses] table.
+enum EnumAccountStatus {
+  // Undefined account status.
+  EnumAccountStatus_Undefined = 0;
+  // Active account status.
+  EnumAccountStatus_Active = 1;
+  // Pending KYC (Know Your Customer) verification.
+  EnumAccountStatus_PendingKyc = 2;
+  // KYC verified status.
+  EnumAccountStatus_KycVerified = 3;
+  // Pending clearing firm confirmation.
+  EnumAccountStatus_PendingClearingConfirmation = 4;
+  // Blocked account status.
+  EnumAccountStatus_Blocked = 5;
+  // Pending submission of required documents.
+  EnumAccountStatus_PendingDocuments = 6;
+  // Account limited to closing transactions only.
+  EnumAccountStatus_ClosingTransactionsOnly = 7;
+}
+
+// Enum for specifying the order type for position transfers.
+enum EnumPositionTransferOrderType {
+  // Undefined order type.
+  EnumPositionTransferOrderType_Undefined = 0;
+  // Transfer older lots first (First In, First Out).
+  EnumPositionTransferOrderType_FIFO = 1;
+  // Transfer newer lots first (Last In, First Out).
+  EnumPositionTransferOrderType_LIFO = 2;
+}

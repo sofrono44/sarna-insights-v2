@@ -1,0 +1,14 @@
+﻿syntax = "proto3";
+
+// Specifies the namespace for C# generated code from this enum.
+option csharp_namespace = "DTS.Services.BusinessHub.DTO.Enums";
+
+// Defines an enumeration for different types of trade requests.
+// This enum is used to determine the action that should be taken for a trade request.
+enum EnumTradeRequestType {
+  EnumTradeRequestType_Undefined = 0;
+  // Validation only, for Place or Replace, it will not save order to DB nor initiate execution
+  EnumTradeRequestType_ReviewOrder = 1;
+  // Initiates order (save to DB and/or send to mareket) depending on Order.RequestLifecycleAttributes.OrderInitiationType
+  EnumTradeRequestType_InitiateOrderExecution = 2;
+}

@@ -1,0 +1,74 @@
+﻿syntax = "proto3";
+
+import "orders_enums.proto";
+import "orders.proto";
+import "bp.proto";
+import "pmbp.proto";
+import "common.proto";
+import "trading_enums.proto";
+import "quotes.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Trading";
+
+message TradeRequest {
+  EnumTradeRequestType TradeRequestType = 1;
+  // index must correspond to TradeResponse.TradeResponseOrderInfo
+  // List, to all place/review of multiple orders
+  repeated TradeRequestOrderInfo TradeRequestOrderInfos = 2;
+  // Flag indicating if BP details should be returned in response.
+  bool ReturnBPDetails = 3;
+  // id that is checked on backend to prevent doubled orders
+  //TODO: check do we need this property?
+  //string TradeRequestGuid = 4;
+}
+
+message TradeRequestOrderInfo {
+  Order Order = 1;
+}
+
+message TradeResponse {
+  bool HasData = 1;
+  // index must correspond to TradeResponse.TradeResponseOrderInfo
+  // List to reflect TradeRequest.TradeResponseOrderInfo
+  repeated TradeResponseOrderInfo TradeResponseOrderInfos = 2;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message TradeResponseOrderInfo {
+  int32 AccountId = 1;
+  string AccountNumber = 2;
+  int32 SubaccountId = 3;
+  // For GTNonInventory OrderAllocationType, place/review is on each child order separatelly, which is stored by this attribute
+  repeated TradeResponseOrderInfo ChildAllocationOrderInfos = 4;
+  // Open: when all legs have Open leg position effect
+  // Close: when all legs have Close leg position effect
+  // Mixed: when legs have Close and Open position effects (i.e. roll)
+  EnumSpreadPositionEffect SpreadPositionEffect = 5;
+  // Sign: negative when buy and positive sign for sell
+  double OrderPrice = 6;
+  // Sign: negative when buy and positive sign for sell
+  double PendingTransaction = 7;
+  // Sign: always positive
+  double CommissionEstimated = 8;
+  // Sign: always positive
+  double FeesEstimated = 9;
+  // Pre-trade check result for RegT account trade review.
+  RegTBpForProposedOrderResponseInfo ProposedOrderResponseBpEngine = 10;
+  ExecutionInitiatorResponseInfo ExecutionInitiatorResponseInfo = 11;
+  // Leg quotes for order preview screen.
+  QuoteData QuoteData = 12;
+  // Pre-trade check result for Portfolio Margin account trade review.
+  PmBpForProposedOrderResponse ProposedOrderResponsePmBpEngine = 13;
+  // Flag indicating Portfolio Margin account. If True, PMBP values are provided in PmBpValues.
+  bool IsPMAccount = 14;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+// EXECUTION INITIATOR DTOs
+message ExecutionInitiatorResponseInfo {
+  // OrderId of initialized order (saved to DB)
+  int32 OrderId = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}

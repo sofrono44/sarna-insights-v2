@@ -1,0 +1,45 @@
+﻿syntax = "proto3";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "admin/admin_external_data_source.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.ExternalDataSource";
+
+service AdminExternalAccountMappingService {
+	// List all external account mappings.
+	rpc List(google.protobuf.Empty) returns (ListExternalAccountMappingsResponse){
+		option (google.api.http) = {
+			get: "/admin/external-data-source"
+		};
+	}
+	
+	// Get a specific external account mapping by ID.
+	rpc Get(GetExternalAccountMappingsRequest) returns (GetExternalAccountMappingsResponse){
+		option (google.api.http) = {
+			get: "/admin/external-data-source"
+
+			additional_bindings {
+				get: "/admin/external-data-source/{ExternalAccountMappingId}"
+			}
+		};
+	}
+	
+	// Add or update an external account mapping.
+	rpc Manage(ManageExternalAccountMappingsRequest) returns (ManageExternalAccountMappingsResponse){
+		option (google.api.http) = {
+			put: "/admin/external-data-source"
+			body: "*"
+		};
+	}
+	
+	// Delete an external account mapping by ID.
+	rpc Delete(DeleteExternalAccountMappingsRequest) returns (ManageExternalAccountMappingsResponse){
+		option (google.api.http) = {
+			delete: "/admin/external-data-source"
+
+			additional_bindings {
+				get: "/admin/external-data-source/{ExternalAccountMappingId}"
+			}
+		};
+	}
+}

@@ -1,0 +1,38 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumAccountsRequestType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumAccountsRequestType_Undefined: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_AccountsInfo: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_CreateSubaccount: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_DeleteSubaccount: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_CreateV_T_Account: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_AskForTradingLevelChangeRequest: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_UpdateAccountNickname: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_GetAccountActivity: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_SubaccountsTransferCashOrPositions: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_CreateAbaAccount: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_BrowseAbaAccounts: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_CreateAccountAchTransfer: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_LinkAccountGroup: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_UnlinkAccountGroup: _ClassVar[EnumAccountsRequestType]
+    EnumAccountsRequestType_ChangeAccountGroup: _ClassVar[EnumAccountsRequestType]
+EnumAccountsRequestType_Undefined: EnumAccountsRequestType
+EnumAccountsRequestType_AccountsInfo: EnumAccountsRequestType
+EnumAccountsRequestType_CreateSubaccount: EnumAccountsRequestType
+EnumAccountsRequestType_DeleteSubaccount: EnumAccountsRequestType
+EnumAccountsRequestType_CreateV_T_Account: EnumAccountsRequestType
+EnumAccountsRequestType_AskForTradingLevelChangeRequest: EnumAccountsRequestType
+EnumAccountsRequestType_UpdateAccountNickname: EnumAccountsRequestType
+EnumAccountsRequestType_GetAccountActivity: EnumAccountsRequestType
+EnumAccountsRequestType_SubaccountsTransferCashOrPositions: EnumAccountsRequestType
+EnumAccountsRequestType_CreateAbaAccount: EnumAccountsRequestType
+EnumAccountsRequestType_BrowseAbaAccounts: EnumAccountsRequestType
+EnumAccountsRequestType_CreateAccountAchTransfer: EnumAccountsRequestType
+EnumAccountsRequestType_LinkAccountGroup: EnumAccountsRequestType
+EnumAccountsRequestType_UnlinkAccountGroup: EnumAccountsRequestType
+EnumAccountsRequestType_ChangeAccountGroup: EnumAccountsRequestType

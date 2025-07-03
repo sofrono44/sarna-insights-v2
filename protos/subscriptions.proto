@@ -1,0 +1,217 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "google/protobuf/timestamp.proto";
+import "api_hub_enums.proto";
+import "commissions.proto";
+import "account_maintenance_fee.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Subscriptions";
+
+// Defines the request for subscription-related actions.
+message SubscriptionRequest{
+  // The type of subscription request being made.
+  EnumSubscriptionRequestType SubscriptionRequestType = 1;
+  // Request information for checking user status.
+  UserStatusCheckRequest UserStatusCheckRequest = 2;
+  // Request to activate a user platform subscription.
+  UserPlatformSubscriptionActivationRequest UserPlatformSubscriptionActivationRequest = 3;
+  // Request to deactivate a user platform subscription.
+  UserPlatformSubscriptionDeactivationRequest UserPlatformSubscriptionDeactivationRequest = 4;
+  // Request to claim a promotional offer.
+  PromoClaimRequest PromoClaimRequest = 5;
+}
+
+// Empty message for user status check request.
+message UserStatusCheckRequest {
+}
+
+// Contains details for activating a user platform subscription.
+message UserPlatformSubscriptionActivationRequest {
+  // ID of the subscription to be activated.
+  int32 UserPlatformSubscriptionId = 1;
+  // Account ID to charge for the subscription.
+  int32 AccountIdToCharge = 2;
+  // Indicates if the activation replaces an active subscription.
+  bool IsReplaceOfActiveSubscription = 3;
+}
+
+// Contains details for deactivating a user platform subscription.
+message UserPlatformSubscriptionDeactivationRequest {
+  // ID of the subscription to be deactivated.
+  int32 UserPlatformSubscriptionId = 1;
+}
+
+// Contains the promotional code for claiming an offer.
+message PromoClaimRequest {
+  // The promotional code to be claimed.
+  string PromoCode = 1;
+}
+
+// Defines the response to a subscription request.
+message SubscriptionResponse {
+    // Response to a user status check request.
+    UserStatusCheckResponse UserStatusCheckResponse = 1;
+    // Response to a subscription activation request.
+    UserPlatformSubscriptionActivationResponse UserPlatformSubscriptionActivationResponse = 2;
+    // Response to a subscription deactivation request.
+    UserPlatformSubscriptionDeactivationResponse UserPlatformSubscriptionDeactivationResponse = 3;
+    // Response to a promotional claim request.
+    PromoClaimResponse PromoClaimResponse = 4;
+}
+
+// Contains response data for a user status check.
+message UserStatusCheckResponse {
+  // Information about the user's active subscription.
+  UserPlatformSubscriptionActivatedUser ActiveSubscription = 1;
+  // Information about subscriptions available to the user.
+  repeated AvailableSubscriptionInfo AvailableSubscriptions = 2;
+  // Information about available upgrades for the user.
+  repeated SubscriptionUpgradeInfo AvailableUpgrades = 3;
+  // Basic plan information for the user.
+  BasicPlanInfo BasicPlanInfo = 4;
+  // Messages related to the response.
+  repeated ResponseMessage ResponseMessages = 100;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Contains response data for activating a user platform subscription.
+message UserPlatformSubscriptionActivationResponse {
+  // Indicates if the activation was successful.
+  bool IsActivationSuccess = 1;
+  // Information about the activated subscription.
+  UserPlatformSubscriptionActivatedUser ActivatedSubscription = 2;
+  // Messages related to the response.
+  repeated ResponseMessage ResponseMessages = 100;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Contains response data for deactivating a user platform subscription.
+message UserPlatformSubscriptionDeactivationResponse {
+  // Indicates if the deactivation was successful.
+  bool IsDeactivationSuccess = 1;
+  // Information about the deactivated subscription
+  UserPlatformSubscriptionActivatedUser DeactivatedSubscription = 2;
+  // Messages related to the response.
+  repeated ResponseMessage ResponseMessages = 100;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Contains response data for a promotional claim.
+message PromoClaimResponse {
+  // Indicates if the promo claim was successful.
+  bool PromoClaimSuccess = 1;
+  // Subscriptions available to the user as part of the promo.
+  repeated UserPlatformSubscription PromoSubscriptionsAvailableToUser = 2;
+  // Messages related to the response.
+  repeated ResponseMessage ResponseMessages = 100;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Information about a user's activated platform subscription.
+message UserPlatformSubscriptionActivatedUser {
+  // User ID associated with the subscription.
+  int32 UserId = 1;
+  // ID of the activated platform subscription.
+  int32 UserPlatformSubscriptionId = 2;
+  // Expiration date of the subscription.
+  google.protobuf.Timestamp SubscriptionExpiration = 3;
+  // Indicates if auto-renew is enabled for the subscription.
+  bool IsAutoRenewEnabled = 4;
+  // ID for the charge associated with the account maintenance fee.
+  int32 AccountMaintenanceFeeChargeId = 5;
+  // ID for the promotion associated with the subscription
+  int32 UserPlatformSubscriptionPromotionId = 6;
+  // User ID of the last modifier of the subscription.
+  int32 LastModifiedUserId = 7;
+  // Creation time of the subscription record
+  google.protobuf.Timestamp CreatedTime = 8;
+  // Last modified time of the subscription record.
+  google.protobuf.Timestamp LastModifiedTime = 9;
+  // Subscription details.
+  UserPlatformSubscription Subscription = 10;
+}
+
+// Contains details about a user platform subscription.
+message UserPlatformSubscription {
+  // ID of the subscription.
+  int32 UserPlatformSubscriptionId = 1;
+  // Period of the subscription in days.
+  int32 SubscriptionPeriodInDays = 2;
+  // Fee for the subscription.
+  double SubscriptionFee = 3;
+  // Entitlement for non-professional real-time quotes.
+  bool RealTimeQuotesNonProEntitlement = 4;
+  // Entitlement for professional real-time quotes.
+  bool RealTimeQuotesProEntitlement = 5;
+  // Indicates if commissions apply to linked accounts.
+  bool ApplyCommissionsToLinkedAccounts = 6;
+  // User ID of the last modifier of the subscription.
+  int32 LastModifiedUserId = 7;
+  // Creation time of the subscription.
+  google.protobuf.Timestamp CreatedTime = 8;
+  // Last modified time of the subscription.
+  google.protobuf.Timestamp LastModifiedTime = 9;
+  // Description of the subscription.
+  string Description = 10;
+  // Indicates if the subscription is soft deleted.
+  bool IsSoftDeleted = 11;
+  // Commissions associated with the subscription.
+  repeated Commission Commissions = 12;
+  // The duration of the free trial period offered with the subscription, in days.
+  int32 FreeTrialInDays = 13;
+  // Indicates if the free trial is only for new subscribers.
+  bool FreeTrialForNewSubscribersOnly = 14;
+}
+
+// Contains information for upgrading a subscription.
+message SubscriptionUpgradeInfo {
+  // Subscription details.
+  UserPlatformSubscription Subscription = 1;
+  // Due date for the upgrade payment.
+  google.protobuf.Timestamp DueDate = 2;
+  // Amount due for the upgrade.
+  double DueAmount = 3;
+  // Credit towards the subscription upgrade.
+  double SubscriptionCredit = 4;
+  // Free days of account charge provided.
+  double AccountChargeFreeDays = 5;
+}
+
+// Contains information about the basic plan.
+message BasicPlanInfo {
+  // Default commissions for the basic plan.
+  repeated Commission CommissionDefaults = 1;
+  // Overrides for account-specific commissions.
+  repeated CommissionAccountOverride CommissionAccountOverrides = 2;
+  // Labels for commissions.
+  repeated string CommissionLabels = 3;
+  // Information about account maintenance fees.
+  repeated AccountMaintenanceFeeInfo AccountMaintenanceFeeInfos = 4;
+  // Labels for account maintenance fees.
+  repeated string AccountMaintenanceFeeLabels = 5;
+  // Entitlement for non-professional real-time quotes.
+  bool RealTimeQuotesNonProEntitlement = 6;
+  // Start date for the basic plan.
+  google.protobuf.Timestamp StartDate = 7;
+}
+
+// Contains information about available subscriptions.
+message AvailableSubscriptionInfo {
+  // Subscription details.
+  UserPlatformSubscription Subscription = 1;
+  // Information about account maintenance fees.
+  repeated AccountMaintenanceFeeInfo AccountMaintenanceFeeInfos = 2;
+}

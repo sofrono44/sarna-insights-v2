@@ -1,0 +1,103 @@
+﻿syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+import public "common.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminBpSymbolRequirement";
+
+//Request to get BP Symbol Requirements
+message BpSymbolRequirementSearchRequest {
+  //The security identifiers to search for
+  //Can be Symbol, Cusip, or Security id
+  repeated string SecurityIdentifiers = 1;
+  //Allow to search for deleted BP Symbol Requirements
+  bool IncludeOverrideHistory = 2;
+}
+
+//Request to add or update BP Symbol Requirements override
+//This action will add new record to the BP Symbol Requirements table
+//in case of existing override for specified symbols and types it will delete previous and add new one 
+message BpSymbolRequirementOverrideRequest{
+  repeated BpSymbolRequirement BpSymbolRequirements = 1;
+}
+
+//Request to delete BP Symbol Requirements
+//Only admin override BP Symbol Requirements could be deleted
+message BpSymbolRequirementDeleteRequest {
+  //The BP Symbol Requirement to delete
+  //Can be Symbol, Cusip, or Security id
+  repeated string SecurityIdentifiers = 1;
+}
+
+//Response to get list of all BP Symbol Requirements security identifiers
+message BpSymbolRequirementListResponse{
+  repeated BpSymbolIdentifier BpSymbolIdentifiers = 1;
+  
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//Security Identifier
+message BpSymbolIdentifier{
+  string Symbol = 1;
+  string Cusip = 2;
+  string ExternalSecurityId = 3;
+}
+
+//BP Symbol Requirements Response
+message BpSymbolRequirementResponse {
+  //The BP Symbol Requirements
+  repeated BpSymbolRequirement BpSymbolRequirements = 1;
+
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//BP Symbol Requirement
+//Simply omit values in the request that should be set to null
+//If you set { value: null } it will resolve to 0 or false
+message BpSymbolRequirement {
+  //Optional parameter if Cusip or ExternalSecurityId are set
+  string Symbol = 1;
+  //Optional parameter if Symbol or ExternalSecurityId are set
+  string Cusip = 2;
+  //Optional parameter if Symbol or Cusip are set
+  string ExternalSecurityId = 3;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue RegtMaintReqLong = 4;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue RegtMaintReqShort = 5;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue FirmMaintReqLong = 6;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue FirmMaintReqShort = 7;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue RegtPrincipalLong = 8;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue RegtPrincipalShort = 9;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue FirmPrincipalLong = 10;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue FirmPrincipalShort = 11;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue MinMaintPointsLong = 12;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue MinMaintPointsShort = 13;
+  //A value of null means the default engine value will be used
+  google.protobuf.DoubleValue EtfAddlMarginPercentage = 14;
+  //Required parameter
+  int32 MarginCode = 15;
+  //True if the BP Symbol Requirement is an admin override
+  //Could be only one override per symbol/cusip/externalSecurityId id and type (short/long) at a time
+  bool IsAdminOverride = 16;
+  //The user id of the last modified user of the BP Symbol Requirement
+  int32 LastModifiedUserId = 17;
+  //The last modified time of the BP Symbol Requirement
+  google.protobuf.Timestamp LastModifiedTime = 18;
+  //The status of the BP Symbol Requirement, only for admin override
+  bool IsDeleted = 19;
+  // Null means not set
+  //Setting to true allows the symbol not recognized by the OCC by default to be used in PM accounts (i.e. ECN symbols)
+  google.protobuf.BoolValue IsPMEligible = 20;
+  bool FetchedFromSM = 21;
+}

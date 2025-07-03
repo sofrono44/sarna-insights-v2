@@ -1,0 +1,18 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Quotes.Enums";
+
+// Enum for specifying the type of quote data.
+enum EnumQuoteDataType {
+  // Undefined quote data type.
+  EnumQuoteDataType_Undefined = 0;
+  // Quote data for an options chain.
+  EnumQuoteDataType_ChainQuotes = 1;
+  // Quote data for a single option.
+  EnumQuoteDataType_OptionQuote = 2;
+  // Quote data for a stock.
+  EnumQuoteDataType_StockQuote = 3;
+  EnumQuoteDataType_FixedIncomeQuote = 4;
+  // EnumQuoteDataType_Heartbeat = 5;
+}

@@ -1,0 +1,26 @@
+syntax = "proto3";
+import "admin/admin_trading_level_change.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminTradingLevelChange";
+
+service AdminTradingLevelChangeService {
+	rpc Search(AdminSearchTradingLevelChangeRequest) returns (AdminSearchTradingLevelChangeResponse){
+    option (google.api.http) = {
+      get: "/admin/trading-level-change"
+    };
+  }
+  
+  
+  rpc Resolve(ResolveTradingLevelChangeRequest) returns (AdminSearchTradingLevelChangeResponse){
+    option (google.api.http) = {
+      post: "/admin/trading-level-change"
+      body: "*"
+
+      additional_bindings {
+        post: "/admin/trading-level-change/{ApprovalId}"
+        body: "*"
+      }
+    };
+  }
+}

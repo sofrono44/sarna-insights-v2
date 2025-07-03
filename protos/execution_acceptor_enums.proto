@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Fix.DTO";
+
+// Enum for specifying the type of execution update.
+enum EnumExecutionUpdateType {
+  // Undefined execution update type.
+  EnumExecutionUpdateType_Undefined = 0;
+  // Execution update type for Fix Initiator.
+  EnumExecutionUpdateType_FixInitiator = 1;
+  // Execution update type for Fix Initiator Integration Test.
+  EnumExecutionUpdateType_FixInitiator_IntegTest = 2;
+  // Execution update type for Fix Initiator Market Provider Simulator.
+  EnumExecutionUpdateType_FixInitiator_MarketProviderSim = 3;
+  // Execution update type for Fix Initiator Volant.
+  EnumExecutionUpdateType_FixInitiator_Volant = 4;
+  // Execution update type for manually filled trade.
+  EnumExecutionUpdateType_FillManualTrade = 5;
+  // Execution update type for connectivity test. Will send ACK set to true in ExecutionInitiatorResponse to confirm service is up and running.
+  EnumExecutionUpdateType_ConnectivityTest = 6;
+  // Execution update type indicating that the update is coming from an external OMS.
+  EnumExecutionUpdateType_ExternalOms = 7;
+  // Execution update type indicating that the update contains order initiation request from an external OMS.
+  EnumExecutionUpdateType_OrderInitiation = 8;
+}

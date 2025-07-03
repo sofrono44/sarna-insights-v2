@@ -1,0 +1,72 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: docker/backend/Dockerfile
+    volumes:
+      - ./backend:/app
+      - ./protos:/protos
+    environment:
+      - SARNA_API_URL=${SARNA_API_URL}
+      - SARNA_JWT_TOKEN=${SARNA_JWT_TOKEN}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DATABASE_URL=postgresql://sarna:sarna@postgres:5432/sarna
+      - REDIS_URL=redis://redis:6379
+      - PINECONE_API_KEY=${PINECONE_API_KEY}
+      - PINECONE_ENVIRONMENT=${PINECONE_ENVIRONMENT}
+    depends_on:
+      - postgres
+      - redis
+    command: uvicorn api.main:app --host 0.0.0.0 --port 8000 --reload
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      - VITE_API_URL=http://localhost:8000
+    command: npm run dev
+
+  nginx:
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - "80:80"
+      - "8000:8000"
+    depends_on:
+      - backend
+      - frontend
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_USER=sarna
+      - POSTGRES_PASSWORD=sarna
+      - POSTGRES_DB=sarna
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes
+    volumes:
+      - redis_data:/data
+
+  proto-compiler:
+    build:
+      context: .
+      dockerfile: docker/proto/Dockerfile
+    volumes:
+      - ./protos:/protos
+      - ./backend/generated:/output
+    command: /compile.sh
+
+volumes:
+  postgres_data:
+  redis_data:

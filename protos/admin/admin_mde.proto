@@ -1,0 +1,30 @@
+﻿syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import "admin/admin_mde_enums.proto";
+import "account_application.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminMdeService";
+
+message AdminSearchMdeRequest{
+}
+
+message AdminSearchMdeResponse
+{
+  repeated MdeRequest Items = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message MdeRequest
+{
+  int32 Id = 1;
+  MarketDataEntitlementFormResponses Mde = 2;
+  google.protobuf.Timestamp CreatedTime = 3;
+  Employment Employment = 4;
+}
+
+message ResolveMdeRequest{
+  int32 MarketDataEntitlementId = 1;
+  EnumAdminMdeAction Action = 2;
+  string Reason = 3;
+}

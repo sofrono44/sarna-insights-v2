@@ -1,0 +1,10 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminMdeService";
+
+enum EnumAdminMdeAction
+{
+  EnumAdminMdeAction_Undefined = 0;
+  EnumAdminMdeAction_Approve = 1;
+  EnumAdminMdeAction_Reject = 2;
+}

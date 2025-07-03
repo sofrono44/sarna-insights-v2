@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Protos.Reports";
+
+enum EnumReportType {
+  EnumReportType_Undefined = 0;
+  EnumReportType_Risk = 1;
+}
+
+enum EnumReportLevel {
+  EnumReportLevel_Undefined = 0;
+  EnumReportLevel_Aggregate = 1;
+  EnumReportLevel_Account = 2;
+}
+
+enum EnumReportOutputType {
+  EnumReportOutputType_Undefined = 0;
+  EnumReportOutputType_C_S_V = 1;
+  EnumReportOutputType_Excel = 2;
+  EnumReportOutputType_P_D_F = 3;
+}

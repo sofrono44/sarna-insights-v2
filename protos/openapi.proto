@@ -1,0 +1,135 @@
+syntax = "proto3";
+import "openapiv3/annotations.proto";
+
+// OpenAPI specification for the Sarna Technologies API.
+option (openapi.v3.document) = {
+  info: {
+    // The title of the API.
+    title: "Sarna API"
+    // The version of the API.
+    version: "v1"
+    // Contact information for the API support.
+    contact: {
+      name: "Sarna Technologies Support"
+      email: "app-support@sarna.io"
+    }
+    // Extension for OpenAPI specification to include custom properties such as a logo.
+    specification_extension: [
+      {
+        name: "x-logo-alt-text"
+        value: {
+          yaml: "Sarna Technologies logo"
+        }
+      }
+    ]
+  }
+  // Components section to define reusable objects like headers and responses.
+  components: {
+    // Definition of common headers that can be referenced across the API.
+    headers: {
+      additional_properties: [
+        {
+          name: "x-language"
+          value: {
+            header: {
+              // Description for the 'x-language' header.
+              description: "Optional language code; Defaults to 'en'"
+              required: false
+              allow_empty_value: true
+              example: {
+                yaml: "en"
+              }
+            }
+          }
+        },
+        {
+          name: "x-region"
+          value: {
+            header: {
+              // Description for the 'x-region' header.
+              description: "Optional region code; Defaults to 'US'"
+              required: false
+              allow_empty_value: true
+              example: {
+                yaml: "US"
+              }
+            }
+          }
+        },
+        {
+          name: "x-app-mode"
+          value: {
+            header: {
+              // Description for the 'x-app-mode' header.
+              description: "Optional application mode: 'Real' or 'VT'; Defaults to 'Real'"
+              required: false
+              allow_empty_value: true
+              example: {
+                yaml: "Real"
+              }
+            }
+          }
+        },
+        {
+          name: "x-version"
+          value: {
+            header: {
+              // Description for the 'x-version' header.
+              description: "Optional API version; Defaults to 'v1'"
+              required: false
+              allow_empty_value: true
+              example: {
+                yaml: "v1"
+              }
+            }
+          }
+        }
+      ]
+    }
+    // Definition of common responses that can be referenced across the API.
+    responses: {
+      additional_properties: [
+        {
+          name: "400"
+          value: {
+            response: {
+              // Description for the 400 response.
+              description: "Invalid Request"
+              content: {
+                additional_properties: {
+                  name: "application/json"
+                  value: {
+                    schema: {
+                      reference: {
+                        // Reference to the ErrorResponse schema defined elsewhere in the API.
+                        _ref: "#/components/schemas/ErrorResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    }
+    // Definition of security schemes like JWT Authentication.
+    security_schemes: {
+      additional_properties: [
+        {
+          name: "Authorization"
+          value: {
+            security_scheme: {
+              // Definition for the JWT Authentication security scheme.
+              type: "http"
+              name: "JWT Authentication"
+              description: "Enter JWT Bearer token **_only_**"
+              scheme: "bearer"
+              bearer_format: "JWT"
+            }
+          }
+        }
+      ]
+    }
+  }
+};

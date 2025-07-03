@@ -1,0 +1,12 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+import public "common_bp_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminAccounts";
+
+message AdminSearchAccount{
+    int32 id = 1;
+    string accountNumber = 2;
+    EnumBpOptionTradingLevel tradingLevel = 3;
+    google.protobuf.Timestamp CreatedTime = 4;
+}

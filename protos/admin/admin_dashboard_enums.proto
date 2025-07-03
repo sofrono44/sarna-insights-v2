@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminManagement";
+
+enum EnumAdminDashboardItemType {
+  EnumAdminDashboardItemType_Undefined = 0;
+  EnumAdminDashboardItemType_VerificationDecision = 1;
+  EnumAdminDashboardItemType_Account = 2;
+  EnumAdminDashboardItemType_TradingLevelChange = 3;
+  EnumAdminDashboardItemType_Mde = 4;
+}

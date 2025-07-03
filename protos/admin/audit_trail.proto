@@ -1,0 +1,32 @@
+syntax = "proto3";
+import "user.proto";
+import "google/protobuf/timestamp.proto";
+import "admin/audit_trail_enums.proto";
+import "common.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminTrail";
+
+message AuditTrail {
+  int32 Id = 1;
+  string Data = 2;
+  string Metadata = 3;
+  google.protobuf.Timestamp CreatedTime = 4;
+  EnumRegulatoryAuditTrailType Type = 5;
+  User AffectedUser = 6;
+  User ExecutingUser = 7;
+}
+
+message AdminRegulatoryAuditTrailResponse {
+	repeated AuditTrail Items = 1;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+//The search is performed by a parameter that is greater than 0
+//if both are greater than 0, then the search is performed on both
+//for example: affectedUserId = 0, affectedAccountId = 15, the search will be only by affectedAccountId and vice versa;
+//affectedUserId = 27, affectedAccountId = 15 - the search will be by affectedUserId and affectedAccountId
+message AdminRegulatoryAuditTrailRequest {
+   int32 AffectedUserId = 1;
+   int32 AffectedAccountId = 2;
+}

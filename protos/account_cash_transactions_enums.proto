@@ -1,0 +1,141 @@
+﻿syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Trading.Protos";
+
+// Enum for specifying the type of cash transactions in an account.
+// Corresponds to the [AccountCashTransactionTypes] table.
+enum EnumAccountCashTransactionType {
+  // Undefined transaction type.
+  EnumAccountCashTransactionType_Undefined = 0;
+  // FixedIncome call transaction.
+  EnumAccountCashTransactionType_FixedIncome_Call = 1;
+  // FixedIncome maturity transaction.
+  EnumAccountCashTransactionType_FixedIncome_Maturity = 2;
+  // FixedIncome put transaction.
+  EnumAccountCashTransactionType_FixedIncome_Put = 3;
+  // Cash disbursement transaction.
+  EnumAccountCashTransactionType_Cash_Disbursement = 4;
+  // IRA disbursement transaction.
+  EnumAccountCashTransactionType_IRA_Disbursement = 5;
+  // IRA withholding transaction.
+  EnumAccountCashTransactionType_IRA_Withholding = 6;
+  // Money market disbursement transaction.
+  EnumAccountCashTransactionType_Money_Market_Disbursement = 7;
+  // Money market charge fees transaction.
+  EnumAccountCashTransactionType_Money_Market_Charge_Fees = 8;
+  // Money market charges transaction.
+  EnumAccountCashTransactionType_Money_Market_Charges = 9;
+  // Money market checks transaction.
+  EnumAccountCashTransactionType_Money_Market_Checks = 10;
+  // Reinvest mutual fund disbursement transaction.
+  EnumAccountCashTransactionType_Reinvest_Mutual_Fund_Disbursement = 11;
+  // Sweep disbursement transaction.
+  EnumAccountCashTransactionType_Sweep_Disbursement = 12;
+  // Cash receipt transaction.
+  EnumAccountCashTransactionType_Cash_Receipt = 13;
+  // IRA receipt transaction.
+  EnumAccountCashTransactionType_IRA_Receipt = 14;
+  // Money market receipt transaction.
+  EnumAccountCashTransactionType_Money_Market_Receipt = 15;
+  // Sweep receipt transaction.
+  EnumAccountCashTransactionType_Sweep_Receipt = 16;
+  // Cash dividend transaction.
+  EnumAccountCashTransactionType_Cash_Dividend = 17;
+  // Qualified dividend transaction.
+  EnumAccountCashTransactionType_Qualified_Dividend = 18;
+  // Ex dividends payable transaction.
+  EnumAccountCashTransactionType_Ex_Dividends_Payable = 19;
+  // Ex dividends receivable transaction.
+  EnumAccountCashTransactionType_Ex_Dividends_Receivable = 20;
+  // Return of capital transaction.
+  EnumAccountCashTransactionType_Return_of_Capital = 21;
+  // Record date dividends receivable transaction.
+  EnumAccountCashTransactionType_Record_Date_Dividends_Receivable = 22;
+  // Euro dollar interest transaction.
+  EnumAccountCashTransactionType_Euro_Dollar_Interest = 23;
+  // FED fund interest transaction.
+  EnumAccountCashTransactionType_FED_Fund_Interest = 24;
+  // Credit interest paid transaction.
+  EnumAccountCashTransactionType_Credit_Interest_Paid = 25;
+  // Interest paid transaction.
+  EnumAccountCashTransactionType_Interest_Paid = 26;
+  // Money market interest paid transaction.
+  EnumAccountCashTransactionType_Money_Market_Interest_Paid = 27;
+  // Interest collect transaction.
+  EnumAccountCashTransactionType_Interest_Collect = 28;
+  // Debit interest collected transaction.
+  EnumAccountCashTransactionType_Debit_Interest_Collected = 29;
+  // Taxable Fixed Income interest transaction.
+  EnumAccountCashTransactionType_Taxable_FixedIncome_Interest = 30;
+  // Back office to G/L journal transaction.
+  EnumAccountCashTransactionType_Back_Office_To_G_L_Journal = 31;
+  // Cash journal transaction.
+  EnumAccountCashTransactionType_Cash_Journal = 32;
+  // Dividend payment fee transaction.
+  EnumAccountCashTransactionType_Dividend_Payment_Fee = 33;
+  // Reinvestment fee transaction.
+  EnumAccountCashTransactionType_Reinvestment_Fee = 34;
+  // Foreign security withholding transaction.
+  EnumAccountCashTransactionType_Foreign_Security_Withholding = 35;
+  // Foreign tax withholding transaction.
+  EnumAccountCashTransactionType_Foreign_Tax_Withholding = 36;
+  // Interest payment fee transaction.
+  EnumAccountCashTransactionType_Interest_Payment_Fee = 37;
+  // IRA journal transaction.
+  EnumAccountCashTransactionType_IRA_Journal = 38;
+  // Networking dividend transaction.
+  EnumAccountCashTransactionType_Networking_Dividend = 39;
+  // Networking journal transaction.
+  EnumAccountCashTransactionType_Networking_Journal = 40;
+  // Networking purchase transaction.
+  EnumAccountCashTransactionType_Networking_Purchase = 41;
+  // Principal payment fee transaction.
+  EnumAccountCashTransactionType_Principal_Payment_Fee = 42;
+  // Pair off broker or DVP transaction.
+  EnumAccountCashTransactionType_Pair_Off_Broker_or_DVP = 43;
+  // TEFRA withholding transaction.
+  EnumAccountCashTransactionType_TEFRA_Withholding = 44;
+  // Limited partnership distribution transaction.
+  EnumAccountCashTransactionType_Limited_Partnership_Distribution = 45;
+  // Short account mark to market transaction.
+  EnumAccountCashTransactionType_Short_Account_Mark_To_Market = 46;
+  // Non-taxable income transaction.
+  EnumAccountCashTransactionType_Non_Taxable_Income = 47;
+  // Non-taxable alternative minimum tax transaction.
+  EnumAccountCashTransactionType_Non_Taxable_Alternative_Minimum_Tax = 48;
+  // Principal paydown transaction.
+  EnumAccountCashTransactionType_Principal_Paydown = 49;
+  // Master note interest transaction.
+  EnumAccountCashTransactionType_Master_Note_Interest = 50;
+  // Repo interest transaction.
+  EnumAccountCashTransactionType_Repo_Interest = 51;
+  // SBA interest transaction.
+  EnumAccountCashTransactionType_SBA_Interest = 52;
+  // SBA return of principal transaction.
+  EnumAccountCashTransactionType_SBA_Return_Of_Principal = 53;
+  // Tax file adjustment transaction.
+  EnumAccountCashTransactionType_Tax_File_Adjustment = 54;
+  // US Treasury interest transaction.
+  EnumAccountCashTransactionType_US_Treasury_Interest = 55;
+  // Variation margin transaction.
+  EnumAccountCashTransactionType_Variation_Margin = 56;
+  // Non-taxable return of principal transaction.
+  EnumAccountCashTransactionType_Non_Taxable_Return_Of_Principal = 57;
+  // Capital gain 1250 transaction.
+  EnumAccountCashTransactionType_Capital_Gain_1250 = 58;
+  // Capital gain 1202 transaction.
+  EnumAccountCashTransactionType_Capital_Gain_1202 = 59;
+  // Medium term capital gain transaction.
+  EnumAccountCashTransactionType_Medium_Term_Capital_Gain = 60;
+  // Short term capital gain transaction.
+  EnumAccountCashTransactionType_Short_Term_Capital_Gain = 61;
+  // Long term capital gain transaction.
+  EnumAccountCashTransactionType_Long_Term_Cap_Gain = 62;
+  // Option assignment transaction.
+  EnumAccountCashTransactionType_Option_Assignment = 63;
+  // Option exercise transaction.
+  EnumAccountCashTransactionType_Option_Exercise = 64;
+  // Option expire transaction.
+  EnumAccountCashTransactionType_Option_Expire = 65;
+}

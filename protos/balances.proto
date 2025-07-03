@@ -1,0 +1,123 @@
+﻿syntax = "proto3";
+
+// Import common, bp (buying power), and pmbp (portfolio margin buying power) proto files.
+import "common.proto";
+import "bp.proto"; // reference to BalancesInfoRequest
+import "pmbp.proto"; 
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.Balances";
+
+// Request message for balance information.
+message BalancesInfoRequest {
+  // Filter by account ids (optional)
+  // Pass 2 empty arrays to get positions for all accounts visible to user.
+  repeated int32 AccountIDs = 1;
+  // Filter by account numbers (optional)
+  repeated string AccountNumbers = 2;
+  // Optional attribute. If set to true, the response will include downloadable OccReport for the PM (Portfolio Margin) Account result.
+  bool ReturnOccStyleReportForPM = 3;
+}
+
+// Response message for balance information, intended for RPC, will populate UX with complete info on balances of ALL accounts.
+// Can be used to stream info for a single account. UX capable of processing.
+message BalancesInfoResponse {
+  // Indicates if the response has data.
+  bool HasData = 1;
+  // Map of AccountId to AccountBalanceInfo. <AccountId, BuyingPowerResponse>
+  map<int32, AccountBalanceInfo> AccountBalances = 4;
+  // List of warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Contains balance information for an account.
+message AccountBalanceInfo {
+  // The account ID.
+  int32 AccountId = 1;
+  // Results from BP engine for RegT accounts.
+  BpValuesResponse BpValuesResponse = 2;
+  // Map of SubaccountId to SubaccountBalanceInfo.
+  map<int32, SubaccountBalanceInfo> SubaccountBalancesInfos = 3;
+  // Yesterday's liquidation value.
+  double YesterdayLiquidationValue = 4;
+  // Cash amount in the account.
+  double Cash = 5;
+  // Results from PMBP engine for Portfolio Margin accounts.
+  PmBpValuesResponse PmBpValuesResponse = 6;
+  // If requested, contains OCC-style report for PM, that could be downloaded as CSV on UX. Requested via BalancesInfoRequest.ReturnOccStyleReportForPM)
+  string OccStyleReportForPM = 7;
+  // Flag indicating Portfolio Margin account. If True, PMBP values are provided in PmBpValues.
+  bool IsPMAccount = 8;
+}
+
+// Contains subaccount balance information.
+message SubaccountBalanceInfo {
+  // The subaccount ID.
+  int32 SubaccountId = 1;
+  // Yesterday's liquidation value for the subaccount.
+  double YesterdayLiquidationValue = 2;
+  // Cash amount in the subaccount.
+  double Cash = 3;
+  // not needed, as it is part of parent's BP dto: RegTBpValuesResponseInfo SubaccountBalanceBpEngine = 3;
+}
+
+// Balance adjustment request.
+message BalanceAdjustmentRequest{
+  repeated BalanceAdjustment BalanceAdjustments = 1;
+}
+
+// Request message for balance cash and SMA information.
+message BalanceCashInfoRequest {
+  // Filter by account id (optional if AccountNumber is provided)
+  int32 AccountId = 1;
+  // Filter by account numbers (optional if AccountId is provided
+  string AccountNumber = 2;
+}
+
+// Response message for balance cash and SMA information.
+message BalanceCashInfoResponse {
+  double Cash = 1;
+  double Sma = 2;
+
+  // List of warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Request message for balance adjustment.
+message BalanceAdjustment{
+  // The account ID. optional if account number is provided
+  int32 AccountId = 1;
+  // The account number. optional if account id is provided
+  string AccountNumber = 2;
+  // Cash adjustment amount
+  // meaning positive value will increase cash balance, negative value will decrease cash balance
+  double CashAdjustment = 3;
+  // SMA adjustment amount
+  // meaning positive value will increase SMA balance, negative value will decrease SMA balance
+  double SMAAdjustment = 4;
+  string Details = 5;
+}
+
+// Balance adjustment response.
+message BalanceAdjustmentResponse{
+  repeated BalanceAdjustmentStatus BalanceAdjustmentStatuses = 1;
+
+  // List of warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Response message for balance adjustment.
+message BalanceAdjustmentStatus{
+  // The account ID.
+  int32 AccountId = 1;
+  // The account number.
+  string AccountNumber = 2;
+  // The status of the balance adjustment.
+  bool IsSuccess = 3;
+}

@@ -1,0 +1,37 @@
+﻿syntax = "proto3";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+import "admin/admin_bp_symbol_requirements.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminBpSymbolRequirement";
+
+service AdminBpSymbolRequirementService {
+  
+  rpc List(google.protobuf.Empty) returns (BpSymbolRequirementListResponse){
+    option (google.api.http) = {
+      get: "/admin/bp-symbol-requirement"
+    };
+  }
+  
+  rpc Search(BpSymbolRequirementSearchRequest) returns (BpSymbolRequirementResponse){
+    option (google.api.http) = {
+      post: "/admin/bp-symbol-requirement"
+      body: "*"
+    };
+  }
+
+  rpc Override(BpSymbolRequirementOverrideRequest) returns (BpSymbolRequirementResponse){
+    option (google.api.http) = {
+      post: "/admin/bp-symbol-requirement"
+      body: "*"
+    };
+  }
+
+  rpc Delete(BpSymbolRequirementDeleteRequest) returns (BpSymbolRequirementResponse){
+    option (google.api.http) = {
+      delete: "/admin/bp-symbol-requirement"
+      body: "*"
+    };
+  }
+}

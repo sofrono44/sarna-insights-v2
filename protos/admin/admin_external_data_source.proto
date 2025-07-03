@@ -1,0 +1,67 @@
+﻿syntax = "proto3";
+import "common_enums.proto";
+import "common.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.ExternalDataSource";
+
+message ListExternalAccountMappingsResponse {
+ repeated ExternalAccountMapping ExternalAccountMappings = 1;
+ 
+  // List of warnings, applicable at the response level
+  repeated ResponseWarning Warnings = 101;
+  // List of errors, applicable at the response level
+  repeated ResponseError Errors = 102;
+}
+
+message GetExternalAccountMappingsRequest {
+  // The ID of the external account mapping to retrieve.
+  int32 ExternalAccountMappingId = 1;
+}
+
+message GetExternalAccountMappingsResponse {
+  // The external account mapping information.
+  ExternalAccountMapping ExternalAccountMapping = 1;
+  
+  // List of warnings, applicable at the response level
+  repeated ResponseWarning Warnings = 101;
+  // List of errors, applicable at the response level
+  repeated ResponseError Errors = 102;
+}
+
+message ManageExternalAccountMappingsRequest {
+  // The external account mapping information to manage.
+  ExternalAccountMapping ExternalAccountMapping = 1;
+}
+
+message ManageExternalAccountMappingsResponse {
+  // The processed external account mapping ID.
+  int32 ExternalAccountMappingId = 1;
+  
+  // List of warnings, applicable at the response level
+  repeated ResponseWarning Warnings = 101;
+  // List of errors, applicable at the response level
+  repeated ResponseError Errors = 102;
+}
+
+message DeleteExternalAccountMappingsRequest {
+  // The ID of the external account mapping to delete.
+  int32 ExternalAccountMappingId = 1;
+}
+
+// Defines the ExternalAccountMappings message.
+message ExternalAccountMapping {
+  // Unique identifier for the external account mapping.
+  int32 ExternalAccountMappingId = 1;
+  // The external account number.
+  string ExternalAccountNumber = 2;
+  // The internal account number.
+  string AccountNumber = 3;
+  // The external data source associated with the mapping.
+  EnumExternalDataSource ExternalDataSource = 4;
+  // The clearing account type for the internal account.
+  EnumClearingAccountType ClearingAccountType = 5;
+  // The allocation
+  double Allocation = 6;
+}
+
+

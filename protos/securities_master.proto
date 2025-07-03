@@ -1,0 +1,51 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "orders_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.SecuritiesMasters";
+
+// DTOs corresponding to DTS.Libs.Trading.SecuritiesMaster.DTO. Greeks, current quotes, belong to different proto (quotes.proto).
+
+message SecuritiesMasterDataRequest {
+  bool GetAllEquities = 1;
+  // Array of Underlying Symbols for which equity options will be fetched.
+  repeated string UnderlyingSymbols = 2;
+}
+
+message SecuritiesMasterDataResponse {
+  bool HasData = 1;
+  // Sorted by Symbol, Asc. Typically list of all Equities from DB, based on SecuritiesMasterDataRequest.GetAllEquities
+  repeated Equity Equities = 2;
+  map<string, EquityOptionsListInfo> EquityOptionsListInfoByUnderlyingSymbol = 3;  // <OrderId, OrderInfo>
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+
+message Equity {
+  string Symbol = 1; // PK
+  string Description = 2;
+  bool IsOptionable = 3;
+  double PreviousDayClosePrice = 4;
+}
+
+message EquityOptionsListInfo {
+  // Sorted ASC ROOT\EXPIRATION\STRIKE\CALLORPUT for chains building on UX
+  repeated EquityOption EquityOptions = 1;
+  repeated string RootSymbols = 2;
+}
+
+message EquityOption {
+  // PK
+  string Symbol = 1;
+  string UnderlyingSymbol = 2;
+  // Null or empty value means that RootSymbol==UnderlyingSymbol. Non-DB attribute (at least for now). Root symbol is part of Symbol attribute, in a sense its duplicate. Still, it is better to determine Root by backend, hence this attribute.
+  string RootSymbol = 3;
+  double PreviousDayClosePrice = 4;
+  EnumCallOrPut CallOrPut = 5;
+  google.protobuf.Timestamp Expiration = 6;
+  double StrikePrice = 7;
+  double Multiplier = 8;
+  double ContractSize = 9;
+}

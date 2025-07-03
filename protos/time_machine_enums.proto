@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.TimeMachine.DTO";
+
+enum EnumTimeMachineRetention {
+  EnumTimeMachineRetention_Undefined = 0;
+  EnumTimeMachineRetention_Disabled = 1;
+  EnumTimeMachineRetention_Short = 2;
+  EnumTimeMachineRetention_Long = 3;
+}
+
+enum EnumTimeMachineRequestOrigin {
+  EnumTimeMachineRequestOrigin_Undefined = 0;
+  // Monitor Request
+  EnumTimeMachineRequestOrigin_Monitor = 1;
+  // Trade Preview
+  EnumTimeMachineRequestOrigin_ReviewOrder = 2;
+  // Initiates Order
+  EnumTimeMachineRequestOrigin_InitiateOrderExecution = 3;
+  // BP Pairing Request
+  EnumTimeMachineRequestOrigin_PairingRequest = 4;
+  // PM Report Request
+  EnumTimeMachineRequestOrigin_P_M_Report = 5;
+  // Risk Manager Request
+  EnumTimeMachineRequestOrigin_RiskManager = 6;
+  // BP check ensures the transfer won't result in unwanted risk, like leaving uncovered short positions.
+  EnumTimeMachineRequestOrigin_PreTransferCheck = 7;
+  // BP check for balances request.
+  EnumTimeMachineRequestOrigin_B_P_Check = 8;
+}
+
+enum EnumBpType {
+  EnumBpType_Undefined = 0;
+  EnumBpType_Bp = 1;
+  EnumBpType_Pmbp = 2;
+}

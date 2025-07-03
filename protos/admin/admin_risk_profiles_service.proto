@@ -1,0 +1,31 @@
+﻿syntax = "proto3";
+import "admin/admin_risk_profiles.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminRiskProfiles";
+
+service AdminRiskProfilesService {
+  rpc Get(RiskProfilesRequest) returns (RiskProfilesResponse){
+    option (google.api.http) = {
+      get: "/admin/risk-profiles/{RiskProfileId}"
+    };
+  }
+
+  rpc Update(RiskProfileUpdateRequest) returns (RiskProfileUpdateResponse){
+    option (google.api.http) = {
+      post: "/admin/risk-profiles/update"
+    };
+  }
+
+  rpc Clone(RiskProfileCloneRequest) returns (RiskProfileUpdateResponse){
+    option (google.api.http) = {
+      get: "/admin/risk-profiles/clone/{RiskProfileId}"
+    };
+  }
+
+  rpc Delete(RiskProfileDeleteRequest) returns (RiskProfileDeleteResponse) {
+    option (google.api.http) = {
+      delete: "/admin/risk-profiles/{RiskProfileId}"
+    };
+  }
+}

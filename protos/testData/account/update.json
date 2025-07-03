@@ -1,0 +1,9 @@
+{
+  "account": {
+    "AccountId": 1022,
+    "AccountType": 1,
+    "AccountStatus": 1,
+    "TradingLevel": 1,
+    "BpMarginType": 1
+  }
+}

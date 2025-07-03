@@ -1,0 +1,268 @@
+﻿syntax = "proto3";
+import "accounts.proto";
+import "user.proto";
+import "search.proto";
+import "admin/admin_management_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminManagement";
+
+message AccountsSearchRequest {
+	SearchCriteria SearchCriteria = 100;
+}
+
+message AccountsSearchResponse {
+	repeated AccountInfo Items = 1;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+
+	// Copy from request
+	SearchCriteria SearchCriteria = 110;
+	PageResponse Page = 111;
+}
+
+message UpdateAccountRequest {
+	Account Account = 1;
+	bool IsEmployeeAccount = 2;
+	bool IsRiskMonitoringEnabled = 3;
+}
+
+message AccountInfo {
+	Account Account = 1;
+}
+
+message UsersSearchRequest {
+	string Query = 1;
+}
+
+message UsersSearchResponse {
+	repeated User Items = 1;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+message GetUserAccountsRequest {
+	int32 UserId = 1;
+}
+
+message GetUserAccountsResponse{
+	repeated Account Items = 1;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+message GetAccountRequest {
+	int32 AccountId = 1;
+	string AccountNumber = 2;
+}
+
+message GetAccountResponse{
+	Account Account = 1;
+	bool IsEmployeeAccount = 2;
+	bool IsRiskMonitoringEnabled = 3;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+message GetSecurityQuestionsRequest {
+	int32 UserId = 1;
+}
+
+message UpdateUserStatusRequest {
+	bool IsBlocked = 1;
+	int32 UserId = 2;
+}
+
+message GetUserStatusRequest {
+	int32 UserId = 1;
+}
+
+message GetUserStatusResponse {
+	bool IsBlocked = 1;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+message UpdateUserIsEmployeeStatusRequest {
+	bool IsEmployee = 1;
+	int32 UserId = 2;
+}
+
+message GetUserRequest {
+	int32 UserId = 1;
+}
+
+message LinkUserToAccountRequest {
+	int32 UserId = 1;
+	string AccountNumber = 2;
+}
+
+message GetUserResponse {
+	User User = 1;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+message SendEmailToUserRequest {
+	int32 UserId = 1;
+	int32 AccountId = 2;
+	EnumAdminEmailType EmailType = 3;
+	repeated string AdditionalInfo = 4;
+}
+
+message SendEmailToUserResponse {
+	bool EmailSent = 1;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+// Create or update user request
+message ManageUserRequest {
+	// User data to create or update
+	User User = 1;
+}
+
+// Create or update user response
+message ManageUserResponse {
+	// Affected user id
+	int32 UserId = 1;
+	// If the operation was successful
+	bool IsSuccess = 2;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+// Get, update or delete Branche request
+message BranchesRequest {
+	// Requested branch id or 0 for all branches
+	int32 BranchId = 1;
+}
+
+// Get Branches response
+message GetBranchesResponse {
+	// List of branches
+	repeated Branch Branches = 1;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+// Create or update branch response
+message ManageBranchResponse {
+	// Affected branch id
+	int32 BranchId = 1;
+	// If the operation was successful
+	bool IsSuccess = 2;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+// Branch
+message Branch
+{
+	// Branch id
+	int32 BranchId = 1;
+	// Branch name
+	string BranchName = 2;
+	// Branch code
+	string BranchCode = 3;
+	// Parent branch id
+	int32 ParentBranchId = 4;
+	// Clearing house id
+	int32 ClearingHouseId = 5;
+	// Country code
+	string CountryCode = 6;
+}
+
+message UploadMorningFileRequest {
+	EnumAdminFileType FileType = 1;
+	string FileName = 2;
+	bytes FileContent = 3;
+	//File size in bytes
+	int64 FileSize = 4;
+}
+
+message UploadMorningFileResponse {
+	bool IsSucceed = 1;
+	//internal file name, no need to show to user
+	string SavedFileName = 2;
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+//Get all AccountGroups
+message AccountGroupsResponse
+{
+	repeated AccountGroup AccountGroups = 1;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+//Get AccountGroup by Id
+message AccountGroupRequest
+{
+	int32 AccountGroupId = 1;
+}
+
+//Get AccountGroup Response
+message AccountGroupResponse
+{
+	AccountGroup AccountGroup = 1;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+//AddOrUpdate AccountGroup Response
+message ManageAccountGroupsResponse
+{
+	//added or updated AccountGroupId
+	//if AccountGroupId is greater than 0 then it is successfully added or updated
+	int32 AccountGroupId = 1;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+//Delete AccountGroup Request
+message DeleteAccountGroupRequest
+{
+	int32 AccountGroupId = 1;
+}
+
+//Delete AccountGroup Response
+message DeleteAccountGroupResponse
+{
+	bool IsSuccess = 1;
+
+	repeated ResponseWarning Warnings = 101;
+	repeated ResponseError Errors = 102;
+}
+
+//AccountGroup
+message AccountGroup
+{
+	//Account group id
+	//0 for adding new account group
+	int32 AccountGroupId = 1;
+	//Account group name
+	string Name = 2;
+	//Branch id to which this account group belongs
+	int32 BranchId = 3;
+	//Accounts in this account group
+	//read only
+	repeated Account Accounts = 4;
+	//Number of static accounts in this account group
+	int32 AccountsCount = 5;
+	//The representative that user belongs to
+	// 0 means no representative restriction
+	int32 RepresentativeId = 6;
+	//Enables risk monitoring
+	bool IsRiskMonitoringEnabled = 7;
+	//Risk profile id
+	int32 RiskProfileId = 8;
+	//Account filter for dynamic account groups
+	FilterGroup AccountFilter = 9;
+}

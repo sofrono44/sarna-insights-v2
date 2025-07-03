@@ -1,0 +1,38 @@
+﻿syntax = "proto3";
+
+import "common.proto";
+import "sessions_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Sessions";
+
+// Request to create a session with specified language, region, and Azure AD access token.
+message CreateSessionRequest {
+  // Example: en
+  string LanguageCode = 4;
+  // ISO 3166-1 region code.
+  // See: https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2
+  // Example: US
+  string RegionCode = 5;
+  // Example: 123***789
+  string AzureAdAccessToken = 6;
+}
+
+// Response containing session information.
+message SessionInfoResponse {
+  // Indicates if the response contains data.
+  bool HasData = 1;
+  // Flag indicating if the user must re-login. Backend controls when UX is forcing user to re-login to Identity Provider.
+  bool MustReLogin = 2;
+  // The session ID generated for the session.
+  string SessionId = 3;
+  // The user type associated with the session. Corresponds to EnumUserTypes (1:Retail, 2:BranchAdmin, 3:SuperAdmin)
+  EnumUserType UserType = 4;
+  // The request ID associated with the session creation request.
+  string RequestId = 5;
+  // The user label associated with the session. This is typically the abbreviated name of the user.
+  string UserLabel = 6;
+  // List of warnings related to the session creation.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the session creation.
+  repeated ResponseError Errors = 102;
+}

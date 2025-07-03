@@ -1,0 +1,62 @@
+﻿syntax = "proto3";
+
+// Import the common proto definitions and market data entitlement enums.
+import public "common.proto";
+import "market_data_entitlement_enums.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.UserProfiles";
+
+// Message containing a list of market data entitlement form questions, including any warnings or errors.
+message MarketDataEntitlementFormQuestions {
+  // A list of questions related to market data entitlement.
+  repeated MarketDataEntitlementFormQuestion MarketDataEntitlementFormQuestion = 1;
+  // List of warnings related to the market data entitlement form questions.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the processing of market data entitlement form questions.
+  repeated ResponseError Errors = 102;
+}
+
+// Represents a single question in the market data entitlement form.
+message MarketDataEntitlementFormQuestion {
+  // The unique key identifier for the question.
+  string Key = 1;
+  // The text of the question.
+  string Question = 2;
+  // The type of the question, defining how it should be presented or answered.
+  MarketDataEntitlementFormQuestionType MarketDataEntitlementFormQuestionType = 3;
+}
+
+// Response message containing the responses to the market data entitlement form, including any warnings or errors.
+message MarketDataEntitlementFormResponsesResponse {
+  // The responses to the market data entitlement form.
+  MarketDataEntitlementFormResponses MarketDataEntitlementFormResponses = 1;
+  // List of warnings related to the market data entitlement form responses.
+  repeated ResponseWarning Warnings = 101;
+  // List of errors occurred during the processing of market data entitlement form responses.
+  repeated ResponseError Errors = 102;
+}
+
+// Contains all responses to the market data entitlement form, the requested entitlement types, and the approval status.
+message MarketDataEntitlementFormResponses {
+  // The types of market data entitlements requested.
+  repeated EnumMarketDataEntitlementType RequestedMarketDataEntitlementTypes = 1;
+  // The responses to individual questions in the form.
+  repeated MarketDataEntitlementFormResponse MarketDataEntitlementFormPersonResponses = 2;
+  // The types of consents given in the form.
+  repeated EnumMarketDataEntitlementConsent MarketDataEntitlementConsentTypes = 3;
+  // The approval status of the market data entitlement request.
+  EnumMarketDataEntitlementApprovalStatus MarketDataEntitlementApprovalStatus = 4;
+  // Reason for the approval status, if applicable.
+  string Reason = 5;
+}
+
+// Represents a response to a single question in the market data entitlement form.
+message MarketDataEntitlementFormResponse {
+  // The key identifier of the question being answered.
+  string MarketDataEntitlementFormQuestionKey = 1;
+  // The answer to the question.
+  string Answer = 2;
+  // The type of the question being answered, for context.
+  MarketDataEntitlementFormQuestionType MarketDataEntitlementFormQuestionType = 3;
+}

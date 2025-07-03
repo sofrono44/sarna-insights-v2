@@ -1,0 +1,52 @@
+﻿syntax = "proto3";
+// Imports Google's empty message type for use in messages that do not require a body.
+import "google/protobuf/empty.proto";
+// Imports definitions for account application processes.
+import "account_application.proto";
+// Imports definitions related to user data.
+import "user_data.proto";
+// Imports definitions for market data entitlement processes.
+import "market_data_entitlement.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.UserProfiles";
+
+// Defines the service for user data operations.
+service UserDataService {
+  // Retrieves the user profile.
+  rpc GetUserProfile(google.protobuf.Empty) returns (GetUserProfileResponse);
+  // Updates the user profile.
+  rpc UpdateUserProfile(UpdateUserProfileRequest) returns (google.protobuf.Empty);
+  // Updates the user's email address.
+  rpc UpdateUserEmail(UpdateUserEmailRequest) returns (google.protobuf.Empty);
+  // Retrieves the investment profile of the user.
+  rpc GetInvestmentProfile(google.protobuf.Empty) returns (GetInvestmentProfileResponse);
+
+  // Retrieves all security questions available.
+  rpc GetAllSecurityQuestions(google.protobuf.Empty) returns (SecurityQuestions);
+
+  // Retrieves all questions for the market data entitlement form.
+  rpc GetAllMarketDataEntitlementFormQuestions(google.protobuf.Empty) returns (MarketDataEntitlementFormQuestions);
+  // Updates the user's responses to the market data entitlement form.
+  rpc UpdateMarketDataEntitlementFormUserResponses(MarketDataEntitlementFormResponses) returns (google.protobuf.Empty);
+  // Retrieves the user's responses to the market data entitlement form.
+  rpc GetMarketDataEntitlementFormResponses(google.protobuf.Empty) returns (MarketDataEntitlementFormResponses);
+
+
+  // Deletes the user's responses to market data entitlement form questions.
+  rpc DeleteMarketDataEntitlementFormQuestionsUserResponses(google.protobuf.Empty) returns (google.protobuf.Empty);
+
+  // Retrieves the user's responses to security questions.
+  rpc GetSecurityQuestionUserResponses(google.protobuf.Empty) returns (SecurityQuestionUserResponsesResponse);
+  // Updates the user's responses to security questions.
+  rpc UpdateSecurityQuestionUserResponses(SecurityQuestionUserResponseRequest) returns (google.protobuf.Empty);
+
+  // Retrieves the user's notification preferences.
+  rpc GetUserNotificationPreferences(google.protobuf.Empty) returns (GetUserNotificationPreferencesResponse);
+  // Updates the user's notification preferences.
+  rpc UpdateUserNotificationPreferences(UpdateUserNotificationPreferencesRequest) returns (google.protobuf.Empty);
+  // Retrieves the user's general preferences.
+  rpc GetUserPreferences(GetUserPreferencesRequest) returns (GetUserPreferencesResponse);
+  // Updates the user's general preferences.
+  rpc UpdateUserPreferences(UpdateUserPreferencesRequest) returns (google.protobuf.Empty);
+}

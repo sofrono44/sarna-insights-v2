@@ -1,0 +1,226 @@
+﻿syntax = "proto3";
+
+//import "protobuf-net/bcl.proto"; // schema for protobuf-net's handling of core .NET types
+// C# to proto: string proto = Serializer.GetProto<RegTBpValuesResponseInfo>();
+//import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+import "orders_enums.proto";
+import "common.proto";
+import "quotes_enums.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Quotes";
+
+// REQUEST MESSAGES
+
+// Request for quotes, including both single and net quotes.
+message QuoteRequest {
+  // Information for individual quote requests.
+  repeated GetQuoteRequestInfo GetQuoteRequestInfos = 1;
+  // Information for net quote requests.
+  repeated GetNetQuoteRequestInfo GetNetQuoteRequestInfos = 2;
+}
+
+// Request for chain quotes.
+message ChainQuoteRequest {
+  // Information for chain quotes request.
+  GetChainQuotesRequestInfo GetChainQuotesRequestInfo = 1;
+}
+
+// Request for expiration dates based on an underlying symbol.
+message GetExpirationsRequest {
+  // Symbol of the underlying asset.
+  string UnderlyingSymbol = 1;
+}
+
+// RESPONSE MESSAGES
+
+// Response for chain quote requests.
+message ChainQuoteResponse {
+  // Chain quotes response information.
+  GetChainQuotesResponseInfo GetChainQuotesResponseInfo = 1;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Response for expiration dates request.
+message GetExpirationsResponse {
+  // Information about expiration dates.
+  repeated ExpirationInfo ExpirationInfos = 1;
+  // Warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Contains expiration date information.
+message ExpirationInfo {
+  // Expiration date of the option contract.
+  google.protobuf.Timestamp ExpirationDate = 1;
+}
+
+// INFORMATION MESSAGES
+
+// Information for a chain quotes request.
+message GetChainQuotesRequestInfo {
+  // Symbol of the underlying asset for which chain quotes are requested.
+  string UnderlyingSymbol = 1;
+  // Specific expiration dates for which quotes are requested.
+  repeated google.protobuf.Timestamp ExpirationDates = 2;
+}
+
+// Information for a single quote request.
+message GetQuoteRequestInfo {
+  // Symbol for which the quote is requested.
+  string Symbol = 1;
+  // Allow to get synthetic quote for Flex options
+  bool GetSyntheticQuote = 2;
+}
+
+// Information for a request for multiple quotes.
+message GetQuotesRequestInfo {
+  // Symbols for which quotes are requested.
+  repeated string Symbols = 1;
+  // Allow to get synthetic quote for Flex options
+  bool GetSyntheticQuote = 2;
+}
+
+// Information for a request for multiple quotes.
+message GetNetQuoteRequestInfos {
+  // Symbols for which quotes are requested.
+  repeated GetNetQuoteRequestInfo GetNetQuoteRequestInfo = 1;
+}
+
+// Information for net quote requests.
+message GetNetQuoteRequestInfo {
+  // Information for each net quote request.
+  repeated string LegSymbols = 1;
+  repeated EnumOrderAction LegOrderActions = 2;
+  repeated double LegQuantities = 3;
+  double OrderQuantity = 4;
+  double OrderMultiplier = 5;
+  // unique value that allows to identify NetQuote to Order, typically OrderId, or random int value for an unsaved order.
+  int32 UniqueKey = 6;
+}
+// Errors will by returned in API level, QuoteProxyResponse.Erros are typically not used by UX (too specific for end user)
+message QuoteResponse {
+  bool HasData = 1;
+  repeated QuoteData QuoteDatas = 2;
+  repeated NetQuoteInfo NetQuoteInfos = 3;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+message NetQuoteInfo {
+  NetQuote NetQuote = 1;
+  // unique value that allows to identify NetQuote to Order, typically OrderId, or random int value for an unsaved order.
+  int32 UniqueKey = 2;
+}
+message NetQuote {
+  // Summary level of NetQuote quote, containing Nbbo Bid, Ask, Last, greeks, etc.
+  NetQuoteSummary Summary = 1;
+  repeated Quote LegQuotes = 2;
+}
+message NetQuoteSummary {
+  Quote Quote = 1;
+  google.protobuf.Timestamp QuoteTime = 2;
+  bool IsCredit = 3; // For credit spread, where initial Net calculations result with: Math.Abs(Ask)<Math.Abs(Bid)
+}
+message QuoteProxyResponse {
+  bool ACK = 1 ;
+  repeated GetQuoteResponseInfo GetQuoteResponseInfos = 2;
+  GetChainQuotesResponseInfo GetChainQuotesResponseInfo = 3;
+  SubscriptionTopicResponseInfo SubscriptionTopicResponseInfo = 4;
+  repeated ResponseWarning Warnings = 101;
+  repeated ResponseError Errors = 102;
+}
+message GetChainQuotesResponseInfo {
+  QuoteData QuoteData = 1;
+}
+message GetQuoteResponseInfo {
+  QuoteData QuoteData = 1;
+}
+
+// Keep in-sync with backend's IQuote
+message Quote {
+  double Last = 1 ;
+  double Bid = 2 ;
+  double Ask = 3 ;
+  string Symbol = 4;
+  double Multiplier = 5 ;
+  // The amount of the underlying asset covered by the options contract
+  double ContractSize = 6;
+  double Midpoint = 7;
+  int32 LastSize = 8;
+  int32 AskSize = 9;
+  int32 BidSize = 10;
+  string AskExchangeParticipantId = 11;
+  string BidExchangeParticipantId = 12;
+  string LastExchangeParticipantId = 13;
+  string AskExchangeName = 14;
+  string BidExchangeName = 15;
+  string LastExchangeName = 16;
+  double Volume = 17;
+  double PriceChange = 18;
+  // The percent of the price change for the asset from the previous trading day.
+  double PriceChangePercent = 19;
+  // The open price of the asset for the day.
+  double OpenPrice = 20;
+  // The closing price of the asset for the day.
+  double ClosePrice = 21;
+  // The closing price of the asset for the previous trading day.
+  double PreviousClosePrice = 22;
+  // The lowest price of the asset for the day.
+  double DayLowPrice = 23;
+  // The highest price of the asset for the day.
+  double DayHighPrice = 24;
+  bool IsRealTime = 25;
+
+  oneof subtype {
+    StockQuote StockQuote = 1009;
+    OptionQuote OptionQuote = 1010;
+    FixedIncomeQuote FixedIncomeQuote = 1008;
+  }
+}
+message StockQuote {
+}
+message SubscriptionTopicResponseInfo {
+  repeated string TopicsAvailableForStreaming = 1;
+}
+message OptionQuote {
+  int32 ExpirationYear = 1;
+  int32 ExpirationMonth = 2 ;
+  int32 ExpirationDay = 3;
+  double Strike = 4;
+  bool IsCall = 5;
+  OptionGreeks OptionGreeks = 6;
+  double BreakEvenPrice = 7;
+  double ImpliedVolatility = 8;
+  double OpenInterest = 9;
+}
+message OptionGreeks {
+  double Delta = 1;
+  double Gamma = 2;
+  double Theta = 3;
+  double Vega = 4;
+}
+message ChainQuotes {
+  StockQuote UnderlyingStockQuote = 1;
+  repeated Quote OptionQuotes = 2;
+}
+
+message FixedIncomeQuote{
+  string Cusip = 1;
+  string BondTypeCode = 2;
+  double UnitQuantity = 3;
+  double Factor = 4;
+  bool IsMarginable = 5;
+}
+    
+message QuoteData {
+  EnumQuoteDataType QuoteDataType = 1 ;
+  google.protobuf.Timestamp QuoteTime = 2;
+  ChainQuotes ChainQuotes = 3;
+  Quote Quote = 4;
+  string QuoteProvider = 5;
+}

@@ -1,0 +1,31 @@
+{
+    "RequestTypes": [
+      7
+    ],
+    "CreateSessionRequest": null,
+    "SessionInfoRequest": null,
+    "AccountsRequest": null,
+    "BalancesInfoRequest": null,
+    "OrdersInfoRequest": null,
+    "OrderExecutionLogsRequest": null,
+    "PositionsInfoRequest": null,
+    "BuyingPowerRequest": null,
+    "SecuritiesMasterDataRequest": null,
+    "TradeRequest": null,
+    "QuoteRequest": {
+      "GetQuoteRequestInfos": [
+        {
+          "Symbol": "WTF20715C0066000"
+        }
+      ],
+      "GetNetQuoteRequestInfos": []
+    },
+    "SessionInfo": {
+      "SessionId": "500",
+      "LanguageCode": "en",
+      "RegionCode": "US",
+      "AppMode": 1
+    },
+    "AccountApplicationRequest": null,
+    "GlossaryRequest": null
+  }

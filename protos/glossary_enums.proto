@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Services.BusinessHub.DTO.RPC.Request.Glossary";
+
+// Enum for specifying the type of glossary request.
+enum EnumGlossaryRequestType {
+  // Undefined request type.
+  EnumGlossaryRequestType_Undefined = 0;
+  // Request type for retrieving provinces.
+  EnumGlossaryRequestType_Provinces = 1;
+}

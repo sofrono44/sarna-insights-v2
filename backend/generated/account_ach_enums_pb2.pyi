@@ -1,0 +1,25 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumAccountAchTransactionType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumAccountAchTransactionType_Undefined: _ClassVar[EnumAccountAchTransactionType]
+    EnumAccountAchTransactionType_Credit: _ClassVar[EnumAccountAchTransactionType]
+    EnumAccountAchTransactionType_Debit: _ClassVar[EnumAccountAchTransactionType]
+
+class EnumAccountAchTransactionStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumAccountAchTransactionStatus_Undefined: _ClassVar[EnumAccountAchTransactionStatus]
+    EnumAccountAchTransactionStatus_Initialized: _ClassVar[EnumAccountAchTransactionStatus]
+    EnumAccountAchTransactionStatus_Submitted: _ClassVar[EnumAccountAchTransactionStatus]
+    EnumAccountAchTransactionStatus_Fulfilled: _ClassVar[EnumAccountAchTransactionStatus]
+EnumAccountAchTransactionType_Undefined: EnumAccountAchTransactionType
+EnumAccountAchTransactionType_Credit: EnumAccountAchTransactionType
+EnumAccountAchTransactionType_Debit: EnumAccountAchTransactionType
+EnumAccountAchTransactionStatus_Undefined: EnumAccountAchTransactionStatus
+EnumAccountAchTransactionStatus_Initialized: EnumAccountAchTransactionStatus
+EnumAccountAchTransactionStatus_Submitted: EnumAccountAchTransactionStatus
+EnumAccountAchTransactionStatus_Fulfilled: EnumAccountAchTransactionStatus

@@ -1,0 +1,19 @@
+{
+  "RequestTypes": [
+    12
+  ],
+  "SessionInfo": {
+    "SessionId": "500500",
+    "LanguageCode": "EN",
+    "CountryCode": "US",
+    "AppMode": 0
+  },
+  "AccountApplicationRequest": {
+    "RequestType": 14,    
+    "Account": {
+      "AccountType": 1,
+      "BpMarginType": 1,
+      "Nickname": "Hello"
+    }
+  }
+}

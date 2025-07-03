@@ -1,0 +1,103 @@
+﻿syntax = "proto3";
+
+// Imports the necessary protobuf files for timestamps and various enums.
+import "google/protobuf/timestamp.proto";
+import "api_hub_enums.proto";
+import "commissions_enums.proto";
+import "orders_enums.proto";
+import "common.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.Commissions";
+
+// Represents a request for commission-related actions.
+message CommissionRequest {
+  // Specifies the type of commission request.
+  EnumCommissionRequestType CommissionRequestType = 1;
+  // Contains information for a commission promo claim request.
+  CommissionPromoClaimRequest CommissionPromoClaimRequest = 2;
+}
+
+// Contains the promo code for claiming a commission promo.
+message CommissionPromoClaimRequest {
+  // The promo code to claim.
+  string PromoCode = 1;
+}
+
+// Represents the response to a commission request.
+message CommissionResponse {
+  // Contains the response for a commission promo claim.
+  CommissionPromoClaimResponse CommissionPromoClaimResponse = 2;
+}
+
+// Contains the result of a commission promo claim request.
+message CommissionPromoClaimResponse {
+  // Indicates whether the promo commission claim was successful.
+  bool PromoCommissionClaimSuccess = 1;
+  // Lists commissions applied to the user's accounts.
+  repeated Commission CommissionsAppliedToUserAccounts = 2;
+  // Lists warnings related to the response.
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors occurred during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Defines the structure of a commission.
+message Commission {
+  // The unique identifier for the commission.
+  int32 CommissionId = 1;
+  // The schedule of the commission.
+  EnumCommissionSchedule CommissionSchedule = 2;
+  // The type of security the commission applies to.
+  EnumSecurityType SecurityType = 3;
+  // Indicates if position closing is commission free.
+  bool CommissionFreePositionClosing = 4;
+  // The minimum commission charged.
+  double Minimum = 5;
+  // The maximum commission charged.
+  double Maximum = 6;
+  // The base quantity for commission calculation.
+  int32 BaseQuantity = 7;
+  // The decimal value for commission calculation.
+  double decimal = 8;
+  // The percentage of the principal considered for commission.
+  double PercentageOfPrincipal = 9;
+  // The minimum secondary commission charged.
+  double SecondaryMinimum = 10;
+  // The maximum secondary commission charged.
+  double SecondaryMaximum = 11;
+  // The per unit secondary commission.
+  double SecondaryPerUnit = 12;
+  // The base quantity for secondary commission calculation.
+  int32 SecondaryBaseQuantity = 13;
+  // A description of the commission.
+  string Description = 14;
+  // The user ID of the last person who modified the commission.
+  int32 LastModifiedUserId = 15;
+  // The timestamp when the commission was created.
+  google.protobuf.Timestamp CreatedTime = 16;
+  // The timestamp of the last modification to the commission.
+  google.protobuf.Timestamp LastModifiedTime = 17;
+  // Indicates if the commission is soft deleted.
+  bool IsSoftDeleted = 18;
+}
+
+// Defines overrides for commissions on a per-account basis.
+message CommissionAccountOverride{
+  // The account identifier.
+  int32 AccountId = 1;
+  // The commission identifier.
+  int32 CommissionId = 2;
+  // The user platform subscription identifier.
+  int32 UserPlatformSubscriptionId = 3;
+  // The commission promotion identifier.
+  int32 CommissionPromotionId = 4;
+  // The expiration date for the override.
+  google.protobuf.Timestamp OverrideExpiration = 5;
+  // The user ID of the last person who modified the override.
+  int32 LastModifiedUserId = 6;
+  // The timestamp when the override was created.
+  google.protobuf.Timestamp CreatedTime = 7;
+  // The commission details for the override.
+  Commission Commission = 8;
+}

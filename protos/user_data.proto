@@ -1,0 +1,210 @@
+﻿syntax = "proto3";
+
+// Imports Google's empty message type for use in messages that do not require a body.
+import "google/protobuf/empty.proto";
+// Imports common definitions and structures.
+import "common.proto";
+// Imports notification-related enumerations.
+import "notifications_enums.proto";
+// Imports account application-related enumerations.
+import "account_application_enums.proto";
+// Imports user data-related enumerations.
+import "user_data_enums.proto";
+// Imports definitions for account application processes.
+import "account_application.proto";
+// Imports definitions for market data entitlement processes.
+import "market_data_entitlement.proto";
+// Imports session-related enumerations.
+import "sessions_enums.proto";
+
+// Specifies the C# namespace for the generated code.
+option csharp_namespace = "DTS.Libs.Protos.UserProfiles";
+
+// Defines a request for various types of user data actions.
+message UserDataRequest{
+  // Specifies the type of user data request being made.
+  EnumUserDataRequestType UserDataRequestType = 1;
+  // Requests retrieval of the user's profile.
+  google.protobuf.Empty GetUserProfile = 2;
+  // Requests updating the user's profile.
+  UpdateUserProfileRequest UpdateUserProfileRequest = 3;
+  // Requests updating the user's email address.
+  UpdateUserEmailRequest UpdateUserEmailRequest = 4;
+  // Requests retrieval of the user's investment profile.
+  google.protobuf.Empty GetInvestmentProfile = 5;
+  // Requests retrieval of all security questions.
+  google.protobuf.Empty GetAllSecurityQuestions = 6;
+  // Requests retrieval of all market data entitlement(MDE)form questions.
+  google.protobuf.Empty GetAllMdeFormQuestions = 7;
+  // Requests updating the user's responses to the market data entitlement (MDE) form.
+  MarketDataEntitlementFormResponses UpdateMdeFormUserResponses = 8;
+  // Requests retrieval of the user's responses to the market datat entitlement (MDE) form.
+  google.protobuf.Empty GetMdeFormResponses = 9;
+  // Requests deletion of the user's responses to market date entitlement (MDE) form questions.
+  google.protobuf.Empty DeleteMdeFormQuestionsUserResponses = 10;
+  // Requests retrieval of the user's responses to security questions.
+  google.protobuf.Empty GetSecurityQuestionUserResponses = 11;
+  // Requests updating the user's responses to security questions.
+  SecurityQuestionUserResponseRequest UpdateSecurityQuestionUserResponses = 12;
+  // Requests retrieval of the user's notification preferences.
+  google.protobuf.Empty GetUserNotificationPreferences = 13;
+  // Requests updating the user's notification preferences.
+  UpdateUserNotificationPreferencesRequest UpdateUserNotificationPreferencesRequest = 14;
+  // Requests retrieval of the user's general preferences.
+  GetUserPreferencesRequest GetUserPreferencesRequest = 15;
+  // Requests updating the user's general preferences.
+  UpdateUserPreferencesRequest UpdateUserPreferencesRequest = 16;
+}
+
+// Defines the response to a UserDataRequest, containing various types of user data.
+message UserDataResponse
+{
+   // Contains the user's profile information.
+  GetUserProfileResponse GetUserProfileResponse = 1;
+  // Contains the user's investment profile information.
+  GetInvestmentProfileResponse GetInvestmentProfileResponse = 2;
+  // Contains security questions.
+  SecurityQuestions SecurityQuestions = 3;
+  // Contains merket date entitlement (MDE) form questions.
+  MarketDataEntitlementFormQuestions MarketDataEntitlementFormQuestions = 4;
+  // Contains the user's responses to the market date entitlement (MDE) form.
+  MarketDataEntitlementFormResponses MarketDataEntitlementFormResponses = 5;
+  // Contains the user's responses to security questions.
+  SecurityQuestionUserResponseRequest SecurityQuestionUserResponse = 6;
+  // Contains the user's notification preferences.
+  GetUserNotificationPreferencesResponse GetUserNotificationPreferencesResponse = 7;
+  // Contains the user's general preferences.
+  GetUserPreferencesResponse GetUserPreferencesResponse = 8;
+  GetExternalBrokerageAccountInfoResponse GetExternalBrokerageAccountInfoResponse = 9;   
+}
+
+// Defines the response for retrieving a user's profile.
+message GetUserProfileResponse {
+  // Contains the detailed user profile.
+  UserProfile Profile = 1;
+  // Contains any warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Contains any errors encountered during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Defines the structure of a user's profile.
+message UserProfile {
+  // The user's first name. Example: John
+  string FirstName = 1;
+  // The user's middle name. Example: Quincy
+  string MiddleName = 2;
+  // The user's last name.Example: Adams
+  string LastName = 3;
+  // Any suffix for the user's name. Example: Jr
+  string Suffix = 4;
+  // The user's phone numbers.
+  repeated PhoneNumber PhoneNumbers = 5;
+  // The user's national ID number.
+  string NationalIdNumber = 6;
+  // The user's addresses.
+  repeated Address Addresses = 7;
+}
+
+// Defines an address structure.
+message Address
+{
+  // The primary address line.
+  string Address = 1;
+  // The secondary address line.
+  string AddressLineTwo = 2;
+  // The city of the address.
+  string City = 3;
+  // The state of the address.
+  int32 State = 4;
+  // The zip or postal code of the address.
+  string ZipPostalCode = 5;
+  // The country of the address.
+  int32 Country = 6;
+  // The type of address.
+  EnumAddressType AddressType = 7;
+}
+
+// Defines a phone number structure.
+message PhoneNumber {
+  // The phone number.
+  string PhoneNumber = 1;
+  // The type of phone number.
+  EnumPhoneType PhoneType = 2;
+}
+
+// Defines a request to update a user's profile.
+message UpdateUserProfileRequest {
+  // The updated user profile.
+  UserProfile Profile = 1;
+}
+
+// Defines a request to update a user's email address.
+message UpdateUserEmailRequest {
+  // The new email address.
+  string Email = 1;
+}
+
+// Defines the response for retrieving a user's notification preferences.
+message GetUserNotificationPreferencesResponse {
+  // The user's notification preferences.
+  repeated NotificationPreferences NotificationPreferences = 1;
+  // Contains any warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Contains any errors encountered during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Defines notification preferences for different event types.
+message NotificationPreferences {
+  // The type of event.
+  EnumNotificationType EventType = 1;
+  // Whether email notifications are enabled.
+  bool Email = 2;
+  // Whether push notifications are enabled.
+  bool Push = 3;
+}
+
+// Defines a request to update a user's notification preferences.
+message UpdateUserNotificationPreferencesRequest {
+  // The updated notification preferences.
+  repeated NotificationPreferences NotificationPreferences = 1;
+}
+
+// Defines a request to retrieve a user's general preferences.
+message GetUserPreferencesRequest {
+  // The types of preferences to retrieve.
+  repeated int32 PreferenceTypes = 1;
+}
+
+// Defines the response for retrieving a user's general preferences.
+message GetUserPreferencesResponse {
+  // The user's preferences.
+  repeated Preferences Preferences = 1;
+  // The language code for the user's preferences.
+  string LanguageCode = 2;
+  // The country code for the user's preferences.
+  string CountryCode = 3;
+  // The user's permissions.
+  repeated EnumUserPermission UserPermissions = 4;
+  // Contains any warnings related to the request.
+  repeated ResponseWarning Warnings = 101;
+  // Contains any errors encountered during the request.
+  repeated ResponseError Errors = 102;
+}
+
+// Defines a single preference.
+message Preferences {
+  // The type of preference
+  int32 Type = 1;
+  // The value of the preference.
+  string Value = 2;
+}
+
+// Defines a request to update a user's general preferences.
+message UpdateUserPreferencesRequest {
+  // The updated preferences.
+  repeated Preferences Preferences = 1;
+  // The language code for the updated preferences.
+  string LanguageCode = 2;
+}

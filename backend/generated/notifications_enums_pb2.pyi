@@ -1,0 +1,50 @@
+from google.protobuf.internal import enum_type_wrapper as _enum_type_wrapper
+from google.protobuf import descriptor as _descriptor
+from typing import ClassVar as _ClassVar
+
+DESCRIPTOR: _descriptor.FileDescriptor
+
+class EnumNotificationType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    EnumNotificationType_Undefined: _ClassVar[EnumNotificationType]
+    EnumNotificationType_EmailConfirmation: _ClassVar[EnumNotificationType]
+    EnumNotificationType_OrderFilled: _ClassVar[EnumNotificationType]
+    EnumNotificationType_InternalApplicationEmail: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AdminToUserEmail: _ClassVar[EnumNotificationType]
+    EnumNotificationType_UserPlatformSubscriptionRenewalReceipt: _ClassVar[EnumNotificationType]
+    EnumNotificationType_UserPlatformSubscriptionTermination: _ClassVar[EnumNotificationType]
+    EnumNotificationType_OptionAssignment: _ClassVar[EnumNotificationType]
+    EnumNotificationType_OptionExercise: _ClassVar[EnumNotificationType]
+    EnumNotificationType_OptionExpire: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AccountApplicationSuccess: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AccountApplicationKycPendingReview: _ClassVar[EnumNotificationType]
+    EnumNotificationType_EmailConfirmed: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AccountApplicationRejected: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AccountApplicationDocumentsNeeded: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AccountApplicationContactUsToComplete: _ClassVar[EnumNotificationType]
+    EnumNotificationType_AccountApplicationMoreInfoNeeded: _ClassVar[EnumNotificationType]
+    EnumNotificationType_MdeFormSubmitted: _ClassVar[EnumNotificationType]
+    EnumNotificationType_MdeFormApproved: _ClassVar[EnumNotificationType]
+    EnumNotificationType_MdeFormRejected: _ClassVar[EnumNotificationType]
+    EnumNotificationType_Alert: _ClassVar[EnumNotificationType]
+EnumNotificationType_Undefined: EnumNotificationType
+EnumNotificationType_EmailConfirmation: EnumNotificationType
+EnumNotificationType_OrderFilled: EnumNotificationType
+EnumNotificationType_InternalApplicationEmail: EnumNotificationType
+EnumNotificationType_AdminToUserEmail: EnumNotificationType
+EnumNotificationType_UserPlatformSubscriptionRenewalReceipt: EnumNotificationType
+EnumNotificationType_UserPlatformSubscriptionTermination: EnumNotificationType
+EnumNotificationType_OptionAssignment: EnumNotificationType
+EnumNotificationType_OptionExercise: EnumNotificationType
+EnumNotificationType_OptionExpire: EnumNotificationType
+EnumNotificationType_AccountApplicationSuccess: EnumNotificationType
+EnumNotificationType_AccountApplicationKycPendingReview: EnumNotificationType
+EnumNotificationType_EmailConfirmed: EnumNotificationType
+EnumNotificationType_AccountApplicationRejected: EnumNotificationType
+EnumNotificationType_AccountApplicationDocumentsNeeded: EnumNotificationType
+EnumNotificationType_AccountApplicationContactUsToComplete: EnumNotificationType
+EnumNotificationType_AccountApplicationMoreInfoNeeded: EnumNotificationType
+EnumNotificationType_MdeFormSubmitted: EnumNotificationType
+EnumNotificationType_MdeFormApproved: EnumNotificationType
+EnumNotificationType_MdeFormRejected: EnumNotificationType
+EnumNotificationType_Alert: EnumNotificationType

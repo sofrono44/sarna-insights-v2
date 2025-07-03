@@ -1,0 +1,32 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Trading.Protos";
+
+enum EnumCommissionSchedule {
+  EnumCommissionSchedule_Undefined = 0;
+  // Formula: Minimum until BaseQuantity plus PerUnit above BaseQuantity. Base, Min and Max quantities considered at Order level.
+  // Examples:
+  // 1. $4.95 for 10 shares + $.05 per share; Buy 100 stock shares yields $9
+  // 2. $1 per option contract, $10 max per order; Buy 50 call/call spread yields $10 max charge
+  EnumCommissionSchedule_OrderQuantity = 1;
+  // Formula: Minimum until BaseQuantity plus PerUnit above BaseQuantity. Base, Min and Max quantities considered at Leg level.
+  // Computes commissions charge based on Leg quantity level.
+  // For example: $1 per option contract, $10 max per leg; Buy 50 call/call spread yields $20 max charge
+  EnumCommissionSchedule_LegQuantity = 2;
+  // Commission charge corresponds to percentage of premium collected or paid.
+  EnumCommissionSchedule_PercentOfPrincipal = 3;
+}
+
+enum EnumCommissionOverrideLevel {
+  EnumCommissionOverrideLevel_Undefined = 0;
+  // Commission in [CommissionAccountOverrides]
+  EnumCommissionOverrideLevel_AccountOverride = 1;
+  // Commission in [CommissionUserOverrides]
+  EnumCommissionOverrideLevel_UserOverride = 2;
+  // Commission in [CommissionAccountOverrides]
+  EnumCommissionOverrideLevel_BranchOverride = 3;
+  // Commission in [CommissionDefaults] by User's CountryCode
+  EnumCommissionOverrideLevel_CountryCodeDefault = 4;
+  // Commission in [CommissionDefaults], if no entry for considered CountryCode
+  EnumCommissionOverrideLevel_GlobalDefault = 5;
+}
