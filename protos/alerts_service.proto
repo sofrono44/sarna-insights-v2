@@ -1,0 +1,13 @@
+syntax = "proto3";
+import "alerts.proto";
+import "google/api/annotations.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Api";
+
+service AlertService {
+  rpc ListAlerts(AlertListRequest) returns (AlertsListResponse) {
+    option (google.api.http) = {
+      get: "/alerts"
+    };
+  }
+}

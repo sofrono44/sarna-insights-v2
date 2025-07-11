@@ -1,0 +1,23 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "DTS.Libs.Alerts.Protos";
+
+/// Severity of the alert.
+/// In future we will have different routing / escalation rules for different severity levels.
+enum EnumAlertSeverity {
+  EnumAlertSeverity_Undefined = 0;
+  EnumAlertSeverity_Warning = 1;
+  EnumAlertSeverity_Critical = 2;
+}
+
+enum EnumAlertStatus {
+  EnumAlertStatus_Undefined = 0;
+  EnumAlertStatus_Open = 1;
+  EnumAlertStatus_Acknowledged = 2;
+  EnumAlertStatus_Resolved = 3;
+}
+
+enum EnumAlertNotificationType {
+  EnumAlertNotificationType_Unspecified = 0;
+  EnumAlertNotificationType_Email = 1;
+}

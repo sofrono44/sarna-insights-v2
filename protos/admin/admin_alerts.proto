@@ -1,0 +1,196 @@
+syntax = "proto3";
+import "common.proto";
+import "search.proto";
+import "alerts_enums.proto";
+import "alerts.proto";
+import "search_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminAlerts";
+
+// Alert rule definition
+message AlertRule {
+  int32 AlertRuleId = 1;
+  int32 AlertNotificationId = 2;
+  string Name = 3;
+  EnumAlertSeverity Severity = 4;
+  EnumField Field = 5;
+  EnumOperator Op = 6;
+  double Value = 7;
+  int32 CreatedUserId = 8;
+  google.protobuf.Timestamp CreatedTime = 9;
+  int32 ModifiedUserId = 10;
+  google.protobuf.Timestamp ModifiedTime = 11;
+  int32 AccountGroupId = 12;
+}
+
+// Alert notification definition
+message AlertNotification {
+  int32 AlertNotificationId = 1;
+  EnumAlertNotificationType Type = 2;
+  // CSV list of recipients
+  string EmailRecipients = 3;
+  DurationValue StartTimeET = 4;
+  DurationValue EndTimeET = 5;
+  bool TradingDaysOnly = 6;
+  int32 OpenAlertReminderInMin = 7;
+  bool AcknowledgedAlertDailyReminder = 8;
+  int32 CreatedUserId = 9;
+  google.protobuf.Timestamp CreatedTime = 10;
+  int32 ModifiedUserId = 11;
+  google.protobuf.Timestamp ModifiedTime = 12;
+}
+
+message AlertRuleSearchDefinitionsResponse {
+  repeated EnumField Field = 1;
+  repeated int32 AccountGroupIds = 2;
+
+  // List of warnings
+  repeated ResponseWarning Warnings = 101;
+  // List of errors
+  repeated ResponseError Errors = 102;
+}
+
+// Alert rule search request
+message AlertRuleSearchRequest {
+  string Name = 1;
+  EnumField Field = 3;
+  int32 AccountGroupId = 4;
+
+  PageRequest Page = 110;
+}
+
+// Response containing alert rules
+message AlertRuleSearchResponse {
+  // List of alert rules
+  repeated AlertRule AlertRules = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  AlertRuleSearchRequest SearchRequest = 110;
+  PageResponse Page = 111;
+}
+
+// Request to create or update alert rule
+message SaveAlertRuleRequest {
+  AlertRule AlertRule = 1;
+}
+
+// Basic response for create/update/delete operations
+message SaveAlertRuleResponse {
+  AlertRule AlertRule = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+}
+
+// Request to delete an alert rule
+message DeleteAlertRuleRequest {
+  int32 AlertRuleId = 1;
+}
+
+// Request to delete an alert rule
+message DeleteAlertRuleResponse {
+  bool IsSuccess = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+}
+
+// Alert notification list request
+message AlertNotificationListRequest {
+  PageRequest Page = 110;
+}
+
+// Response containing alert notifications
+message AlertNotificationsListResponse {
+  // List of alert notifications
+  repeated AlertNotification AlertNotifications = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  AlertNotificationListRequest AlertNotificationListRequest = 110;
+  PageResponse Page = 111;
+}
+
+// Request to create or update alert notification
+message SaveAlertNotificationRequest {
+  AlertNotification AlertNotification = 1;
+}
+
+// Basic response for create/update/delete operations
+message SaveAlertNotificationResponse {
+  AlertNotification AlertNotification = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+}
+
+// Request to delete an alert notification
+message DeleteAlertNotificationRequest {
+  int32 AlertNotificationId = 1;
+}
+
+// Request to delete an alert rule
+message DeleteAlertNotificationResponse {
+  bool IsSuccess = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+}
+
+message AlertSearchRequest {
+  string AccountNumber = 1;
+  repeated EnumAlertStatus Status = 13;
+
+  PageRequest Page = 110;
+}
+
+message AlertSearchResponse {
+  repeated Alert Alerts = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  AlertSearchRequest AlertSearchRequest = 110;
+  PageResponse Page = 111;
+}
+
+
+// Request to acknowledge an alert
+message AcknowledgeAlertRequest {
+  int32 AlertId = 1;
+}
+
+// Request to resolve an alert
+message ResolveAlertRequest {
+  int32 AlertId = 1;
+}
+
+message AlertOperationResponse {
+  repeated Alert Alerts = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+}

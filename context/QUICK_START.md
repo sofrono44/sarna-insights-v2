@@ -1,128 +1,85 @@
-# Quick Start - Next Session
+# Quick Start Guide
 
-## 🚀 Verify Everything is Working
+## 🚀 Starting a New Session
 
+### 1. Check Current State
 ```bash
-# 1. Start all services
+# Read the current project state
+cat C:\Development\sarna-insights-v2\context\PROJECT_STATE.md
+```
+
+### 2. Start Services
+```bash
 cd C:\Development\sarna-insights-v2
 docker-compose up -d
 
-# 2. Check services are running
+# Verify all services are running
 docker-compose ps
+```
 
-# 3. Test backend is responding
+### 3. Test the Application
+- Frontend: http://localhost
+- Backend API: http://localhost:8000/api
+- API Docs: http://localhost:8000/docs
+
+### 4. Quick Health Check
+```powershell
+# Test backend API
 curl http://localhost:8000/api/health/
 
-# 4. Test gRPC connection
-docker-compose exec backend python test_grpc_connection.py
+# Test portfolio data endpoint
+curl http://localhost:8000/api/data/portfolio/10006/risk-matrix
 
-# 5. Test cache is working
-docker-compose exec backend python test_cache_service.py
-
-# 6. Test API endpoints
-docker-compose exec backend python test_api_cache.py
+# Check position counts
+$response = Invoke-WebRequest -Uri http://localhost:8000/api/data/portfolio/10006/risk-matrix -Method GET
+$data = $response.Content | ConvertFrom-Json
+$data.accounts | ForEach-Object { Write-Host "$($_.account_number): $($_.positions_count) positions" }
 ```
 
-## 📊 Current State Summary
+## 🔧 Common Tasks
 
-### What's Working:
-- ✅ gRPC connection to Sarna API
-- ✅ Redis caching (102x performance improvement)
-- ✅ All data endpoints (`/api/data/*`)
-- ✅ All visualization endpoints (`/api/viz/*`)
-- ✅ Historical data retrieval
-- ✅ Time machine service
-
-### What Needs Work:
-- ❌ LLM service not tested
-- ❌ Frontend not connected to backend
-- ❌ Chat endpoint needs LLM service
-
-## 🔧 Key Endpoints
-
-### Data Endpoints:
-- `GET /api/data/portfolio/10006` - Current portfolio (cached 30s)
-- `GET /api/data/history/10006?days=7` - Historical data (cached forever)
-- `POST /api/data/refresh/10006` - Clear cache
-
-### Visualization Endpoints:
-- `GET /api/viz/portfolio-overview/10006` - Bar chart of accounts
-- `GET /api/viz/pl-trends/10006?days=7` - P&L line chart
-- `GET /api/viz/risk-metrics/10006` - Risk radar chart
-- `GET /api/viz/liquidity-trends/10006?days=7` - Liquidity trends
-
-### Chat Endpoint (needs LLM):
-- `POST /api/chat/query` - Natural language queries
-
-## 🎯 Next Steps Priority
-
-### 1. Test LLM Service (30 mins)
-```python
-# Quick test in backend shell
-docker-compose exec backend python
->>> from services.llm_service import LLMService
->>> llm = LLMService()
->>> await llm.query("What is 2+2?", provider="openai")
-```
-
-### 2. Connect Frontend (1 hour)
-- Update frontend API client to use correct endpoints
-- Test portfolio display
-- Test one visualization
-- Implement refresh button
-
-### 3. Implement Chat UI (1 hour)
-- Create chat component
-- Connect to `/api/chat/query`
-- Add provider selector
-- Test with sample queries
-
-## 📝 Important Notes
-
-1. **Accounts are pre-anonymized**: ACCOUNT_XXXXX format from API
-2. **Group 10006 has 9 accounts**: Not 7 as documented
-3. **Historical data is metadata**: Contains metrics, not full files
-4. **Cache keys follow pattern**: `type:id:params`
-
-## 🐛 Common Issues & Fixes
-
-### Backend Won't Start
+### View Logs
 ```bash
-# Check logs
-docker-compose logs backend
+# All services
+docker-compose logs -f
 
-# Rebuild if needed
-docker-compose build backend
-docker-compose up -d
+# Backend only
+docker-compose logs -f backend
+
+# Search for specific patterns
+docker-compose logs backend | Select-String "position"
 ```
 
-### Cache Not Working
+### Clear Cache
 ```bash
-# Check Redis
-docker-compose exec redis redis-cli ping
-# Should return: PONG
-
-# Clear all cache
 docker-compose exec redis redis-cli FLUSHALL
 ```
 
-### gRPC Connection Failed
-- Check SARNA_JWT_TOKEN hasn't expired
-- Verify SARNA_API_URL format (no https://)
-- Check network connectivity
+### Rebuild After Code Changes
+```bash
+# Backend changes require rebuild
+docker-compose build backend
+docker-compose up -d backend
+```
 
-## 📞 Key Files to Reference
+### Stop Everything
+```bash
+docker-compose down
+```
 
-- `/context/CRITICAL_FIXES_2025-07-03.md` - Proto fixes
-- `/backend/test_*.py` - All test files for verification
-- `/backend/services/` - All service implementations
-- `/backend/routers/` - All API endpoints
+## 📊 Current Status (Jan 5, 2025)
+- ✅ All 33 positions loading correctly
+- ✅ Expandable rows working
+- ✅ UI fully functional
+- ⚠️ Risk calculations using placeholder values
+- ⚠️ Credit utilization showing 0%
 
-## ✅ Definition of Done
+## 🎯 Next Priority
+Implement real risk calculations - see NEXT_SESSION_RISK_CALCULATIONS.md
 
-The backend is ready when:
-1. LLM service tested and working
-2. Frontend displays portfolio data
-3. At least one visualization works
-4. Chat interface processes queries
-5. Manual refresh updates data
+## 💡 Tips
+- Always check PROJECT_STATE.md first
+- Clear Redis cache when debugging data issues
+- Rebuild containers after backend changes
+- Use browser DevTools to inspect API responses
+- Monitor logs while testing changes

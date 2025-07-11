@@ -1,62 +1,74 @@
-"""gRPC client for Sarna API."""
 import grpc
+import os
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Dict, List, Any, Optional
 from datetime import datetime, timedelta
-import asyncio
-import json
 from google.protobuf.timestamp_pb2 import Timestamp
 
-# Import generated protobuf files
+# Import generated proto files
 from generated.admin import admin_margin_manager_pb2
 from generated.admin import admin_margin_manager_service_pb2_grpc
 from generated import time_machine_pb2
 from generated.api_hub import api_hub_service_pb2_grpc
+from generated import pmbp_pb2
+from generated import search_pb2
+from generated import alerts_pb2
+from generated import alerts_service_pb2_grpc
+from generated import alerts_enums_pb2
 
 logger = logging.getLogger(__name__)
 
-
 class SarnaGRPCClient:
-    """Client for Sarna gRPC API."""
-    
-    def __init__(self, url: str, jwt_token: str, use_tls: bool = True):
-        self.url = url
-        self.jwt_token = jwt_token
-        self.use_tls = use_tls
+    def __init__(self, url: Optional[str] = None, jwt_token: Optional[str] = None):
         self.channel = None
         self.connected = False
-    
+        # Try to use RISK_SYSTEM_HOST if SARNA_API_URL is not set
+        if url:
+            self.api_url = url
+        else:
+            host = os.getenv("RISK_SYSTEM_HOST", os.getenv("SARNA_API_URL", "api.stage.sarnafinance.com"))
+            port = os.getenv("RISK_SYSTEM_PORT", "443")
+            self.api_url = f"{host}:{port}" if ":" not in host else host
+        self.jwt_token = jwt_token or os.getenv("SARNA_JWT_TOKEN", "") or os.getenv("RISK_API_KEY", "")
+        
     async def connect(self):
-        """Establish gRPC connection."""
+        """Establish connection to Sarna gRPC API."""
         try:
-            # Create channel based on TLS setting
-            if self.use_tls:
-                self.channel = grpc.aio.secure_channel(
-                    self.url,
-                    grpc.ssl_channel_credentials()
-                )
-                logger.info(f"Connected to Sarna API at {self.url} (TLS enabled)")
-            else:
-                self.channel = grpc.aio.insecure_channel(self.url)
-                logger.info(f"Connected to Sarna API at {self.url} (TLS disabled)")
+            # Use secure channel with default SSL credentials
+            logger.info(f"Connecting to Sarna API at {self.api_url}")
+            self.channel = grpc.aio.secure_channel(
+                self.api_url,
+                grpc.ssl_channel_credentials()
+            )
             
+            # Wait for channel to be ready
+            await self.channel.channel_ready()
             self.connected = True
+            logger.info("Successfully connected to Sarna API")
+            
         except Exception as e:
             logger.error(f"Failed to connect to Sarna API: {e}")
             raise
     
-    async def close(self):
-        """Close gRPC connection."""
+    async def disconnect(self):
+        """Close the gRPC channel."""
         if self.channel:
             await self.channel.close()
             self.connected = False
+            logger.info("Disconnected from Sarna API")
+    
+    async def close(self):
+        """Alias for disconnect to match expected interface."""
+        await self.disconnect()
     
     def _get_metadata(self):
-        """Get auth metadata for requests."""
-        return [('authorization', f'Bearer {self.jwt_token}')]
+        """Get metadata for authentication."""
+        return [
+            ("authorization", f"Bearer {self.jwt_token}"),
+        ]
     
-    async def get_current_margin_data(self, group_id: int) -> Dict[str, Any]:
-        """Fetch current margin data from AdminMarginManagerService/Get."""
+    async def get_margin_data(self, group_id: int) -> Dict[str, Any]:
+        """Fetch margin data for a specific account group."""
         if not self.connected:
             raise RuntimeError("Not connected to Sarna API")
         
@@ -70,7 +82,7 @@ class SarnaGRPCClient:
             # Set up portfolio request for the account group
             portfolio_request = admin_margin_manager_pb2.MarginManagerPortfolioRequest()
             portfolio_request.AccountGroupIds.append(group_id)
-            portfolio_request.FetchAllAccounts = True
+            portfolio_request.FetchAllAccounts = True  # Use True to get all accounts in group
             portfolio_request.NumberOfScenarios = 11  # Default scenarios
             portfolio_request.UnderlyingPriceShockPercentDown = 0.08
             portfolio_request.UnderlyingPriceShockPercentUp = 0.06
@@ -90,6 +102,133 @@ class SarnaGRPCClient:
         except Exception as e:
             logger.error(f"Error fetching margin data: {e}")
             raise
+    
+    async def get_current_margin_data(self, group_id: int) -> Dict[str, Any]:
+        """Alias for get_margin_data to match expected interface."""
+        return await self.get_margin_data(group_id)
+    
+    async def get_portfolio_with_risk_profile(self, group_id: int, risk_profile_id: int = 10011) -> Dict[str, Any]:
+        """Fetch comprehensive portfolio data with risk profile and scenarios."""
+        logger.info(f"=== get_portfolio_with_risk_profile called with group_id={group_id}, risk_profile_id={risk_profile_id} ===")
+        
+        if not self.connected:
+            raise RuntimeError("Not connected to Sarna API")
+        
+        try:
+            # Create stub
+            stub = admin_margin_manager_service_pb2_grpc.AdminMarginManagerServiceStub(self.channel)
+            
+            # Create request
+            request = admin_margin_manager_pb2.MarginManagerRequest()
+            
+            # Set up portfolio request EXACTLY matching the sample
+            portfolio_request = admin_margin_manager_pb2.MarginManagerPortfolioRequest()
+            
+            # Set all fields in EXACT order from sample
+            portfolio_request.NumberOfScenarios = 0
+            portfolio_request.UnderlyingPriceShockPercentDown = 0
+            portfolio_request.UnderlyingPriceShockPercentUp = 0
+            portfolio_request.VolatilityShockPercentage = 0
+            portfolio_request.VolatilityShockDirection = 3
+            portfolio_request.ReturnOccStyleReportForPM = False
+            portfolio_request.ReturnOccStyleInputForPM = False
+            
+            # Empty StressTestInput
+            stress_test_input = pmbp_pb2.PmBpStressTestInput()
+            portfolio_request.StressTestInput.CopyFrom(stress_test_input)
+            
+            portfolio_request.FetchAllAccounts = False
+            portfolio_request.IncludeOrders = True
+            portfolio_request.OptionPricingModel = 7
+            
+            # Apply risk profile ID
+            portfolio_request.AppliedRiskProfileIds.append(risk_profile_id)
+            
+            portfolio_request.LotsAggregatorAlgo = 0
+            
+            # Add account group ID
+            portfolio_request.AccountGroupIds.append(group_id)
+            
+            # RequirementAddOns - all false
+            portfolio_request.RequirementAddOns.ApplyLowPricedStocksAddOn = False
+            portfolio_request.RequirementAddOns.ApplyConcentrationAddOn = False
+            portfolio_request.RequirementAddOns.ApplyLiquidityAddOn = False
+            
+            # SearchCriteria with Page info
+            # TODO: Fix Page import issue - commenting out for now
+            # search_criteria = search_pb2.SearchCriteria()
+            # page = search_pb2.Page()
+            # page.PageRequestId = ""
+            # page.Page = 1
+            # page.PageSize = 50
+            # search_criteria.Page.CopyFrom(page)
+            # portfolio_request.SearchCriteria.CopyFrom(search_criteria)
+            
+            # Log the complete request details
+            logger.info(f"Portfolio request details:")
+            logger.info(f"  AccountGroupIds: {list(portfolio_request.AccountGroupIds)}")
+            logger.info(f"  AppliedRiskProfileIds: {list(portfolio_request.AppliedRiskProfileIds)}")
+            logger.info(f"  NumberOfScenarios: {portfolio_request.NumberOfScenarios}")
+            logger.info(f"  FetchAllAccounts: {portfolio_request.FetchAllAccounts}")
+            logger.info(f"  IncludeOrders: {portfolio_request.IncludeOrders}")
+            logger.info(f"  OptionPricingModel: {portfolio_request.OptionPricingModel}")
+            logger.info(f"  VolatilityShockDirection: {portfolio_request.VolatilityShockDirection}")
+            
+            # Try to log the full request for debugging
+            logger.debug(f"Full portfolio request: {portfolio_request}")
+            
+            request.MarginManagerPortfolioRequest.CopyFrom(portfolio_request)
+            
+            # Make the call
+            response = await stub.Get(request, metadata=self._get_metadata())
+            
+            # Log response structure for debugging
+            logger.info(f"Response has {len(response.MarginManagerInfo)} accounts")
+            for account_id, margin_info in response.MarginManagerInfo.items():
+                logger.debug(f"Account {account_id}: {margin_info.AccountNumber}")
+                if margin_info.HasField("PmBpValuesResponse") and margin_info.PmBpValuesResponse.HasField("PmBpValues"):
+                    logger.debug(f"  Has PM values data")
+            
+            # Convert to dict and preserve structure
+            return {
+                "group_id": group_id,
+                "risk_profile_id": risk_profile_id,
+                "MarginManagerInfo": self._convert_protobuf_to_dict(response.MarginManagerInfo)
+            }
+            
+        except grpc.RpcError as e:
+            logger.error(f"gRPC error fetching portfolio with risk profile: {e.code()} - {e.details()}")
+            raise
+        except Exception as e:
+            logger.error(f"Error fetching portfolio with risk profile: {e}")
+            raise
+    
+    def _convert_protobuf_to_dict(self, protobuf_obj) -> Any:
+        """Recursively convert protobuf object to dict."""
+        if isinstance(protobuf_obj, (list, tuple)):
+            return [self._convert_protobuf_to_dict(item) for item in protobuf_obj]
+        elif isinstance(protobuf_obj, dict):
+            result = {}
+            for key, value in protobuf_obj.items():
+                result[str(key)] = self._convert_protobuf_to_dict(value)
+            return result
+        elif hasattr(protobuf_obj, 'ListFields'):
+            # Handle message types
+            result = {}
+            for descriptor, value in protobuf_obj.ListFields():
+                if descriptor.type == descriptor.TYPE_MESSAGE:
+                    if descriptor.label == descriptor.LABEL_REPEATED:
+                        result[descriptor.name] = [self._convert_protobuf_to_dict(v) for v in value]
+                    else:
+                        result[descriptor.name] = self._convert_protobuf_to_dict(value)
+                elif descriptor.label == descriptor.LABEL_REPEATED:
+                    result[descriptor.name] = list(value)
+                else:
+                    result[descriptor.name] = value
+            return result
+        else:
+            # Primitive types
+            return protobuf_obj
     
     def _convert_margin_response(self, response, group_id: int) -> Dict[str, Any]:
         """Convert MarginManagerResponse protobuf to dict format."""
@@ -119,143 +258,83 @@ class SarnaGRPCClient:
             if margin_info.HasField("PmBpValuesResponse") and margin_info.PmBpValuesResponse.HasField("PmBpValues"):
                 pm_values = margin_info.PmBpValuesResponse.PmBpValues
                 account_data.update({
-                    "margin": pm_values.Requirement if hasattr(pm_values, 'Requirement') else 0,
+                    "total_margin": pm_values.Requirement,
+                    "net_liquidity": pm_values.NAV,
+                    "excess_liquidity": pm_values.BuyingPower,
                     "buying_power": pm_values.BuyingPower,
-                    "excess_liquidity": pm_values.ExcessLiquidity,
-                    "net_liquidity": pm_values.NetLiquidity,
-                    "nav": pm_values.NAV if hasattr(pm_values, 'NAV') else 0,
-                    "credit_utilization": pm_values.CreditUtilization if hasattr(pm_values, 'CreditUtilization') else 0,
-                    "morning_nav": pm_values.MorningNAV if hasattr(pm_values, 'MorningNAV') else 0
+                    "cash": pm_values.Cash,
+                    "credit_limit": pm_values.CreditLimit,
+                    "requirement": pm_values.Requirement,
+                    "nav": pm_values.NAV
                 })
                 
-                # Extract position aggregations if available
-                if hasattr(pm_values, 'PositionAggregations'):
-                    pos_agg = pm_values.PositionAggregations
-                    account_data["position_aggregations"] = {
-                        "long_market_value": pos_agg.LongMarketValue if hasattr(pos_agg, 'LongMarketValue') else 0,
-                        "delta_long_exposure": pos_agg.DeltaLongExposure if hasattr(pos_agg, 'DeltaLongExposure') else 0,
-                        "delta_long_count": pos_agg.DeltaLongCount if hasattr(pos_agg, 'DeltaLongCount') else 0
-                    }
-                
-                # Aggregate totals
-                result["total_margin"] += account_data.get("margin", 0)
-                result["total_buying_power"] += account_data.get("buying_power", 0)
-                result["total_excess_liquidity"] += account_data.get("excess_liquidity", 0)
-                result["total_net_liquidity"] += account_data.get("net_liquidity", 0)
-            
-            # Extract regular account data if available
-            elif margin_info.HasField("BpValuesResponse") and margin_info.BpValuesResponse.HasField("BpValues"):
-                bp_values = margin_info.BpValuesResponse.BpValues
-                account_data.update({
-                    "buying_power": bp_values.BuyingPower if hasattr(bp_values, 'BuyingPower') else 0,
-                    "excess_liquidity": bp_values.ExcessLiquidity if hasattr(bp_values, 'ExcessLiquidity') else 0,
-                    "cash": bp_values.Cash if hasattr(bp_values, 'Cash') else margin_info.Cash
-                })
-                
-                result["total_buying_power"] += account_data.get("buying_power", 0)
-                result["total_excess_liquidity"] += account_data.get("excess_liquidity", 0)
+                # Update totals
+                result["total_margin"] += pm_values.Requirement
+                result["total_buying_power"] += pm_values.BuyingPower
+                result["total_excess_liquidity"] += pm_values.BuyingPower
+                result["total_net_liquidity"] += pm_values.NAV
             
             result["accounts"].append(account_data)
         
-        # Calculate margin utilization
-        if result["total_net_liquidity"] > 0:
-            result["total_margin_utilization"] = result["total_margin"] / result["total_net_liquidity"]
-        else:
-            result["total_margin_utilization"] = 0
-        
         return result
     
-    def _get_risk_type_name(self, risk_type_enum) -> str:
+    def _get_risk_type_name(self, risk_type: int) -> str:
         """Convert risk type enum to string."""
-        # This mapping should match the enum values in the proto
-        risk_type_map = {
-            0: "Unknown",
-            1: "RegTMargin",
-            2: "PMCPM",
-            3: "Cash"
+        risk_types = {
+            0: "UNKNOWN",
+            1: "CASH",
+            2: "MARGIN",
+            3: "PORTFOLIO_MARGIN"
         }
-        return risk_type_map.get(risk_type_enum, f"Type_{risk_type_enum}")
+        return risk_types.get(risk_type, "UNKNOWN")
     
-    async def get_historical_data(self, group_id: int, days: int = 30) -> List[Dict[str, Any]]:
-        """Fetch historical snapshots from TimeMachineService/List."""
+    async def get_historical_data(self, account_number: str, days: int = 7) -> List[Dict[str, Any]]:
+        """Fetch historical data for an account using time machine service."""
         if not self.connected:
             raise RuntimeError("Not connected to Sarna API")
         
         try:
-            # First, get accounts for the group to pick one account number
-            margin_data = await self.get_current_margin_data(group_id)
-            if not margin_data or not margin_data.get("accounts"):
-                logger.warning(f"No accounts found for group {group_id}")
-                return []
-            
-            # Use the first account's number for the query
-            first_account = margin_data["accounts"][0]
-            account_number = first_account.get("account_number")
-            if not account_number:
-                logger.error("No account number found in margin data")
-                return []
-            
-            logger.info(f"Using account {account_number} to fetch historical data for group {group_id}")
-            
-            # Create stub for TimeMachineService
+            # Create stub
             stub = api_hub_service_pb2_grpc.TimeMachineServiceStub(self.channel)
             
-            # Calculate time range
+            # Calculate date range
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=days)
             
             # Create request with proper format
             request = time_machine_pb2.TimeMachineBrowseRequest()
-            request.AccountNumber = account_number
+            request.AccountNumbers.append(account_number)
             # Use FromDatetime to properly set the timestamps
             request.From.FromDatetime(start_time)
             request.To.FromDatetime(end_time)
-            request.RequestOrigin = 0  # Undefined = 0
+            request.IsCompressed = True
             
             logger.info(f"Request: AccountNumber={account_number}, From={start_time.isoformat()}, To={end_time.isoformat()}")
             
             # Make the call
             response = await stub.List(request, metadata=self._get_metadata())
             
-            logger.info(f"Received {len(response.Files)} historical files")
-            
-            # Process the file list from the response
-            snapshots = []
-            for file_info in response.Files:
-                # Convert protobuf timestamp to datetime
-                created_time = datetime.fromtimestamp(
-                    file_info.CreatedTime.seconds + file_info.CreatedTime.nanos / 1e9
-                )
-                
-                snapshot = {
-                    "timestamp": created_time.isoformat(),
-                    "file_name": file_info.FileName,
-                    "type": str(file_info.Type) if hasattr(file_info, 'Type') else "",
-                    "requirement": float(file_info.Requirement) if hasattr(file_info, 'Requirement') else 0,
-                    "net_liquidity": float(file_info.NetLiquidity) if hasattr(file_info, 'NetLiquidity') else 0,
-                    "day_pnl": float(file_info.DayPnL) if hasattr(file_info, 'DayPnL') else 0,
-                    "day_pnl_utilization": float(file_info.DayPnLUtilization) if hasattr(file_info, 'DayPnLUtilization') else 0,
-                    "credit_utilization": float(file_info.CreditUtilization) if hasattr(file_info, 'CreditUtilization') else 0,
-                    "excess_liquidity": float(file_info.ExcessLiquidity) if hasattr(file_info, 'ExcessLiquidity') else 0,
-                    "account_group_ids": list(file_info.AccountGroupIds) if file_info.AccountGroupIds else [],
-                    "data": {
-                        "requirement": float(file_info.Requirement) if hasattr(file_info, 'Requirement') else 0,
-                        "net_liquidity": float(file_info.NetLiquidity) if hasattr(file_info, 'NetLiquidity') else 0,
-                        "credit_utilization": float(file_info.CreditUtilization) if hasattr(file_info, 'CreditUtilization') else 0,
-                        "excess_liquidity": float(file_info.ExcessLiquidity) if hasattr(file_info, 'ExcessLiquidity') else 0,
-                        "day_pnl": float(file_info.DayPnL) if hasattr(file_info, 'DayPnL') else 0
-                    }
-                }
-                
-                # Include snapshots that have our group ID, group ID 0, or no group IDs
-                group_ids = snapshot["account_group_ids"]
-                if not group_ids or group_id in group_ids or 0 in group_ids:
-                    snapshots.append(snapshot)
+            # Convert response to list of historical data points
+            history = []
+            for file_info in response.FileInfo:
+                history.append({
+                    "account_number": account_number,
+                    "timestamp": file_info.MarginCalculatedTime.ToDatetime().isoformat(),
+                    "net_liquidity": file_info.Netliq,
+                    "margin_requirement": file_info.MarginReq,
+                    "excess_liquidity": file_info.Excessliq,
+                    "maintenance_requirement": file_info.MaintReq,
+                    "total_pl": file_info.TotalPl,
+                    "margin_type": file_info.MarginType,
+                    "buying_power": file_info.Excessliq * 4 if file_info.MarginType == "PM" else file_info.Excessliq * 2,
+                    "margin_utilization": (file_info.MarginReq / file_info.Netliq * 100) if file_info.Netliq > 0 else 0
+                })
             
             # Sort by timestamp
-            snapshots.sort(key=lambda x: x["timestamp"])
+            history.sort(key=lambda x: x["timestamp"])
             
-            return snapshots
+            logger.info(f"Retrieved {len(history)} historical data points for {account_number}")
+            return history
             
         except grpc.RpcError as e:
             logger.error(f"gRPC error fetching historical data: {e.code()} - {e.details()}")
@@ -264,8 +343,8 @@ class SarnaGRPCClient:
             logger.error(f"Error fetching historical data: {e}")
             raise
     
-    async def get_time_machine_snapshot(self, file_name: str) -> Dict[str, Any]:
-        """Download a specific time machine snapshot."""
+    async def get_historical_file(self, file_id: str) -> Dict[str, Any]:
+        """Download a specific historical file."""
         if not self.connected:
             raise RuntimeError("Not connected to Sarna API")
         
@@ -275,83 +354,90 @@ class SarnaGRPCClient:
             
             # Create request
             request = time_machine_pb2.TimeMachineDownloadRequest()
-            request.FileName = file_name
+            request.FileId = file_id
             
             # Make the call
             response = await stub.Get(request, metadata=self._get_metadata())
             
             # Process the response
-            snapshot_data = {
-                "file_name": response.FileName,
-                "request": response.Request,
-                "response": response.Response
+            return {
+                "file_id": file_id,
+                "content": response.Content,
+                "timestamp": datetime.utcnow().isoformat()
             }
             
-            # Extract PM BP values if available
-            if response.HasField("PmBpValuesResponse"):
-                snapshot_data["pm_bp_values"] = self._extract_pm_bp_values(response.PmBpValuesResponse)
-            
-            # Extract regular BP values if available
-            if response.HasField("BpValuesResponse"):
-                snapshot_data["bp_values"] = self._extract_bp_values(response.BpValuesResponse)
-            
-            # Extract portfolio report if available
-            if response.PortfolioReport:
-                snapshot_data["portfolio_report"] = response.PortfolioReport
-            
-            return snapshot_data
-            
         except grpc.RpcError as e:
-            logger.error(f"gRPC error downloading snapshot: {e.code()} - {e.details()}")
+            logger.error(f"gRPC error downloading file: {e.code()} - {e.details()}")
             raise
         except Exception as e:
-            logger.error(f"Error downloading snapshot: {e}")
+            logger.error(f"Error downloading file: {e}")
             raise
     
-    def _extract_pm_bp_values(self, pm_response) -> Dict[str, Any]:
-        """Extract PM BP values from response."""
-        # Similar extraction logic as in _convert_margin_response
-        return {
-            "account_id": pm_response.AccountId,
-            "account_number": pm_response.AccountNumber,
-            "account_name": pm_response.AccountName
-            # Add more fields as needed
+    async def get_alerts(self, page: int = 1, page_size: int = 50) -> Dict[str, Any]:
+        """Get active alerts for the current user."""
+        if not self.connected:
+            raise RuntimeError("Not connected to Sarna API")
+        
+        try:
+            # Create stub
+            stub = alerts_service_pb2_grpc.AlertServiceStub(self.channel)
+            
+            # Create request
+            request = alerts_pb2.AlertListRequest()
+            request.Page.Page = page
+            request.Page.PageSize = page_size
+            
+            # Make the call
+            response = await stub.ListAlerts(request, metadata=self._get_metadata())
+            
+            # Process the response
+            alerts = []
+            for alert in response.Alerts:
+                alerts.append({
+                    "alert_id": alert.AlertId,
+                    "account_id": alert.AccountId,
+                    "account_number": alert.AccountNumber,
+                    "alert_rule_id": alert.AlertRuleId,
+                    "message": alert.Message,
+                    "current_value": alert.CurrentValue,
+                    "severity": self._get_alert_severity_name(alert.Severity),
+                    "status": self._get_alert_status_name(alert.Status),
+                    "created_time": alert.CreatedTime.ToDatetime().isoformat() if alert.HasField("CreatedTime") else None,
+                    "last_notification_time": alert.LastNotificationTime.ToDatetime().isoformat() if alert.HasField("LastNotificationTime") else None,
+                    "resolved_time": alert.ResolvedTime.ToDatetime().isoformat() if alert.HasField("ResolvedTime") else None,
+                    "acknowledged_time": alert.AcknowledgedTime.ToDatetime().isoformat() if alert.HasField("AcknowledgedTime") else None,
+                    "acknowledged_user_id": alert.AcknowledgedUserId if alert.AcknowledgedUserId else None
+                })
+            
+            return {
+                "alerts": alerts,
+                "page": response.Page.Page if response.HasField("Page") else page,
+                "page_size": response.Page.PageSize if response.HasField("Page") else page_size,
+                "total_count": response.Page.TotalCount if response.HasField("Page") else len(alerts)
+            }
+            
+        except grpc.RpcError as e:
+            logger.error(f"gRPC error fetching alerts: {e.code()} - {e.details()}")
+            raise
+        except Exception as e:
+            logger.error(f"Error fetching alerts: {e}")
+            raise
+    
+    def _get_alert_severity_name(self, severity: int) -> str:
+        """Convert alert severity enum to string."""
+        severity_map = {
+            alerts_enums_pb2.EnumAlertSeverity_Undefined: "undefined",
+            alerts_enums_pb2.EnumAlertSeverity_Warning: "warning",
+            alerts_enums_pb2.EnumAlertSeverity_Critical: "critical"
         }
+        return severity_map.get(severity, "unknown")
     
-    def _extract_bp_values(self, bp_response) -> Dict[str, Any]:
-        """Extract regular BP values from response."""
-        return {
-            # Extract relevant fields
+    def _get_alert_status_name(self, status: int) -> str:
+        """Convert alert status enum to string."""
+        status_map = {
+            alerts_enums_pb2.EnumAlertStatus_Undefined: "undefined",
+            alerts_enums_pb2.EnumAlertStatus_Open: "open",
+            alerts_enums_pb2.EnumAlertStatus_Acknowledged: "acknowledged",
+            alerts_enums_pb2.EnumAlertStatus_Resolved: "resolved"
         }
-
-
-# Singleton instance management
-_client_instance = None
-_client_lock = asyncio.Lock()
-
-
-async def get_grpc_client() -> SarnaGRPCClient:
-    """Get or create singleton gRPC client instance."""
-    global _client_instance
-    
-    async with _client_lock:
-        if _client_instance is None:
-            from core.config import settings
-            _client_instance = SarnaGRPCClient(
-                url=settings.SARNA_API_URL,
-                jwt_token=settings.SARNA_JWT_TOKEN,
-                use_tls=settings.RISK_SYSTEM_USE_TLS
-            )
-            await _client_instance.connect()
-    
-    return _client_instance
-
-
-async def close_grpc_client():
-    """Close the gRPC client connection."""
-    global _client_instance
-    
-    async with _client_lock:
-        if _client_instance:
-            await _client_instance.close()
-            _client_instance = None
+        return status_map.get(status, "unknown")

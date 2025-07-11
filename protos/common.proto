@@ -1,8 +1,14 @@
 ﻿syntax = "proto3";
 
 import "google/protobuf/any.proto";
+import "google/protobuf/duration.proto";
 import "common_enums.proto";
 option csharp_namespace = "DTS.Libs.Protos.Common";
+
+message DurationValue {
+  // The uint64 value.
+  google.protobuf.Duration value = 1;
+}
 
 // Represents errors in a response
 message ResponseError {

@@ -19,7 +19,7 @@ find /output -maxdepth 1 -name "*.py" -type f -exec sed -i 's/^import \([a-zA-Z0
 # Fix 2: Fix imports in subdirectories to use parent imports
 for dir in admin api_hub time_machine; do
     if [ -d "/output/$dir" ]; then
-        find "/output/$dir" -name "*.py" -type f -exec sed -i 's/^import \(common\|accounts\|balances\|positions\|orders\|bp\|pmbp\|quotes\|securities_master\|search\|sessions\|subscriptions\|trading\|user_data\|ux_messages\|order_execution_logs\|account_application\|account_ach\|glossary\|commissions\|market_data_entitlement\|trading_level_change\|time_machine\|api_hub\|user\|pmbp_groups\|execution_api_hub\)_pb2 as/from .. import \1_pb2 as/g' {} \;
+        find "/output/$dir" -name "*.py" -type f -exec sed -i 's/^import \(common\|accounts\|balances\|positions\|orders\|bp\|pmbp\|quotes\|securities_master\|search\|sessions\|subscriptions\|trading\|user_data\|ux_messages\|order_execution_logs\|account_application\|account_ach\|glossary\|commissions\|market_data_entitlement\|trading_level_change\|time_machine\|api_hub\|user\|pmbp_groups\|execution_api_hub\|alerts\|alerts_enums\)_pb2 as/from .. import \1_pb2 as/g' {} \;
         find "/output/$dir" -name "*.py" -type f -exec sed -i 's/^import \([a-zA-Z0-9_]*_enums\)_pb2 as/from .. import \1_pb2 as/g' {} \;
     fi
 done

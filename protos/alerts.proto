@@ -1,0 +1,44 @@
+﻿syntax = "proto3";
+import "common.proto";
+import "search.proto";
+import "alerts_enums.proto";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.Alerts";
+
+// Alert definition matching the DTO
+message Alert {
+  int32 AlertId = 1;
+  int32 AccountId = 2;
+  string AccountNumber = 3;
+  int32 AlertRuleId = 4;
+  int32 AlertProcessorRunLogId = 5;
+  string Message = 6;
+  double CurrentValue = 7;
+  EnumAlertSeverity Severity = 8;
+  google.protobuf.Timestamp CreatedTime = 9;
+  google.protobuf.Timestamp LastNotificationTime = 10;
+  google.protobuf.Timestamp ResolvedTime = 11;
+  int32 ResolvedByAlertProcessorRunLogId = 12;
+  EnumAlertStatus Status = 13;
+  int32 AcknowledgedUserId = 14;
+  google.protobuf.Timestamp AcknowledgedTime = 15;
+}
+
+// At this point only active alerts are returned for user.
+message AlertListRequest {
+  PageRequest Page = 110;
+}
+
+message AlertsListResponse {
+  repeated Alert Alerts = 1;
+
+  // Lists warnings
+  repeated ResponseWarning Warnings = 101;
+  // Lists errors
+  repeated ResponseError Errors = 102;
+
+  // Copy from request
+  AlertListRequest AlertBrowseRequest = 110;
+  PageResponse Page = 111;
+}

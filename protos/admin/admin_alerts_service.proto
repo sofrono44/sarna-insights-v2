@@ -1,0 +1,88 @@
+syntax = "proto3";
+import "common.proto";
+import "search.proto";
+import "admin/admin_alerts.proto";
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option csharp_namespace = "DTS.Libs.Protos.AdminAlerts";
+
+// Service definition for managing alert rules
+service AdminAlertRuleService {
+
+  rpc SearchDefinitions(google.protobuf.Empty) returns (AlertRuleSearchDefinitionsResponse) {
+    option (google.api.http) = {
+      get: "/admin/alert-rules/definitions"
+    };
+  }
+
+  // Search for alert rules based on criteria
+  rpc Search(AlertRuleSearchRequest) returns (AlertRuleSearchResponse) {
+    option (google.api.http) = {
+      get: "/admin/alert-rules"
+    };
+  }
+
+  // Create a new alert rule
+  rpc Save(SaveAlertRuleRequest) returns (SaveAlertRuleResponse) {
+    option (google.api.http) = {
+      post: "/admin/alert-rules"
+    };
+  }
+
+  // Delete an alert rule
+  rpc Delete(DeleteAlertRuleRequest) returns (DeleteAlertRuleResponse) {
+    option (google.api.http) = {
+      delete: "/admin/alert-rules/{AlertRuleId}"
+    };
+  }
+}
+
+// Service definition for managing alert notifications
+service AdminAlertNotificationService {
+  // Search for alert notifications based on criteria
+  rpc List(AlertNotificationListRequest) returns (AlertNotificationsListResponse) {
+    option (google.api.http) = {
+      get: "/admin/alert-notifications"
+    };
+  }
+
+  // Create a new alert notification
+  rpc Save(SaveAlertNotificationRequest) returns (SaveAlertNotificationResponse) {
+    option (google.api.http) = {
+      post: "/admin/alert-notifications"
+    };
+  }
+
+  // Delete an alert notification
+  rpc Delete(DeleteAlertNotificationRequest) returns (DeleteAlertNotificationResponse) {
+    option (google.api.http) = {
+      delete: "/admin/alert-notifications/{AlertNotificationId}"
+    };
+  }
+}
+
+
+// Service definition for managing alert s
+service AdminAlertService {
+  // Search for alert s based on criteria
+  rpc Search(AlertSearchRequest) returns (AlertSearchResponse) {
+    option (google.api.http) = {
+      get: "/admin/alerts"
+    };
+  }
+  // Acknowledge an alert
+  rpc Acknowledge(AcknowledgeAlertRequest) returns (AlertOperationResponse) {
+    option (google.api.http) = {
+      post: "/admin/alerts/{AlertId}/acknowledge"
+    };
+  }
+
+  // Resolve an alert
+  rpc Resolve(ResolveAlertRequest) returns (AlertOperationResponse) {
+    option (google.api.http) = {
+      post: "/admin/alerts/{AlertId}/resolve"
+    };
+  }
+}

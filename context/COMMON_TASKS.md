@@ -1,178 +1,205 @@
-# Common Tasks & Solutions
+# Common Tasks
 
-## Protobuf Related
+This document provides quick solutions to common development tasks for the Sarna Insights v2 project.
 
-### After Adding New Proto Files
+## Starting the Application
+
 ```bash
-# Regenerate Python files
-make proto
+# Start all services
+docker-compose up -d
 
-# Or manually for specific files:
-docker run --rm -v C:\Development\sarna-insights-v2\protos:/protos -v C:\Development\sarna-insights-v2\backend\generated:/output python:3.11-slim bash -c "apt-get update -qq && apt-get install -y -qq protobuf-compiler > /dev/null && pip install -q grpcio-tools==1.60.0 && cd /protos && python -m grpc_tools.protoc -I. --python_out=/output --grpc_python_out=/output [PROTO_FILE]"
+# Start with logs
+docker-compose up
 
-# Fix imports if needed
-find backend/generated -name "*.py" -exec sed -i 's/^import /from . import /g' {} \;
+# Start specific service
+docker-compose up backend frontend
 ```
 
-### Important Proto Notes
-- **TimeMachineService is in api_hub_service.proto**, not time_machine.proto!
-- Services and messages can be in different files
-- Always check for service definitions in "api" or "hub" proto files
+## Viewing Logs
 
-### Common Proto Errors
-- **"Module not found"**: Check generated files exist in backend/generated/
-- **"Import error"**: Proto might have circular dependencies, check imports
-- **"Field not accessible"**: Use string representation fallback
-
-## gRPC Connection
-
-### Test Connection
 ```bash
-# Use the test script
-cd backend
-python test_grpc_connection.py
+# All services
+docker-compose logs -f
+
+# Specific service
+docker-compose logs -f backend
+docker-compose logs -f frontend
+
+# Last N lines
+docker-compose logs --tail 50 backend
 ```
 
-### Quick Connection Test
+## Testing the Application
+
+### Quick Health Check
+```bash
+# Test backend
+curl http://localhost:8000/api/health/
+
+# Test frontend
+curl http://localhost
+```
+
+### Test API Endpoints
 ```python
-# Quick test script
-import grpc
-from backend.core.config import settings
-
-channel = grpc.insecure_channel(settings.SARNA_API_URL)
-try:
-    grpc.channel_ready_future(channel).result(timeout=10)
-    print("Connected!")
-except grpc.FutureTimeoutError:
-    print("Connection failed")
+# Run the test script
+python test_frontend_api.py
 ```
 
-### Auth Issues
-- Check JWT token hasn't expired
-- Verify token format: "Bearer {token}" in metadata
-- Check SARNA_API_URL includes port if needed
+### Manual Testing
+1. Open http://localhost in browser
+2. Try these queries in the chat:
+   - "What is my total margin?"
+   - "Show me my buying power"
+   - "Which accounts have high utilization?"
+   - "How many accounts do I have?"
 
-## Database Operations
+## Restarting Services
 
-### Create New Migration
 ```bash
-docker-compose exec backend alembic revision -m "description"
-docker-compose exec backend alembic upgrade head
+# Restart all
+docker-compose restart
+
+# Restart specific service
+docker-compose restart backend
+docker-compose restart frontend
+
+# Full rebuild
+docker-compose down
+docker-compose up -d --build
+```
+
+## Debugging Issues
+
+### Frontend Not Loading
+```bash
+# Check logs
+docker-compose logs frontend
+
+# Restart frontend
+docker-compose restart frontend
+
+# Check if running
+docker-compose ps
+```
+
+### Backend API Errors
+```bash
+# Check logs
+docker-compose logs backend --tail 100
+
+# Test specific endpoint
+curl http://localhost:8000/api/health/
+
+# Check Redis
+docker-compose exec redis redis-cli ping
+```
+
+### Database Issues
+```bash
+# Connect to database
+docker-compose exec postgres psql -U sarnauser -d sarnadb
+
+# Check tables
+\dt
+
+# Exit
+\q
+```
+
+## Updating Code
+
+### Frontend Changes
+- Files in `frontend/src` auto-reload
+- No restart needed
+- Check browser console for errors
+
+### Backend Changes
+- Files in `backend/` auto-reload
+- No restart needed
+- Check logs for import errors
+
+### Proto Changes (RARE - Only if .proto files change)
+```bash
+# DO NOT regenerate unless .proto files changed!
+# Current proto files are fixed and committed
+make proto
+```
+
+## Common Fixes
+
+### Clear Cache
+```bash
+# Clear Redis cache
+docker-compose exec redis redis-cli FLUSHALL
+
+# Restart backend to reload
+docker-compose restart backend
 ```
 
 ### Reset Database
 ```bash
+# Full reset (WARNING: Deletes all data)
 docker-compose down -v
-docker-compose up -d postgres
-docker-compose exec backend alembic upgrade head
+docker-compose up -d
 ```
 
-## Frontend Development
-
-### Add New Component
-1. Create component file in appropriate folder
-2. Export from index if creating folder
-3. Import in parent component
-4. Add to router if new page
-
-### Common React Patterns
-```typescript
-// Query with error handling
-const { data, error, isLoading } = useQuery({
-  queryKey: ['portfolio', groupId],
-  queryFn: () => api.getPortfolio(groupId),
-  retry: 1,
-  onError: (error) => {
-    toast.error('Failed to load portfolio');
-  }
-});
-
-// Mutation with optimistic update
-const mutation = useMutation({
-  mutationFn: api.refreshData,
-  onMutate: async () => {
-    // Optimistic update
-    queryClient.setQueryData(['portfolio'], null);
-  },
-  onSuccess: () => {
-    queryClient.invalidateQueries(['portfolio']);
-  }
-});
-```
-
-## Debugging
-
-### Backend Debugging
-```python
-# Add to any endpoint
-import logging
-logger = logging.getLogger(__name__)
-
-# In your function
-logger.info(f"Received request: {request}")
-logger.error(f"Error occurred: {str(e)}")
-
-# Check logs
-make logs
-```
-
-### Frontend Debugging
-```typescript
-// Add to any component
-console.log('Component rendered with props:', props);
-
-// Network debugging
-window.DEBUG_API = true; // Enable in console
-
-// React Query devtools
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
-// Add <ReactQueryDevtools /> to App.tsx
-```
-
-### Docker Issues
+### Fix Permission Issues
 ```bash
-# Rebuild everything
-docker-compose down
-docker-compose build --no-cache
-docker-compose up
-
-# Check container status
-docker-compose ps
-
-# Enter container
-docker-compose exec backend bash
-docker-compose exec frontend sh
-
-# View specific service logs
-docker-compose logs -f backend
-docker-compose logs -f frontend
+# If files can't be written
+sudo chown -R $USER:$USER .
 ```
 
-## Performance Optimization
+## Performance Testing
 
-### Slow Queries
-1. Check Redis is working: `docker-compose exec redis redis-cli ping`
-2. Verify cache keys are being set
-3. Check gRPC call timing in logs
-4. Consider implementing pagination
+### Monitor Resource Usage
+```bash
+# Check container stats
+docker stats
 
-### Memory Issues
-1. Check Docker memory allocation
-2. Reduce Redis max memory if needed
-3. Implement streaming for large datasets
+# Check specific container
+docker stats sarna-insights-v2-backend-1
+```
 
-## Environment Variables
+### Test Query Performance
+```bash
+# Time a request
+time curl http://localhost:8000/api/data/portfolio/10006
+```
 
-### Adding New Variable
-1. Add to `.env`
-2. Add to `.env.example` with placeholder
-3. Add to `backend/core/config.py`
-4. Add to `docker-compose.yml` if needed
-5. Restart services
+## Deployment Preparation
 
-### Secret Rotation
-1. Update in `.env`
-2. Restart only affected service:
-   ```bash
-   docker-compose restart backend
-   ```
+### Build for Production
+```bash
+# Frontend
+cd frontend
+npm run build
+
+# Backend
+cd backend
+pip install -r requirements.txt
+```
+
+### Environment Variables
+- Copy `.env.example` to `.env`
+- Update all API keys
+- Set `RISK_SYSTEM_USE_TLS=true` for production
+- Update `SARNA_API_URL` without https://
+
+## Troubleshooting Checklist
+
+1. ✓ Are all containers running? (`docker-compose ps`)
+2. ✓ Are there any errors in logs? (`docker-compose logs`)
+3. ✓ Is Redis working? (`docker-compose exec redis redis-cli ping`)
+4. ✓ Is the database accessible? (`docker-compose exec postgres pg_isready`)
+5. ✓ Are API endpoints responding? (`curl http://localhost:8000/api/health/`)
+6. ✓ Is the frontend building? (Check frontend logs)
+7. ✓ Are environment variables set? (Check .env file)
+
+## Quick Links
+
+- Frontend: http://localhost
+- Backend API: http://localhost:8000/api
+- API Docs: http://localhost:8000/docs
+- Project State: /context/PROJECT_STATE.md
+- Session Notes: /context/SESSION_SUMMARY_*.md

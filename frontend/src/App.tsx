@@ -1,8 +1,10 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { BrowserRouter } from 'react-router-dom'
 import Layout from '@/components/layout/Layout'
-import ChatInterface from '@/components/chat/ChatInterface'
-import PortfolioOverview from '@/components/visualizations/PortfolioOverview'
+import { PortfolioEnhanced } from '@/components/visualizations/PortfolioEnhanced'
+import { ToastProvider } from '@/contexts/ToastContext'
+import { RiskMetricsCards } from '@/components/dashboard/RiskMetricsCards'
+import { AIAssistantLayout } from '@/components/ai-assistant'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -16,20 +18,24 @@ const queryClient = new QueryClient({
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Layout>
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-6">
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-bold mb-4">Portfolio Overview</h2>
-              <PortfolioOverview />
-            </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-2xl font-bold mb-4">AI Assistant</h2>
-              <ChatInterface />
-            </div>
-          </div>
-        </Layout>
-      </BrowserRouter>
+      <ToastProvider>
+        <BrowserRouter>
+          <Layout>
+            <AIAssistantLayout>
+              <div className="space-y-6">
+                {/* Risk Metrics Cards */}
+                <RiskMetricsCards />
+                
+                {/* Portfolio Overview - Full Width */}
+                <div>
+                  <h2 className="text-lg font-semibold mb-2">Portfolio Risk View</h2>
+                  <PortfolioEnhanced groupId={10006} />
+                </div>
+              </div>
+            </AIAssistantLayout>
+          </Layout>
+        </BrowserRouter>
+      </ToastProvider>
     </QueryClientProvider>
   )
 }

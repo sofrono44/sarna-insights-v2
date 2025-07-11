@@ -2,8 +2,10 @@
 from fastapi import APIRouter, HTTPException, Query
 from typing import Optional, List, Dict, Any
 from datetime import datetime
+import grpc
 from api.dependencies import GRPCClientDep, CacheServiceDep
 from models.responses import PortfolioData, HistoricalData, AccountData, HistoricalSnapshot
+from services.portfolio_service import PortfolioService
 import logging
 
 logger = logging.getLogger(__name__)
@@ -147,11 +149,73 @@ async def refresh_data(
         return {
             "status": "success", 
             "message": f"Cache cleared for group {group_id}",
-            "cleared_keys": ["portfolio"]
+            "timestamp": datetime.utcnow().isoformat()
         }
         
     except Exception as e:
         logger.error(f"Failed to refresh data: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/portfolio/{group_id}/risk-matrix")
+async def get_portfolio_risk_matrix(
+    group_id: int,
+    grpc_client: GRPCClientDep,
+    cache: CacheServiceDep,
+    risk_profile_id: int = Query(10011, description="Risk profile ID")
+):
+    """Get comprehensive portfolio data with risk matrix scenarios."""
+    try:
+        # Create portfolio service
+        portfolio_service = PortfolioService(grpc_client, cache)
+        
+        # Fetch comprehensive data
+        portfolio_data = await portfolio_service.get_portfolio_with_risk_matrix(
+            group_id=group_id,
+            risk_profile_id=risk_profile_id
+        )
+        
+        return portfolio_data
+        
+    except grpc.RpcError as e:
+        logger.error(f"gRPC error fetching portfolio risk matrix: {e.code()} - {e.details()}")
+        raise HTTPException(status_code=503, detail="Unable to fetch portfolio data from backend")
+    except Exception as e:
+        logger.error(f"Failed to fetch portfolio risk matrix: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+
+@router.get("/alerts")
+async def get_active_alerts(
+    grpc_client: GRPCClientDep,
+    cache: CacheServiceDep,
+    page: int = Query(1, description="Page number", ge=1),
+    page_size: int = Query(50, description="Page size", ge=1, le=100)
+):
+    """Get active alerts for the current user."""
+    try:
+        # Check cache first (5 minute TTL for alerts)
+        cache_key = cache.cache_key("alerts", f"page_{page}_size_{page_size}")
+        cached_data = await cache.get(cache_key)
+        if cached_data:
+            logger.info(f"Cache HIT for alerts page {page}")
+            return cached_data
+        
+        logger.info(f"Cache MISS for alerts page {page} - fetching from gRPC")
+        
+        # Fetch from gRPC
+        alerts_data = await grpc_client.get_alerts(page=page, page_size=page_size)
+        
+        # Cache the response
+        await cache.set(cache_key, alerts_data, ttl=300)  # 5 minute TTL
+        
+        return alerts_data
+        
+    except grpc.RpcError as e:
+        logger.error(f"gRPC error fetching alerts: {e.code()} - {e.details()}")
+        raise HTTPException(status_code=503, detail="Unable to fetch alerts from backend")
+    except Exception as e:
+        logger.error(f"Failed to fetch alerts: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
 

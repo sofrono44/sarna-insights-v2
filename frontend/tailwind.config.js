@@ -12,6 +12,13 @@ export default {
           500: '#3b82f6',
           600: '#2563eb',
           700: '#1d4ed8',
+        },
+        // Add custom colors used in the app
+        sarna: {
+          blue: '#28549C',
+          light: '#F8F9FB',
+          dark: '#1A1F2E',
+          gray: '#4A5568',
         }
       }
     },
